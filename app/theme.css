@@ -1,0 +1,131 @@
+/* Optimized theme.css - ลดความซับซ้อนของสีและเอฟเฟกต์ */
+
+:root {
+    --radius: 0.625rem;
+    
+    /* ลดจำนวนสีและทำให้ง่ายขึ้น */
+    --background: oklch(99% 0.01 240);
+    --foreground: oklch(25% 0.05 265);
+    
+    --card: oklch(100% 0 0);
+    --card-foreground: oklch(25% 0.05 265);
+    
+    --popover: oklch(100% 0 0);
+    --popover-foreground: oklch(25% 0.05 265);
+    
+    --primary: oklch(55% 0.2 265);
+    --primary-foreground: oklch(99% 0.01 0);
+    
+    --secondary: oklch(97% 0.01 240);
+    --secondary-foreground: oklch(30% 0.1 265);
+    
+    --muted: oklch(96% 0.01 240);
+    --muted-foreground: oklch(50% 0.06 265);
+    
+    --accent: oklch(95% 0.03 265);
+    --accent-foreground: oklch(30% 0.1 265);
+    
+    --destructive: oklch(65% 0.2 25);
+    --destructive-foreground: oklch(98% 0.005 0);
+    
+    --border: oklch(92% 0.02 265 / 15%);
+    --input: oklch(92% 0.02 265 / 20%);
+    --ring: oklch(55% 0.2 265);
+    
+    /* ใช้ static gradient แทน animation gradient */
+    --hero-gradient: linear-gradient(135deg, 
+      oklch(90% 0.05 265) 0%, 
+      oklch(95% 0.03 240) 100%);
+    
+    /* Shadow รูปแบบเดียว แทนที่จะมีหลายแบบ */
+    --shadow: 0 4px 20px rgba(120, 120, 255, 0.1);
+  }
+  
+  .dark {
+    --background: oklch(15% 0.03 265);
+    --foreground: oklch(95% 0.015 265);
+    
+    --card: oklch(20% 0.05 265);
+    --card-foreground: oklch(95% 0.015 265);
+    
+    --popover: oklch(20% 0.05 265);
+    --popover-foreground: oklch(95% 0.015 265);
+    
+    --primary: oklch(65% 0.2 265);
+    --primary-foreground: oklch(10% 0.05 265);
+    
+    --secondary: oklch(25% 0.04 265);
+    --secondary-foreground: oklch(95% 0.015 265);
+    
+    --muted: oklch(25% 0.04 265);
+    --muted-foreground: oklch(70% 0.06 265);
+    
+    --accent: oklch(25% 0.04 265);
+    --accent-foreground: oklch(95% 0.015 265);
+    
+    --destructive: oklch(65% 0.2 25);
+    --destructive-foreground: oklch(98% 0.005 0);
+    
+    --border: oklch(95% 0.01 265 / 15%);
+    --input: oklch(95% 0.01 265 / 20%);
+    --ring: oklch(65% 0.2 265);
+    
+    --hero-gradient: linear-gradient(135deg, 
+      oklch(20% 0.06 265) 0%, 
+      oklch(16% 0.04 220) 100%);
+    
+    --shadow: 0 4px 20px rgba(20, 20, 50, 0.25);
+  }
+  
+  /* Custom Hero Background - ไม่ใช้ animation */
+  .hero-bg {
+    background: var(--hero-gradient);
+  }
+  
+  /* Custom Card Styles - ใช้สีพื้นฐานแทน gradient */
+  .card-gradient-1 {
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+  
+  .card-gradient-2 {
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+  
+  /* Shadow เดียว */
+  .shadow-custom {
+    box-shadow: var(--shadow);
+  }
+  
+  /* Glass Effect ที่เรียบง่ายขึ้น */
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .dark .glass-effect {
+    background: rgba(30, 30, 60, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(80, 80, 150, 0.2);
+  }
+  
+  /* Button Styles - ไม่ใช้ gradient animation */
+  .gradient-button {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    transition: 0.3s;
+  }
+  
+  .gradient-button:hover {
+    background: color-mix(in oklch, var(--primary), black 10%);
+  }
+  
+  /* Gradient Text - ใช้สีเดียวแทน */
+  .gradient-text {
+    color: var(--primary);
+    font-weight: bold;
+  }

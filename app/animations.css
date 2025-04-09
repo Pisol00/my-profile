@@ -1,0 +1,32 @@
+/* animations.css - ลดลงให้เหลือเฉพาะที่จำเป็น */
+
+/* Float animation สำหรับรูปโปรไฟล์ */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Card Hover Effects - เรียบง่าย */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+/* Button Hover Effects - เรียบง่าย */
+.button-hover {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.button-hover:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}

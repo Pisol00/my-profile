@@ -22,6 +22,9 @@ export type ProfileTranslations = {
   toolsTech: string;
   otherLang: string;
   projectsHighlight: string;
+  contactMe: string;
+  home: string;
+  phone: string;
 };
 
 export const translations: Record<Language, ProfileTranslations> = {
@@ -46,9 +49,12 @@ export const translations: Record<Language, ProfileTranslations> = {
     toolsTech: "Tools & Technologies",
     otherLang: "Other Languages",
     projectsHighlight: "Projects Highlight",
+    contactMe: "Contact Me",
+    home: "Home",
+    phone: "Phone",
   },
   th: {
-    name: "พิศล อัฏนกาลจรรยา",
+    name: "พิศลย์ อุตตาลกาญจนา",
     title: "วิศวกรรมซอฟต์แวร์",
     bio: "นักศึกษาชั้นปีที่ 3 สาขาเทคโนโลยีสารสนเทศ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง กำลังมองหาการฝึกงาน 2 เดือนในด้าน Full-Stack Development มีความชื่นชอบในการพัฒนาเว็บและแอปพลิเคชัน กระตือรือร้นที่จะนำความรู้ไปประยุกต์ใช้ เพิ่มประสิทธิภาพระบบ และพัฒนาทักษะการแก้ปัญหาและการทำงานเป็นทีมผ่านประสบการณ์จริง",
     location: "กรุงเทพมหานคร, ประเทศไทย",
@@ -68,6 +74,9 @@ export const translations: Record<Language, ProfileTranslations> = {
     toolsTech: "เครื่องมือและเทคโนโลยี",
     otherLang: "ภาษาอื่นๆ",
     projectsHighlight: "โปรเจคที่โดดเด่น",
+    contactMe: "ติดต่อฉัน",
+    home: "หน้าหลัก",
+    phone: "โทรศัพท์",
   }
 };
 
