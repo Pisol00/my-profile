@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Archivo, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 // ฟอนต์ภาษาอังกฤษ
 const archivo = Archivo({
@@ -28,9 +30,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="th" className={`${archivo.variable} ${notoSansThai.variable}`}>
+    <html className={`${archivo.variable} ${notoSansThai.variable}`}>
       <body className="antialiased font-sans">
-        {children}
+        <ThemeProvider>
+          <LanguageProvider>
+            {children}
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
