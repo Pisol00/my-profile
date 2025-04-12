@@ -76,7 +76,7 @@ export default function Navbar({ scrollToSection, sections }: NavbarProps) {
             variant="outline"
             size="icon"
             onClick={toggleDarkMode}
-            className="rounded-full border-border/50 hover:bg-primary/5 transition-all"
+            className="rounded-full border-border/50 hover:bg-primary/5 transition-all cursor-pointer"
           >
             {isDarkMode ? (
               <Sun size={18} className="text-primary" />
@@ -89,7 +89,7 @@ export default function Navbar({ scrollToSection, sections }: NavbarProps) {
             variant="outline"
             size="sm"
             onClick={toggleLanguage}
-            className="rounded-full border-border/50 hover:bg-primary/5 transition-all font-medium gap-2"
+            className="rounded-full border-border/50 hover:bg-primary/5 transition-all font-medium gap-2 cursor-pointer"
           >
             <Languages size={16} className="text-primary" />
             {currentLang === "en" ? "TH" : "EN"}

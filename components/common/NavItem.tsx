@@ -11,13 +11,13 @@ export default function NavItem({ label, onClick, icon }: NavItemProps) {
   return (
     <button
       onClick={onClick}
-      className="text-sm font-medium transition-colors relative group"
+      className="text-sm font-medium transition-colors relative group cursor-pointer"
     >
       <span className="flex items-center gap-1.5">
         {icon}
         <span>{label}</span>
       </span>
-      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
+      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300 "></span>
     </button>
   );
 }

@@ -2,7 +2,7 @@
 
 import { forwardRef, useState, useMemo } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Github, ExternalLink } from 'lucide-react';
+import { Github, ExternalLink, Code2, FolderGit2 } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import { useLanguage } from '@/context/LanguageContext';
 import { profileData, thProjects } from '@/translations';
@@ -50,28 +50,37 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
     return (
       <section 
         ref={ref} 
-        className="py-24 relative overflow-hidden bg-background"
+        className="py-24 relative overflow-hidden bg-white dark:bg-gray-900"
       >
         {/* Decorative elements */}
-        <div className="absolute inset-0 overflow-hidden opacity-30 pointer-events-none">
-          <div className="absolute h-full w-1 left-1/3 bg-gradient-to-b from-transparent via-primary/10 to-transparent"></div>
-          <div className="absolute h-1 w-full top-1/3 bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
-          <div className="absolute h-full w-1 right-1/3 bg-gradient-to-b from-transparent via-primary/10 to-transparent"></div>
-          <div className="absolute h-1 w-full bottom-1/3 bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Grid pattern background */}
+          <div className="absolute inset-0 opacity-5">
+            <svg width="100%" height="100%">
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1" className="text-blue-500 dark:text-blue-400" />
+              </pattern>
+              <rect width="100%" height="100%" fill="url(#grid)" />
+            </svg>
+          </div>
+          
+          {/* Decorative circles */}
+          <div className="absolute top-1/4 -right-20 w-80 h-80 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-70"></div>
+          <div className="absolute bottom-1/4 -left-20 w-80 h-80 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-70"></div>
         </div>
 
         <div className="container mx-auto max-w-7xl px-4 relative z-10">
-          <AnimatedSection animation="fade-in" disabled={!animationsEnabled} className="mb-16">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/20 text-primary text-sm font-semibold mb-4 shadow-sm border border-primary/10 backdrop-blur-sm mx-auto text-center block w-fit">
+          <AnimatedSection animation="fade-in" disabled={!animationsEnabled} className="mb-16 text-center">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 text-sm font-semibold mb-4 shadow-sm border border-blue-200 dark:border-blue-800 backdrop-blur-sm">
               {currentLang === "en" ? "Portfolio" : "ผลงาน"}
             </span>
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-6">
               {t.projectsHighlight}
             </h2>
-            <p className="text-center text-muted-foreground max-w-2xl mx-auto text-lg">
+            <p className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
               {currentLang === "en"
-                ? "Featured projects I've developed that showcase my skills and experience"
-                : "โปรเจกต์เด่นที่ฉันได้พัฒนาที่แสดงให้เห็นถึงทักษะและประสบการณ์ของฉัน"}
+                ? "Featured projects showcasing my skills and experience"
+                : "โปรเจกต์เด่นที่แสดงให้เห็นถึงทักษะและประสบการณ์ของฉัน"}
             </p>
           </AnimatedSection>
 
@@ -81,10 +90,11 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
               <button
                 key={index}
                 onClick={() => setActiveTab(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all 
-                  ${activeTab === category 
-                    ? "bg-primary text-white shadow-md shadow-primary/20" 
-                    : "bg-secondary/50 text-secondary-foreground hover:bg-secondary"}`}
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                  activeTab === category 
+                    ? "bg-blue-600 text-white shadow-md shadow-blue-200 dark:shadow-blue-900/20" 
+                    : "bg-blue-50 dark:bg-blue-900/20 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-800/30"
+                }`}
               >
                 {category === "all" 
                   ? currentLang === "en" ? "All Projects" : "ทั้งหมด"
@@ -99,40 +109,44 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
               <AnimatedSection
                 key={index}
                 delay={100 + index * 50}
-                animation="zoom-in"
+                animation="fade-in"
                 disabled={!animationsEnabled}
               >
-                <div className="group relative bg-card rounded-xl overflow-hidden border border-border/50 hover:border-primary/20 shadow-lg hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
-                  {/* Project Header with Gradient Overlay */}
-                  <div className="h-32 w-full bg-gradient-to-br from-primary/20 to-primary/5 p-6 flex items-end">
-                    <div className="absolute top-4 right-4">
-                      <a 
-                        href={project.link} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="bg-background/50 hover:bg-background/80 text-primary p-2 rounded-full transition-all backdrop-blur-sm"
-                        aria-label={`View ${project.title} on GitHub`}
-                      >
-                        <Github size={16} />
-                      </a>
+                <div className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-blue-100 dark:border-blue-900/50 hover:border-blue-300 dark:hover:border-blue-700 shadow-md hover:shadow-xl hover:shadow-blue-100 dark:hover:shadow-blue-900/10 transition-all duration-300 h-full flex flex-col">
+                  {/* Project Header */}
+                  <div className="flex items-center justify-between p-6 border-b border-blue-50 dark:border-blue-900/50">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-300">
+                        <FolderGit2 size={20} />
+                      </div>
+                      <h3 className="font-bold text-xl">{project.title}</h3>
                     </div>
-                    <h3 className="font-bold text-xl">{project.title}</h3>
+                    <a 
+                      href={project.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-800/50 text-blue-600 dark:text-blue-400 p-2 rounded-full transition-colors"
+                      aria-label={`View ${project.title} on GitHub`}
+                    >
+                      <Github size={18} />
+                    </a>
                   </div>
 
                   {/* Project Content */}
-                  <div className="p-6">
-                    <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+                  <div className="p-6 flex-1 flex flex-col">
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-6 flex-1">
                       {project.description}
                     </p>
 
                     {/* Technologies */}
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2 mb-6">
                       {project.technologies.map((tech, techIndex) => (
                         <Badge 
                           key={techIndex} 
                           variant="outline" 
-                          className="text-xs bg-secondary/30 border-secondary/50"
+                          className="bg-blue-50/50 dark:bg-blue-900/10 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800/50 hover:bg-blue-100 dark:hover:bg-blue-800/30 py-1"
                         >
+                          <Code2 size={12} className="mr-1" />
                           {tech}
                         </Badge>
                       ))}
@@ -143,7 +157,7 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sm text-primary hover:text-primary/80 transition-colors"
+                      className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors font-medium"
                     >
                       <span>{t.viewProject}</span>
                       <ExternalLink size={14} />
@@ -152,6 +166,19 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
                 </div>
               </AnimatedSection>
             ))}
+          </div>
+
+          {/* "View More Projects" button at the bottom */}
+          <div className="flex justify-center mt-12">
+            <a
+              href={`https://github.com/${profileData.github}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white dark:bg-gray-800 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all shadow-md hover:shadow-lg font-medium"
+            >
+              <Github size={18} />
+              {currentLang === "en" ? "View More Projects on GitHub" : "ดูโปรเจกต์เพิ่มเติมบน GitHub"}
+            </a>
           </div>
         </div>
       </section>

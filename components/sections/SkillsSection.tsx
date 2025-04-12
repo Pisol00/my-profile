@@ -1,8 +1,17 @@
 'use client';
 
 import { forwardRef } from 'react';
-import { Layout, Database, Wrench, Terminal, User, Languages } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { 
+  Code2, 
+  Database, 
+  Wrench, 
+  User, 
+  GitBranch, 
+  Server,
+  Languages as LanguagesIcon, 
+  Check,
+  Globe
+} from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import { useLanguage } from '@/context/LanguageContext';
 import { profileData } from '@/translations';
@@ -11,269 +20,210 @@ type SkillsSectionProps = {
   animationsEnabled: boolean;
 };
 
-// ใช้ forwardRef เพื่อรับ ref จาก parent component
 const SkillsSection = forwardRef<HTMLElement, SkillsSectionProps>(
   ({ animationsEnabled }, ref) => {
     const { currentLang, t } = useLanguage();
 
+    // All skills from profile data
+    const { frontend, backend, tools, other } = profileData.skills;
+
+    // Skill category with icon mapping
+    const skillCategories = [
+      {
+        name: currentLang === 'en' ? 'Frontend Development' : 'พัฒนาฟร้อนท์เอนด์',
+        icon: <Code2 size={24} />,
+        skills: frontend,
+        color: 'text-blue-500',
+        bgLight: 'bg-blue-50/50',
+        bgDark: 'dark:bg-blue-900/10',
+      },
+      {
+        name: currentLang === 'en' ? 'Backend Development' : 'พัฒนาแบ็คเอนด์',
+        icon: <Database size={24} />,
+        skills: backend,
+        color: 'text-blue-500',
+        bgLight: 'bg-blue-50/50',
+        bgDark: 'dark:bg-blue-900/10',
+      },
+      {
+        name: currentLang === 'en' ? 'DevOps & Tools' : 'เครื่องมือและ DevOps',
+        icon: <Server size={24} />,
+        skills: tools,
+        color: 'text-blue-500',
+        bgLight: 'bg-blue-50/50',
+        bgDark: 'dark:bg-blue-900/10',
+      },
+      {
+        name: currentLang === 'en' ? 'Other Languages' : 'ภาษาโปรแกรมมิ่งอื่นๆ',
+        icon: <GitBranch size={24} />,
+        skills: other,
+        color: 'text-blue-500',
+        bgLight: 'bg-blue-50/50',
+        bgDark: 'dark:bg-blue-900/10',
+      },
+    ];
+
+    // Languages data
+    const languageData = profileData.languages;
+
+    // Soft skills with custom icons
+    const softSkillsWithIcons = [
+      {
+        skill: profileData.softSkills[0], // Problem-Solving
+        icon: <User size={24} />,
+      },
+      {
+        skill: profileData.softSkills[1], // Teamwork
+        icon: <User size={24} />,
+      },
+      {
+        skill: profileData.softSkills[2], // Adaptability
+        icon: <User size={24} />,
+      },
+      {
+        skill: profileData.softSkills[3], // Communication
+        icon: <Globe size={24} />,
+      },
+    ];
+
     return (
       <section 
         ref={ref} 
-        className="py-24 relative overflow-hidden"
-        style={{
-          background: `linear-gradient(135deg, 
-            var(--background) 0%, 
-            color-mix(in oklch, var(--primary), var(--background) 90%) 100%)`
-        }}
+        className="py-24 bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-blue-950/20 relative overflow-hidden"
       >
-        {/* Decorative background elements */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
-          <div className="absolute top-10 left-10 w-64 h-64 rounded-full bg-primary/30 blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-primary/20 blur-3xl"></div>
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden opacity-10">
+          <div className="absolute h-64 w-64 -top-20 -right-20 rounded-full bg-blue-200 dark:bg-blue-600 blur-3xl"></div>
+          <div className="absolute h-64 w-64 -bottom-20 -left-20 rounded-full bg-blue-200 dark:bg-blue-600 blur-3xl"></div>
         </div>
 
-        <div className="container mx-auto max-w-7xl px-4 relative z-10">
+        <div className="container relative z-10 mx-auto max-w-7xl px-4">
+          {/* Section header */}
           <AnimatedSection 
             animation="fade-in" 
             disabled={!animationsEnabled} 
-            className="mb-16"
+            className="mb-16 text-center"
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/20 text-primary text-sm font-semibold mb-4 shadow-sm border border-primary/10 backdrop-blur-sm mx-auto text-center block w-fit">
-              {currentLang === "en" ? "Technology Stack" : "เทคโนโลยีที่ใช้"}
+            <span className="inline-block px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 text-sm font-semibold mb-4 shadow-sm border border-blue-200 dark:border-blue-800 backdrop-blur-sm">
+              {currentLang === "en" ? "My Expertise" : "ความเชี่ยวชาญของฉัน"}
             </span>
-            <h2 className="text-3xl md:text-5xl font-bold text-center mb-6">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">
               {t.technicalSkills}
             </h2>
-            <p className="text-center text-muted-foreground max-w-2xl mx-auto text-lg">
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
               {currentLang === "en"
-                ? "My technical skills and areas of expertise that I've developed through education and projects"
-                : "ทักษะทางเทคนิคและความเชี่ยวชาญของฉันที่ได้พัฒนาผ่านการศึกษาและโครงการต่างๆ"}
+                ? "Technology stack and areas of expertise"
+                : "สแตคเทคโนโลยีและความเชี่ยวชาญของฉัน"}
             </p>
           </AnimatedSection>
 
-          {/* Main technical skills */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            {/* Frontend Development */}
-            <AnimatedSection
-              delay={100}
-              animation="zoom-in"
-              disabled={!animationsEnabled}
-            >
-              <div className="glass-card p-8 rounded-xl transition-all duration-300 h-full flex flex-col border border-white/10 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary ring-1 ring-primary/20">
-                    <Layout size={24} />
+          {/* Main technical skills - card layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            {skillCategories.map((category, categoryIndex) => (
+              <AnimatedSection
+                key={category.name}
+                animation="fade-in"
+                delay={100 + categoryIndex * 50}
+                disabled={!animationsEnabled}
+              >
+                <div className="bg-white dark:bg-gray-800 rounded-xl border border-blue-100 dark:border-blue-900/30 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden h-full">
+                  {/* Category Header */}
+                  <div className="p-6 border-b border-blue-100 dark:border-blue-900/30 flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-300">
+                      {category.icon}
+                    </div>
+                    <h3 className="text-xl font-bold">{category.name}</h3>
                   </div>
-                  <h3 className="text-xl font-bold gradient-text">{t.frontend}</h3>
-                </div>
 
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {profileData.skills.frontend.map((skill) => (
-                    <Badge 
-                      key={skill} 
-                      variant="secondary"
-                      className="py-1.5 px-3 text-sm transition-all duration-300 hover:bg-primary/10 hover:text-primary cursor-default"
-                    >
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-
-                <div className="mt-auto pt-6 border-t border-border/30">
-                  <div className="text-sm text-muted-foreground">
-                    {currentLang === "en" 
-                      ? "Creating responsive and interactive user interfaces" 
-                      : "สร้างส่วนติดต่อผู้ใช้ที่ตอบสนองและโต้ตอบได้"}
+                  {/* Skills Tags */}
+                  <div className="p-6">
+                    <div className="flex flex-wrap gap-2">
+                      {category.skills.map((skill, skillIndex) => (
+                        <div 
+                          key={skillIndex} 
+                          className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 py-2 px-3 rounded-lg border border-blue-100 dark:border-blue-800/50"
+                        >
+                          <Check size={14} className="text-blue-500 dark:text-blue-400" />
+                          <span className="text-sm font-medium">{skill}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </AnimatedSection>
-
-            {/* Backend Development */}
-            <AnimatedSection
-              delay={150}
-              animation="zoom-in"
-              disabled={!animationsEnabled}
-            >
-              <div className="glass-card p-8 rounded-xl transition-all duration-300 h-full flex flex-col border border-white/10 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary ring-1 ring-primary/20">
-                    <Database size={24} />
-                  </div>
-                  <h3 className="text-xl font-bold gradient-text">{t.backend}</h3>
-                </div>
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {profileData.skills.backend.map((skill) => (
-                    <Badge 
-                      key={skill} 
-                      variant="secondary"
-                      className="py-1.5 px-3 text-sm transition-all duration-300 hover:bg-primary/10 hover:text-primary cursor-default"
-                    >
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-
-                <div className="mt-auto pt-6 border-t border-border/30">
-                  <div className="text-sm text-muted-foreground">
-                    {currentLang === "en" 
-                      ? "Building robust server-side applications and APIs" 
-                      : "สร้างแอปพลิเคชันฝั่งเซิร์ฟเวอร์และ API ที่แข็งแกร่ง"}
-                  </div>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            {/* Wrench & Technologies */}
-            <AnimatedSection
-              delay={200}
-              animation="zoom-in"
-              disabled={!animationsEnabled}
-            >
-              <div className="glass-card p-8 rounded-xl transition-all duration-300 h-full flex flex-col border border-white/10 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary ring-1 ring-primary/20">
-                    <Wrench size={24} />
-                  </div>
-                  <h3 className="text-xl font-bold gradient-text">{t.toolsTech}</h3>
-                </div>
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {profileData.skills.tools.map((skill) => (
-                    <Badge 
-                      key={skill} 
-                      variant="secondary"
-                      className="py-1.5 px-3 text-sm transition-all duration-300 hover:bg-primary/10 hover:text-primary cursor-default"
-                    >
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-
-                <div className="mt-auto pt-6 border-t border-border/30">
-                  <div className="text-sm text-muted-foreground">
-                    {currentLang === "en" 
-                      ? "DevOps, CI/CD, and cloud infrastructure Wrench" 
-                      : "เครื่องมือ DevOps, CI/CD และโครงสร้างพื้นฐานคลาวด์"}
-                  </div>
-                </div>
-              </div>
-            </AnimatedSection>
+              </AnimatedSection>
+            ))}
           </div>
 
-          {/* Additional skills and languages - 2 column layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
-            {/* Programming Languages */}
+          {/* Languages and Soft Skills - Two Column Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Languages Card */}
             <AnimatedSection
-              delay={250}
-              animation="slide-left"
+              animation="fade-in"
+              delay={200}
               disabled={!animationsEnabled}
             >
-              <div className="glass-card p-8 rounded-xl transition-all duration-300 border border-white/10 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary ring-1 ring-primary/20">
-                    <Terminal size={24} />
+              <div className="bg-white dark:bg-gray-800 rounded-xl border border-blue-100 dark:border-blue-900/30 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden h-full">
+                {/* Header */}
+                <div className="p-6 border-b border-blue-100 dark:border-blue-900/30 flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-300">
+                    <LanguagesIcon size={24} />
                   </div>
-                  <h3 className="text-xl font-bold gradient-text">{t.otherLang}</h3>
+                  <h3 className="text-xl font-bold">{t.languages}</h3>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 items-center mb-4">
-                  {profileData.skills.other.map((skill) => (
-                    <div 
-                      key={skill} 
-                      className="flex items-center gap-3 p-3 rounded-lg transition-all hover:bg-primary/5"
-                    >
-                      <div className="w-2 h-2 rounded-full bg-primary"></div>
-                      <span className="font-medium">{skill}</span>
+                {/* Languages Content */}
+                <div className="p-6 space-y-6">
+                  {languageData.map((language, index) => (
+                    <div key={index} className="flex items-center space-x-4">
+                      <div className="w-14 h-14 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-300 text-lg font-bold border-2 border-blue-100 dark:border-blue-800">
+                        {language.language === "Thai" ? "TH" : "EN"}
+                      </div>
+                      <div>
+                        <div className="font-bold text-lg">{language.language}</div>
+                        <div className="text-blue-600 dark:text-blue-300 text-sm mt-1 bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-full inline-block">
+                          {language.level}
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
             </AnimatedSection>
 
-            {/* Soft Skills */}
+            {/* Soft Skills Card */}
             <AnimatedSection
-              delay={300}
-              animation="slide-right"
+              animation="fade-in"
+              delay={250}
               disabled={!animationsEnabled}
             >
-              <div className="glass-card p-8 rounded-xl transition-all duration-300 border border-white/10 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary ring-1 ring-primary/20">
+              <div className="bg-white dark:bg-gray-800 rounded-xl border border-blue-100 dark:border-blue-900/30 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden h-full">
+                {/* Header */}
+                <div className="p-6 border-b border-blue-100 dark:border-blue-900/30 flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-300">
                     <User size={24} />
                   </div>
-                  <h3 className="text-xl font-bold gradient-text">{t.softSkills}</h3>
+                  <h3 className="text-xl font-bold">{t.softSkills}</h3>
                 </div>
 
-                <div className="space-y-3">
-                  {profileData.softSkills.map((skill, index) => (
-                    <div 
-                      key={index} 
-                      className="flex items-center gap-3 p-3 rounded-lg transition-all hover:bg-primary/5"
-                    >
-                      <div className="w-2 h-2 rounded-full bg-primary"></div>
-                      <span className="font-medium">{skill}</span>
-                    </div>
-                  ))}
+                {/* Soft Skills Content */}
+                <div className="p-6">
+                  <div className="grid grid-cols-1 gap-4">
+                    {softSkillsWithIcons.map((item, index) => (
+                      <div 
+                        key={index}
+                        className="flex items-center gap-4 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/50"
+                      >
+                        <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-800 border border-blue-200 dark:border-blue-700 flex items-center justify-center text-blue-600 dark:text-blue-300">
+                          {item.icon}
+                        </div>
+                        <span className="font-medium">{item.skill}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </AnimatedSection>
           </div>
-
-          {/* Languages Proficiency - Full width with visual representation */}
-          <AnimatedSection
-            delay={350}
-            animation="fade-in"
-            disabled={!animationsEnabled}
-            className="mt-8"
-          >
-            <div className="glass-card p-8 rounded-xl transition-all duration-300 border border-white/10 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary ring-1 ring-primary/20">
-                  <Languages size={24} />
-                </div>
-                <h3 className="text-xl font-bold gradient-text">{t.languages}</h3>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {profileData.languages.map((lang, index) => (
-                  <div key={index} className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary ring-1 ring-primary/20">
-                          {lang.language === "Thai" ? "TH" : "EN"}
-                        </div>
-                        <span className="font-semibold text-lg">{lang.language}</span>
-                      </div>
-                      <span className="text-sm font-medium px-3 py-1 bg-primary/10 rounded-full text-primary">
-                        {lang.level}
-                      </span>
-                    </div>
-                    
-                    <div className="w-full h-2 bg-secondary rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-primary rounded-full"
-                        style={{
-                          width:
-                            lang.level === "Native"
-                              ? "100%"
-                              : lang.level === "Fluent"
-                              ? "90%"
-                              : lang.level === "Advanced"
-                              ? "80%"
-                              : lang.level === "Intermediate"
-                              ? "60%"
-                              : "40%",
-                          transition: "width 1.5s cubic-bezier(0.16, 1, 0.3, 1)",
-                        }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </AnimatedSection>
         </div>
       </section>
     );
