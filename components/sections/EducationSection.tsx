@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 import { GraduationCap, Calendar, CheckCircle, BookOpen, MapPin } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import { useLanguage } from '@/context/LanguageContext';
-import { profileData, thEducation } from '@/translations';
+import { localizedData } from '@/translations';
 
 type EducationSectionProps = {
   animationsEnabled: boolean;
@@ -14,25 +14,8 @@ const EducationSection = forwardRef<HTMLElement, EducationSectionProps>(
   ({ animationsEnabled }, ref) => {
     const { currentLang, t } = useLanguage();
 
-    // Get the correct higher education data based on language
-    const higherEducation = currentLang === "en" ? profileData.education : thEducation;
-
-    // Add high school education data
-    const highSchoolEducation = {
-      institution: currentLang === "en" 
-        ? "Satri Samut Prakan School" 
-        : "โรงเรียนสตรีสมุทรปราการ",
-      degree: currentLang === "en"
-        ? "Special Program in Science, Math, Technology and Environment (SMTE)"
-        : "โครงการห้องเรียนพิเศษ SMTE (Science, Math, Technology and Environment) หรือ สสวท.",
-      duration: currentLang === "en" ? "2019 - 2022" : "2562 - 2565",
-      description: currentLang === "en"
-        ? "A research and development program to enhance student potential in science and mathematics, organized by the Institute for the Promotion of Teaching Science and Technology."
-        : "โครงการวิจัยและพัฒนาศักยภาพผู้เรียนสู่ความเป็นเลิศและห้องเรียนวิทยาศาสตร์ของสถาบันส่งเสริมการสอนวิทยาศาสตร์และเทคโนโลยี"
-    };
-
-    // Combine higher education and high school data
-    const allEducation = [...higherEducation, highSchoolEducation];
+    // Get education data from localized data
+    const allEducation = localizedData[currentLang].education;
 
     return (
       <section 
@@ -58,9 +41,6 @@ const EducationSection = forwardRef<HTMLElement, EducationSectionProps>(
 
         <div className="container mx-auto max-w-7xl px-4 relative z-10">
           <AnimatedSection animation="fade-in" disabled={!animationsEnabled} className="mb-16 text-center">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 text-sm font-semibold mb-4 shadow-sm border border-blue-200 dark:border-blue-800 backdrop-blur-sm">
-              {currentLang === "en" ? "Academic Background" : "ประวัติการศึกษา"}
-            </span>
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-6">
               {t.education}
             </h2>

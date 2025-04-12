@@ -36,9 +36,6 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
 
         <div className="container mx-auto max-w-7xl px-4 relative z-10">
           <AnimatedSection animation="fade-in" disabled={!animationsEnabled} className="mb-16">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 text-sm font-semibold mb-4 shadow-sm border border-blue-200 dark:border-blue-800 backdrop-blur-sm mx-auto text-center block w-fit">
-              {currentLang === "en" ? "Get In Touch" : "ติดต่อ"}
-            </span>
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-6">
               {t.contact}
             </h2>
@@ -240,24 +237,6 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
               </div>
             </div>
           </div>
-          
-          {/* Extra CTA for GitHub */}
-          <AnimatedSection
-            animation="fade-in"
-            delay={300}
-            disabled={!animationsEnabled}
-            className="mt-16 text-center"
-          >
-            <a
-              href={`https://github.com/${profileData.github}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-800/30 transition-all shadow-sm text-lg font-medium"
-            >
-              <Github size={24} />
-              {currentLang === "en" ? "Check out my projects on GitHub" : "ดูโปรเจกต์ของฉันบน GitHub"}
-            </a>
-          </AnimatedSection>
         </div>
       </section>
     );

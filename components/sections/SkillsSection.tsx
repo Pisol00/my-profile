@@ -104,9 +104,6 @@ const SkillsSection = forwardRef<HTMLElement, SkillsSectionProps>(
             disabled={!animationsEnabled} 
             className="mb-16 text-center"
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 text-sm font-semibold mb-4 shadow-sm border border-blue-200 dark:border-blue-800 backdrop-blur-sm">
-              {currentLang === "en" ? "My Expertise" : "ความเชี่ยวชาญของฉัน"}
-            </span>
             <h2 className="text-3xl md:text-5xl font-bold mb-6">
               {t.technicalSkills}
             </h2>

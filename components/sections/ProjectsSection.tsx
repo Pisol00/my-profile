@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Github, ExternalLink, Code2, FolderGit2 } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import { useLanguage } from '@/context/LanguageContext';
-import { profileData, thProjects } from '@/translations';
+import { localizedData } from '@/translations';
 
 type ProjectsSectionProps = {
   animationsEnabled: boolean;
@@ -16,8 +16,8 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
     const { currentLang, t } = useLanguage();
     const [activeTab, setActiveTab] = useState("all"); // For projects filtering
 
-    // Get the correct data based on language
-    const projects = currentLang === "en" ? profileData.projects : thProjects;
+    // Get the projects data directly from localizedData
+    const projects = localizedData[currentLang].projects;
 
     // Filter projects by technology
     const filteredProjects = useMemo(() => {
@@ -71,9 +71,6 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
 
         <div className="container mx-auto max-w-7xl px-4 relative z-10">
           <AnimatedSection animation="fade-in" disabled={!animationsEnabled} className="mb-16 text-center">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 text-sm font-semibold mb-4 shadow-sm border border-blue-200 dark:border-blue-800 backdrop-blur-sm">
-              {currentLang === "en" ? "Portfolio" : "ผลงาน"}
-            </span>
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-6">
               {t.projectsHighlight}
             </h2>
@@ -171,7 +168,7 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
           {/* "View More Projects" button at the bottom */}
           <div className="flex justify-center mt-12">
             <a
-              href={`https://github.com/${profileData.github}`}
+              href={`https://github.com/${localizedData[currentLang].github}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white dark:bg-gray-800 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all shadow-md hover:shadow-lg font-medium"
