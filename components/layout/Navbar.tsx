@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Languages, Home, Star, Code2, GraduationCap, MessageSquare, MoonStar, Sun, Menu, X } from "lucide-react";
-import { useTheme } from '@/context/ThemeContext';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage, useTheme } from '@/contexts';
 import NavItem from '@/components/common/NavItem';
 import MobileNavItem from '@/components/common/MobileNavItem';
 

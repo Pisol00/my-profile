@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect, ReactNode, memo } from 'react'
+import { useRef, useState, useEffect, ReactNode, memo, CSSProperties } from 'react'
 
 type AnimationType = 'fade-in' | 'slide-left' | 'slide-right' | 'zoom-in' | 'none';
 
@@ -14,7 +14,36 @@ interface AnimatedSectionProps {
   disabled?: boolean;
 }
 
-// ใช้ inline styles แทน CSS animations เพื่อหลีกเลี่ยงการกระพริบ
+// animations style map - แยกส่วน styles ออกมาเพื่อความเป็นระเบียบ
+const animationStyles: Record<AnimationType, { initial: CSSProperties, visible: CSSProperties }> = {
+  'fade-in': {
+    initial: { opacity: 0, transform: 'translateY(10px)' },
+    visible: { opacity: 1, transform: 'translateY(0)' }
+  },
+  'slide-left': {
+    initial: { opacity: 0, transform: 'translateX(-20px)' },
+    visible: { opacity: 1, transform: 'translateX(0)' }
+  },
+  'slide-right': {
+    initial: { opacity: 0, transform: 'translateX(20px)' },
+    visible: { opacity: 1, transform: 'translateX(0)' }
+  },
+  'zoom-in': {
+    initial: { opacity: 0, transform: 'scale(0.98)' },
+    visible: { opacity: 1, transform: 'scale(1)' }
+  },
+  'none': {
+    initial: {},
+    visible: {}
+  }
+};
+
+/**
+ * AnimatedSection Component
+ * 
+ * ใช้สำหรับสร้าง section ที่มี animation เมื่อเลื่อนมาถึง
+ * ปรับปรุงประสิทธิภาพด้วย memo และการแยกส่วน styles
+ */
 const AnimatedSection = memo(({
   children,
   className = '',
@@ -31,11 +60,11 @@ const AnimatedSection = memo(({
     // ถ้า disabled ให้แสดงผลทันทีโดยไม่มี animation
     if (disabled) {
       setIsVisible(true);
-      return;
+      return () => {};
     }
     
     const section = sectionRef.current;
-    if (!section) return;
+    if (!section) return () => {};
     
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -68,41 +97,22 @@ const AnimatedSection = memo(({
     return <div id={id} className={className}>{children}</div>;
   }
 
-  // สร้าง inline styles แบบต่างๆ ตาม animation type
-  let initialStyles = {};
-  let visibleStyles = {};
+  // เลือก styles ตาม animation type
+  const { initial, visible } = animationStyles[animation];
   
-  switch (animation) {
-    case 'fade-in':
-      initialStyles = { opacity: 0, transform: 'translateY(10px)' };
-      visibleStyles = { opacity: 1, transform: 'translateY(0)' };
-      break;
-    case 'slide-left':
-      initialStyles = { opacity: 0, transform: 'translateX(-20px)' };
-      visibleStyles = { opacity: 1, transform: 'translateX(0)' };
-      break;
-    case 'slide-right':
-      initialStyles = { opacity: 0, transform: 'translateX(20px)' };
-      visibleStyles = { opacity: 1, transform: 'translateX(0)' };
-      break;
-    case 'zoom-in':
-      initialStyles = { opacity: 0, transform: 'scale(0.98)' };
-      visibleStyles = { opacity: 1, transform: 'scale(1)' };
-      break;
-    case 'none':
-      initialStyles = {};
-      visibleStyles = {};
-      break;
-  }
-
-  // รวม styles ต่างๆ
-  const styles = {
-    ...initialStyles,
-    ...(isVisible ? visibleStyles : {}),
+  // สร้าง transition style ที่ใช้สำหรับทุก animation
+  const transitionStyle: CSSProperties = {
     transition: `opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
-    willChange: 'opacity, transform', // ช่วยในการ optimize การเรนเดอร์
-    backfaceVisibility: 'hidden', // ช่วยป้องกันการกระพริบใน animation บางชนิด
+    willChange: 'opacity, transform',
+    backfaceVisibility: 'hidden',
     WebkitBackfaceVisibility: 'hidden',
+  };
+  
+  // รวม styles ต่างๆ
+  const styles: CSSProperties = {
+    ...initial,
+    ...(isVisible ? visible : {}),
+    ...transitionStyle
   };
   
   return (

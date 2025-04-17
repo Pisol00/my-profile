@@ -1,0 +1,235 @@
+/* 
+ * main.css - ไฟล์ CSS หลักที่รวมส่วนสำคัญของ 
+ * animations.css, globals.css และ theme.css เข้าด้วยกัน
+ */
+
+ @import "tailwindcss";
+ @import "tw-animate-css";
+ 
+ @custom-variant dark (&:is(.dark *));
+ 
+ /* ========================
+    ตัวแปร Theme - Base Variables
+    ======================== */
+ :root {
+   /* ขนาด Border Radius */
+   --radius: 0.625rem;
+   --radius-sm: calc(var(--radius) - 4px);
+   --radius-md: calc(var(--radius) - 2px);
+   --radius-lg: var(--radius);
+   --radius-xl: calc(var(--radius) + 4px);
+   
+   /* สีพื้นฐาน - Light Theme */
+   --background: oklch(1 0 0);
+   --foreground: oklch(0.129 0.042 264.695);
+   
+   /* สีองค์ประกอบ - Light Theme */
+   --card: oklch(1 0 0);
+   --card-foreground: oklch(0.129 0.042 264.695);
+   --popover: oklch(1 0 0);
+   --popover-foreground: oklch(0.129 0.042 264.695);
+   --primary: oklch(0.429 0.16 230); /* สีฟ้า */
+   --primary-foreground: oklch(0.984 0.003 247.858);
+   --secondary: oklch(0.968 0.007 247.896);
+   --secondary-foreground: oklch(0.208 0.042 265.755);
+   --muted: oklch(0.968 0.007 247.896);
+   --muted-foreground: oklch(0.554 0.046 257.417);
+   --accent: oklch(0.968 0.007 247.896);
+   --accent-foreground: oklch(0.208 0.042 265.755);
+   --destructive: oklch(0.577 0.245 27.325);
+   --border: oklch(0.929 0.013 255.508);
+   --input: oklch(0.929 0.013 255.508);
+   --ring: oklch(0.429 0.16 230); /* สีฟ้า */
+   
+   /* เอฟเฟกต์และลูกเล่น */
+   --shadow: 0 4px 20px rgba(120, 120, 255, 0.1);
+   --hero-gradient: linear-gradient(135deg, 
+     oklch(90% 0.05 265) 0%, 
+     oklch(95% 0.03 240) 100%);
+ }
+ 
+ /* ค่า Theme มืด */
+ .dark {
+   /* สีพื้นฐาน - Dark Theme */
+   --background: oklch(0.129 0.042 264.695);
+   --foreground: oklch(0.984 0.003 247.858);
+   
+   /* สีองค์ประกอบ - Dark Theme */
+   --card: oklch(0.208 0.042 265.755);
+   --card-foreground: oklch(0.984 0.003 247.858);
+   --popover: oklch(0.208 0.042 265.755);
+   --popover-foreground: oklch(0.984 0.003 247.858);
+   --primary: oklch(0.529 0.18 230); /* สีฟ้าในโหมดมืด */
+   --primary-foreground: oklch(0.208 0.042 265.755);
+   --secondary: oklch(0.279 0.041 260.031);
+   --secondary-foreground: oklch(0.984 0.003 247.858);
+   --muted: oklch(0.279 0.041 260.031);
+   --muted-foreground: oklch(0.704 0.04 256.788);
+   --accent: oklch(0.279 0.041 260.031);
+   --accent-foreground: oklch(0.984 0.003 247.858);
+   --destructive: oklch(0.704 0.191 22.216);
+   --border: oklch(1 0 0 / 10%);
+   --input: oklch(1 0 0 / 15%);
+   --ring: oklch(0.551 0.027 264.364);
+   
+   /* เอฟเฟกต์และลูกเล่น - Dark Theme */
+   --shadow: 0 4px 20px rgba(20, 20, 50, 0.25);
+   --hero-gradient: linear-gradient(135deg, 
+     oklch(20% 0.06 265) 0%, 
+     oklch(16% 0.04 220) 100%);
+ }
+ 
+ /* ========================
+    พื้นฐาน
+    ======================== */
+ @layer base {
+   * {
+     /* แก้ไขจาก border-border และ outline-ring/50 */
+     border-color: var(--border);
+     outline-color: rgba(var(--ring), 0.5);
+   }
+   body {
+     background-color: var(--background);
+     color: var(--foreground);
+     font-family: var(--font-noto-sans-thai), var(--font-archivo), sans-serif;
+   }
+ }
+ 
+ /* ปรับแต่งฟอนต์ตามภาษา */
+ :lang(th) {
+   font-family: var(--font-noto-sans-thai), system-ui, sans-serif;
+ }
+ 
+ :lang(en) {
+   font-family: var(--font-archivo), system-ui, sans-serif;
+ }
+ 
+ /* ========================
+    Utility Classes
+    ======================== */
+ 
+ /* Class บังคับฟอนต์ */
+ .font-th {
+   font-family: var(--font-noto-sans-thai), system-ui, sans-serif !important;
+ }
+ 
+ .font-en {
+   font-family: var(--font-archivo), system-ui, sans-serif !important;
+ }
+ 
+ /* ========================
+    Animations
+    ======================== */
+ 
+ /* Float animation สำหรับรูปโปรไฟล์ */
+ @keyframes float {
+   0% { transform: translateY(0px); }
+   50% { transform: translateY(-8px); }
+   100% { transform: translateY(0px); }
+ }
+ 
+ .animate-float {
+   animation: float 6s ease-in-out infinite;
+ }
+ 
+ /* Bounce animation แบบช้า */
+ @keyframes bounce {
+   0%, 100% {
+     transform: translateY(0);
+   }
+   50% {
+     transform: translateY(4px);
+   }
+ }
+ 
+ .animate-bounce-slow {
+   animation: bounce 2s infinite;
+ }
+ 
+ /* ========================
+    Card & UI Effects
+    ======================== */
+ 
+ /* Card Hover Effects */
+ .card-hover {
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+ }
+ 
+ .card-hover:hover {
+   transform: translateY(-4px);
+   box-shadow: var(--shadow);
+ }
+ 
+ /* Button Hover Effects */
+ .button-hover {
+   transition: transform 0.3s ease, opacity 0.3s ease;
+ }
+ 
+ .button-hover:hover {
+   transform: translateY(-1px);
+   opacity: 0.9;
+ }
+ 
+ /* Glass Effect */
+ .glass-effect {
+   background: rgba(255, 255, 255, 0.1);
+   backdrop-filter: blur(8px);
+   -webkit-backdrop-filter: blur(8px);
+   border: 1px solid rgba(255, 255, 255, 0.1);
+ }
+ 
+ .dark .glass-effect {
+   background: rgba(30, 30, 60, 0.2);
+   backdrop-filter: blur(8px);
+   -webkit-backdrop-filter: blur(8px);
+   border: 1px solid rgba(80, 80, 150, 0.2);
+ }
+ 
+ /* Glass Card Effect */
+ .glass-card {
+   background: rgba(255, 255, 255, 0.03);
+   backdrop-filter: blur(10px);
+ }
+ 
+ .dark .glass-card {
+   background: rgba(20, 20, 70, 0.1);
+ }
+ 
+ /* Hero Background */
+ .hero-bg {
+   background: var(--hero-gradient);
+ }
+ 
+ /* ========================
+    Custom Styles
+    ======================== */
+ 
+ /* ปรับแต่งสีเพื่อให้เข้ากับธีมขาว-ฟ้า */
+ .bg-primary-10 {
+   background-color: oklch(0.95 0.03 230); /* สีฟ้าอ่อนมาก */
+ }
+ 
+ .bg-primary-5 {
+   background-color: oklch(0.97 0.02 230); /* สีฟ้าอ่อนมากๆ */
+ }
+ 
+ /* ========================
+    Gradient Styles
+    ======================== */
+ 
+ /* Gradient Text */
+ .gradient-text {
+   color: var(--primary);
+   font-weight: bold;
+ }
+ 
+ /* Gradient Button */
+ .gradient-button {
+   background: var(--primary);
+   color: var(--primary-foreground);
+   transition: 0.3s;
+ }
+ 
+ .gradient-button:hover {
+   opacity: 0.9;
+ }

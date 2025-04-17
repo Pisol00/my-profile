@@ -3,8 +3,8 @@
 import { forwardRef, useState, useMemo } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Github, ExternalLink, Code2, FolderGit2 } from 'lucide-react';
-import AnimatedSection from '@/components/AnimatedSection';
-import { useLanguage } from '@/context/LanguageContext';
+import AnimatedSection from '@/components/common/AnimatedSection';
+import { useLanguage, useTheme } from '@/contexts';
 import { localizedData } from '@/translations';
 
 type ProjectsSectionProps = {

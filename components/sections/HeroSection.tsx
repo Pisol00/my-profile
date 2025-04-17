@@ -4,10 +4,10 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import { Mail, Github, MapPin, Phone, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import AnimatedSection from '@/components/AnimatedSection';
+import AnimatedSection from '@/components/common/AnimatedSection';
 import InfoBadge from '@/components/common/InfoBadge';
-import { useLanguage } from '@/context/LanguageContext';
-import { profileData } from '@/translations';
+import { useLanguage } from '@/contexts';
+import { profileData, localizedData } from '@/translations';
 
 type HeroSectionProps = {
   animationsEnabled: boolean;
@@ -17,14 +17,21 @@ type HeroSectionProps = {
 export default function HeroSection({ animationsEnabled, onScrollToNext }: HeroSectionProps) {
   const { currentLang, t } = useLanguage();
   
-  // ข้อมูลโปรไฟล์ปัจจุบัน (ตามภาษา)
+  // ข้อมูลโปรไฟล์ปัจจุบัน (ตามภาษา) - แก้ไขการดึงข้อมูล
   const profile = {
     ...profileData,
-    name: currentLang === "en" ? profileData.name : t.name,
-    title: currentLang === "en" ? profileData.title : t.title,
-    bio: currentLang === "en" ? profileData.bio : t.bio,
-    location: currentLang === "en" ? profileData.location : t.location,
+    name: t.name,
+    title: t.title,
+    bio: t.bio,
+    location: t.location,
+    // ใช้ข้อมูลจาก localizedData ที่เราสร้างขึ้นใหม่
+    ...localizedData[currentLang]
   };
+  
+  // แยกชื่อออกเป็นส่วน ๆ อย่างปลอดภัย
+  const nameParts = profile.name.split(" ");
+  const firstName = nameParts[0] || "";
+  const lastName = nameParts.length > 1 ? nameParts[1] : "";
 
   return (
     <section className="min-h-screen pt-24 pb-20 relative overflow-hidden bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-blue-950/30">
@@ -66,13 +73,13 @@ export default function HeroSection({ animationsEnabled, onScrollToNext }: HeroS
               </span>
             </div>
 
-            {/* Name and Title */}
+            {/* Name and Title - แก้ไขการแสดงชื่อ */}
             <h1 className="text-4xl md:text-6xl font-bold mb-4 tracking-tight">
               <span className="block leading-tight">
-                {profile.name.split(" ")[0]}
+                {firstName}
               </span>
               <span className="block text-blue-600 dark:text-blue-400 leading-tight">
-                {profile.name.split(" ")[1]}
+                {lastName}
               </span>
             </h1>
 

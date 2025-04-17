@@ -4,17 +4,16 @@ import { forwardRef } from 'react';
 import { 
   Code2, 
   Database, 
-  Wrench, 
-  User, 
-  GitBranch, 
   Server,
   Languages as LanguagesIcon, 
   Check,
-  Globe
+  Globe,
+  User
 } from 'lucide-react';
-import AnimatedSection from '@/components/AnimatedSection';
-import { useLanguage } from '@/context/LanguageContext';
+import AnimatedSection from '@/components/common/AnimatedSection';
+import { useLanguage } from '@/contexts';
 import { profileData } from '@/translations';
+import { SkillCard } from '@/components/common/cards';
 
 type SkillsSectionProps = {
   animationsEnabled: boolean;
@@ -30,7 +29,7 @@ const SkillsSection = forwardRef<HTMLElement, SkillsSectionProps>(
     // Skill category with icon mapping
     const skillCategories = [
       {
-        name: currentLang === 'en' ? 'Frontend Development' : 'พัฒนาฟร้อนท์เอนด์',
+        name: t.frontend,
         icon: <Code2 size={24} />,
         skills: frontend,
         color: 'text-blue-500',
@@ -38,7 +37,7 @@ const SkillsSection = forwardRef<HTMLElement, SkillsSectionProps>(
         bgDark: 'dark:bg-blue-900/10',
       },
       {
-        name: currentLang === 'en' ? 'Backend Development' : 'พัฒนาแบ็คเอนด์',
+        name: t.backend,
         icon: <Database size={24} />,
         skills: backend,
         color: 'text-blue-500',
@@ -46,7 +45,7 @@ const SkillsSection = forwardRef<HTMLElement, SkillsSectionProps>(
         bgDark: 'dark:bg-blue-900/10',
       },
       {
-        name: currentLang === 'en' ? 'DevOps & Tools' : 'เครื่องมือและ DevOps',
+        name: t.toolsTech,
         icon: <Server size={24} />,
         skills: tools,
         color: 'text-blue-500',
@@ -54,8 +53,8 @@ const SkillsSection = forwardRef<HTMLElement, SkillsSectionProps>(
         bgDark: 'dark:bg-blue-900/10',
       },
       {
-        name: currentLang === 'en' ? 'Other Languages' : 'ภาษาโปรแกรมมิ่งอื่นๆ',
-        icon: <GitBranch size={24} />,
+        name: t.otherLang,
+        icon: <Code2 size={24} />,
         skills: other,
         color: 'text-blue-500',
         bgLight: 'bg-blue-50/50',
@@ -63,28 +62,17 @@ const SkillsSection = forwardRef<HTMLElement, SkillsSectionProps>(
       },
     ];
 
-    // Languages data
-    const languageData = profileData.languages;
+    // แก้ไขการดึงข้อมูลภาษา
+    const languageData = profileData.languages.map(lang => ({
+      language: lang.language[currentLang],
+      level: lang.level[currentLang]
+    }));
 
-    // Soft skills with custom icons
-    const softSkillsWithIcons = [
-      {
-        skill: profileData.softSkills[0], // Problem-Solving
-        icon: <User size={24} />,
-      },
-      {
-        skill: profileData.softSkills[1], // Teamwork
-        icon: <User size={24} />,
-      },
-      {
-        skill: profileData.softSkills[2], // Adaptability
-        icon: <User size={24} />,
-      },
-      {
-        skill: profileData.softSkills[3], // Communication
-        icon: <Globe size={24} />,
-      },
-    ];
+    // แก้ไขการดึงข้อมูล soft skills
+    const softSkillsWithIcons = profileData.softSkills.map((skill, index) => ({
+      skill: skill[currentLang],
+      icon: <User size={24} />
+    }));
 
     return (
       <section 
@@ -117,37 +105,14 @@ const SkillsSection = forwardRef<HTMLElement, SkillsSectionProps>(
           {/* Main technical skills - card layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             {skillCategories.map((category, categoryIndex) => (
-              <AnimatedSection
+              <SkillCard
                 key={category.name}
-                animation="fade-in"
+                title={category.name}
+                icon={category.icon}
+                skills={category.skills}
+                animationsEnabled={animationsEnabled}
                 delay={100 + categoryIndex * 50}
-                disabled={!animationsEnabled}
-              >
-                <div className="bg-white dark:bg-gray-800 rounded-xl border border-blue-100 dark:border-blue-900/30 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden h-full">
-                  {/* Category Header */}
-                  <div className="p-6 border-b border-blue-100 dark:border-blue-900/30 flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-300">
-                      {category.icon}
-                    </div>
-                    <h3 className="text-xl font-bold">{category.name}</h3>
-                  </div>
-
-                  {/* Skills Tags */}
-                  <div className="p-6">
-                    <div className="flex flex-wrap gap-2">
-                      {category.skills.map((skill, skillIndex) => (
-                        <div 
-                          key={skillIndex} 
-                          className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 py-2 px-3 rounded-lg border border-blue-100 dark:border-blue-800/50"
-                        >
-                          <Check size={14} className="text-blue-500 dark:text-blue-400" />
-                          <span className="text-sm font-medium">{skill}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </AnimatedSection>
+              />
             ))}
           </div>
 
@@ -173,7 +138,7 @@ const SkillsSection = forwardRef<HTMLElement, SkillsSectionProps>(
                   {languageData.map((language, index) => (
                     <div key={index} className="flex items-center space-x-4">
                       <div className="w-14 h-14 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-300 text-lg font-bold border-2 border-blue-100 dark:border-blue-800">
-                        {language.language === "Thai" ? "TH" : "EN"}
+                        {language.language === "Thai" || language.language === "ไทย" ? "TH" : "EN"}
                       </div>
                       <div>
                         <div className="font-bold text-lg">{language.language}</div>

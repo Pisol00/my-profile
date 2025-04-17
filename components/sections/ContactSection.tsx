@@ -3,8 +3,8 @@
 import { forwardRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Mail, Phone, Github, MapPin, ExternalLink, Send, MessageSquare } from 'lucide-react';
-import AnimatedSection from '@/components/AnimatedSection';
-import { useLanguage } from '@/context/LanguageContext';
+import AnimatedSection from '@/components/common/AnimatedSection';
+import { useLanguage, useTheme } from '@/contexts';
 import { profileData } from '@/translations';
 
 type ContactSectionProps = {

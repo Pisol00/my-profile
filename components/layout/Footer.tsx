@@ -1,7 +1,7 @@
 'use client';
 
 import { Mail, Phone, Github, Heart } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage, useTheme } from '@/contexts';
 import { profileData } from '@/translations';
 
 // FooterLink Component
