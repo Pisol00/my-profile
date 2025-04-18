@@ -144,16 +144,16 @@ export default function ContactForm() {
   };
   
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
       {/* ข้อความแจ้งสถานะ */}
       {submitStatus === 'success' && (
-        <div className="p-4 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-lg border border-green-200 dark:border-green-800 flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <div className="p-3 sm:p-4 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-lg border border-green-200 dark:border-green-800 flex items-center gap-2">
+          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-green-500 flex items-center justify-center text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-4 sm:h-4">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
           </div>
-          <p>
+          <p className="text-xs sm:text-sm">
             {currentLang === 'en'
               ? 'Your message has been sent successfully. I will get back to you soon!'
               : 'ส่งข้อความของคุณเรียบร้อยแล้ว ฉันจะติดต่อกลับในเร็วๆ นี้!'}
@@ -162,14 +162,14 @@ export default function ContactForm() {
       )}
       
       {submitStatus === 'error' && (
-        <div className="p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-800 flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-red-500 flex items-center justify-center text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <div className="p-3 sm:p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-800 flex items-center gap-2">
+          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-red-500 flex items-center justify-center text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-4 sm:h-4">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </div>
-          <p>
+          <p className="text-xs sm:text-sm">
             {currentLang === 'en'
               ? 'There was an error sending your message. Please try again later.'
               : 'เกิดข้อผิดพลาดในการส่งข้อความของคุณ โปรดลองอีกครั้งในภายหลัง'}
@@ -177,9 +177,9 @@ export default function ContactForm() {
         </div>
       )}
       
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
         <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             {t.yourName}
           </label>
           <input 
@@ -187,20 +187,20 @@ export default function ContactForm() {
             name="name"
             value={formState.name}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${
+            className={`w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg border ${
               errors.name 
                 ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
                 : 'border-blue-100 dark:border-blue-900/50 focus:ring-blue-500'
-            } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 dark:focus:ring-blue-600`}
+            } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 dark:focus:ring-blue-600 text-sm`}
             placeholder={currentLang === "en" ? "Enter your name" : "ใส่ชื่อของคุณ"}
             disabled={isSubmitting}
           />
           {errors.name && (
-            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.name}</p>
+            <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">{errors.name}</p>
           )}
         </div>
         <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             {t.yourEmail}
           </label>
           <input 
@@ -208,22 +208,22 @@ export default function ContactForm() {
             name="email"
             value={formState.email}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-lg border ${
+            className={`w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg border ${
               errors.email 
                 ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
                 : 'border-blue-100 dark:border-blue-900/50 focus:ring-blue-500'
-            } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 dark:focus:ring-blue-600`}
+            } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 dark:focus:ring-blue-600 text-sm`}
             placeholder={currentLang === "en" ? "Enter your email" : "ใส่อีเมลของคุณ"}
             disabled={isSubmitting}
           />
           {errors.email && (
-            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>
+            <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">{errors.email}</p>
           )}
         </div>
       </div>
       
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           {t.subject}
         </label>
         <input 
@@ -231,21 +231,21 @@ export default function ContactForm() {
           name="subject"
           value={formState.subject}
           onChange={handleChange}
-          className={`w-full px-4 py-3 rounded-lg border ${
+          className={`w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg border ${
             errors.subject 
               ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
               : 'border-blue-100 dark:border-blue-900/50 focus:ring-blue-500'
-          } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 dark:focus:ring-blue-600`}
+          } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 dark:focus:ring-blue-600 text-sm`}
           placeholder={currentLang === "en" ? "How can I help you?" : "ฉันช่วยคุณได้อย่างไร?"}
           disabled={isSubmitting}
         />
         {errors.subject && (
-          <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.subject}</p>
+          <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">{errors.subject}</p>
         )}
       </div>
       
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           {t.message}
         </label>
         <textarea 
@@ -253,16 +253,16 @@ export default function ContactForm() {
           name="message"
           value={formState.message}
           onChange={handleChange}
-          className={`w-full px-4 py-3 rounded-lg border ${
+          className={`w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg border ${
             errors.message 
               ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
               : 'border-blue-100 dark:border-blue-900/50 focus:ring-blue-500'
-          } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 dark:focus:ring-blue-600 resize-none`}
+          } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 dark:focus:ring-blue-600 resize-none text-sm`}
           placeholder={currentLang === "en" ? "Your message" : "ข้อความของคุณ"}
           disabled={isSubmitting}
         ></textarea>
         {errors.message && (
-          <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.message}</p>
+          <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">{errors.message}</p>
         )}
       </div>
       
@@ -270,12 +270,12 @@ export default function ContactForm() {
         <Button 
           type="submit"
           size="lg"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-2 py-6"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-2 py-2 h-10 sm:h-12 text-sm sm:text-base"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
             <>
-              <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
@@ -283,7 +283,7 @@ export default function ContactForm() {
             </>
           ) : (
             <>
-              <Send size={18} />
+              <Send size={16} className="sm:w-5 sm:h-5" />
               {t.sendMessage}
             </>
           )}

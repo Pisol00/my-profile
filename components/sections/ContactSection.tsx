@@ -18,12 +18,12 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
     const { currentLang, t } = useLanguage();
     
     return (
-      <section ref={ref} className="py-24 bg-white dark:bg-gray-900 relative overflow-hidden">
+      <section ref={ref} className="py-16 sm:py-20 md:py-24 bg-white dark:bg-gray-900 relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* Decorative circles */}
-          <div className="absolute -top-20 -left-20 w-96 h-96 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-70"></div>
-          <div className="absolute -bottom-20 -right-20 w-96 h-96 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-70"></div>
+          <div className="absolute -top-20 -left-20 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-70"></div>
+          <div className="absolute -bottom-20 -right-20 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-70"></div>
           
           {/* Subtle grid pattern */}
           <div className="absolute inset-0 opacity-5">
@@ -36,12 +36,12 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
           </div>
         </div>
 
-        <div className="container mx-auto max-w-7xl px-4 relative z-10">
-          <AnimatedSection animation="fade-in" disabled={!animationsEnabled} className="mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-center mb-6">
+        <div className="container mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
+          <AnimatedSection animation="fade-in" disabled={!animationsEnabled} className="mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4 sm:mb-6">
               {t.contact}
             </h2>
-            <p className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
+            <p className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-base sm:text-lg">
               {currentLang === "en"
                 ? "Feel free to reach out for collaborations, internship opportunities, or just to say hello"
                 : "อย่าลังเลที่จะติดต่อเพื่อความร่วมมือ โอกาสในการฝึกงาน หรือเพียงแค่ทักทาย"}
@@ -49,86 +49,86 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
           </AnimatedSection>
 
           {/* Main content with split design */}
-          <div className="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-blue-100 dark:border-blue-900/50">
+          <div className="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-xl overflow-hidden border border-blue-100 dark:border-blue-900/50">
             <div className="grid md:grid-cols-5">
               {/* Left side - Contact Info */}
-              <div className="md:col-span-2 bg-blue-50 dark:bg-blue-900/30 p-8 md:p-12">
-                <h3 className="text-2xl font-bold mb-8 flex items-center gap-2">
-                  <MessageSquare size={24} className="text-blue-600 dark:text-blue-400" />
+              <div className="md:col-span-2 bg-blue-50 dark:bg-blue-900/30 p-5 sm:p-8 md:p-12">
+                <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2">
+                  <MessageSquare size={20} className="sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
                   <span>{currentLang === "en" ? "Contact Info" : "ข้อมูลติดต่อ"}</span>
                 </h3>
                 
-                <div className="space-y-8">
+                <div className="space-y-6 sm:space-y-8">
                   {/* Email */}
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800">
-                      <Mail size={20} />
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800">
+                      <Mail size={18} className="sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-lg mb-1">
+                      <h4 className="font-medium text-base sm:text-lg mb-1">
                         {currentLang === "en" ? "Email" : "อีเมล"}
                       </h4>
                       <Link 
                         href={`mailto:${profileData.email}`} 
-                        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1 group"
+                        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1 group text-sm sm:text-base break-all"
                       >
                         {profileData.email}
-                        <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ExternalLink size={12} className="sm:w-3.5 sm:h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </Link>
                     </div>
                   </div>
                   
                   {/* Phone */}
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800">
-                      <Phone size={20} />
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800">
+                      <Phone size={18} className="sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-lg mb-1">
+                      <h4 className="font-medium text-base sm:text-lg mb-1">
                         {currentLang === "en" ? "Phone" : "โทรศัพท์"}
                       </h4>
                       <Link 
                         href={`tel:${profileData.phone}`} 
-                        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1 group"
+                        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1 group text-sm sm:text-base"
                       >
                         {profileData.phone}
-                        <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ExternalLink size={12} className="sm:w-3.5 sm:h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </Link>
                     </div>
                   </div>
                   
                   {/* Location */}
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800">
-                      <MapPin size={20} />
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800">
+                      <MapPin size={18} className="sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-lg mb-1">
+                      <h4 className="font-medium text-base sm:text-lg mb-1">
                         {currentLang === "en" ? "Location" : "ที่อยู่"}
                       </h4>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
                         {currentLang === "en" ? profileData.location : t.location}
                       </p>
                     </div>
                   </div>
                   
                   {/* GitHub */}
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800">
-                      <Github size={20} />
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800">
+                      <Github size={18} className="sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-lg mb-1">
+                      <h4 className="font-medium text-base sm:text-lg mb-1">
                         GitHub
                       </h4>
                       <Link 
                         href={`https://github.com/${profileData.github}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1 group"
+                        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1 group text-sm sm:text-base"
                       >
                         github.com/{profileData.github}
-                        <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ExternalLink size={12} className="sm:w-3.5 sm:h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </Link>
                     </div>
                   </div>
@@ -136,39 +136,39 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
               </div>
               
               {/* Right side - Contact Form/Message */}
-              <div className="md:col-span-3 p-8 md:p-12">
-                <h3 className="text-2xl font-bold mb-8 flex items-center gap-2">
-                  <MessageSquare size={24} className="text-blue-600 dark:text-blue-400" />
+              <div className="md:col-span-3 p-5 sm:p-8 md:p-12">
+                <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2">
+                  <MessageSquare size={20} className="sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
                   <span>{currentLang === "en" ? "Send a Message" : "ส่งข้อความ"}</span>
                 </h3>
                 
-                <div className="mb-8">
-                  <p className="text-gray-600 dark:text-gray-300 mb-6">
+                <div className="mb-6 sm:mb-8">
+                  <p className="text-gray-600 dark:text-gray-300 mb-5 sm:mb-6 text-sm sm:text-base">
                     {currentLang === "en"
                       ? "I'm currently available for internship opportunities, collaborations, or any questions you might have."
                       : "ฉันพร้อมรับโอกาสฝึกงาน ความร่วมมือ หรือตอบคำถามที่คุณอาจมี"}
                   </p>
                   
-                  {/* Use the new ContactForm component */}
+                  {/* Use the ContactForm component */}
                   <ContactForm />
                 </div>
                 
                 {/* Alternative contact methods */}
-                <div className="border-t border-blue-100 dark:border-blue-900/30 pt-6 mt-8">
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                <div className="border-t border-blue-100 dark:border-blue-900/30 pt-4 sm:pt-6 mt-6 sm:mt-8">
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-3 sm:mb-4">
                     {currentLang === "en"
                       ? "Prefer a direct approach? Contact me via:"
                       : "ต้องการติดต่อโดยตรง? ติดต่อฉันผ่าน:"}
                   </p>
-                  <div className="flex gap-3">
+                  <div className="flex gap-2 sm:gap-3">
                     <Button 
                       variant="outline" 
                       size="lg"
                       asChild
-                      className="flex-1 border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+                      className="flex-1 border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400 py-2 sm:py-2.5 h-auto text-xs sm:text-sm"
                     >
                       <Link href={`mailto:${profileData.email}`}>
-                        <Mail size={18} className="mr-2" />
+                        <Mail size={14} className="sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
                         Email
                       </Link>
                     </Button>
@@ -176,10 +176,10 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       variant="outline" 
                       size="lg"
                       asChild
-                      className="flex-1 border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+                      className="flex-1 border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400 py-2 sm:py-2.5 h-auto text-xs sm:text-sm"
                     >
                       <Link href={`tel:${profileData.phone}`}>
-                        <Phone size={18} className="mr-2" />
+                        <Phone size={14} className="sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
                         {currentLang === "en" ? "Call" : "โทร"}
                       </Link>
                     </Button>
