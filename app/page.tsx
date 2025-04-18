@@ -42,24 +42,40 @@ export default function HomePage() {
       const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
       setAnimationsEnabled(!mediaQuery.matches);
       
-      // ติดตามการเปลี่ยนแปลงการตั้งค่า reduced motion
-      mediaQuery.addEventListener('change', (e) => {
+      // แก้ไข: สร้าง event listener function ให้เป็น reference เดียวกัน
+      const handleMediaQueryChange = (e: MediaQueryListEvent) => {
         setAnimationsEnabled(!e.matches);
-      });
+      };
+      
+      // ติดตามการเปลี่ยนแปลงการตั้งค่า reduced motion
+      mediaQuery.addEventListener('change', handleMediaQueryChange);
       
       return () => {
-        mediaQuery.removeEventListener('change', (e) => {
-          setAnimationsEnabled(!e.matches);
-        });
+        // ใช้ function reference เดียวกันสำหรับการลบ listener
+        mediaQuery.removeEventListener('change', handleMediaQueryChange);
       };
     };
 
     checkPerformance();
   }, []);
 
+  // แก้ไข: hydration mismatch issue
+  if (typeof window === 'undefined') {
+    // Server-side rendering
+    return (
+      <div className="min-h-screen bg-background">
+        {/* Skeleton or minimal content สำหรับ server-side */}
+      </div>
+    );
+  }
+
   if (!isClient) {
-    // Server-side หรือก่อน hydration
-    return null;
+    // Client-side แต่ยังไม่ hydrated เรียบร้อย
+    return (
+      <div className="min-h-screen bg-background">
+        {/* ควรใช้ skeleton หรือ loading indicator ที่เหมือนกับ layout จริง */}
+      </div>
+    );
   }
 
   return (

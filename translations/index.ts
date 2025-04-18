@@ -1,5 +1,4 @@
-// translations/index.ts
-// ปรับปรุงโครงสร้าง translations ให้เป็นระเบียบมากขึ้น
+// translations/index.ts - แก้ไข Type
 
 export type Language = 'th' | 'en';
 
@@ -65,6 +64,15 @@ export type ContactTranslations = {
   email: string;
   github: string;
   directApproach: string;
+};
+
+// แก้ไข: เพิ่ม type สำหรับข้อมูลประสบการณ์
+export type ExperienceItem = {
+  company: string;
+  position: string;
+  duration: string;
+  description: string;
+  technologies: string[];
 };
 
 // รวมรูปแบบข้อมูลแปลทั้งหมด
@@ -346,6 +354,15 @@ export const projectsData = [
   }
 ];
 
+// แก้ไข: สร้าง type สำหรับ experience ที่ชัดเจน แทนที่จะใช้ any[]
+export type ProfileExperience = {
+  company: string;
+  position: string;
+  duration: string;
+  description: string;
+  technologies: string[];
+};
+
 // สร้าง localizedData สำหรับความเข้ากันได้กับโค้ดเดิม
 export type ProfileData = {
   name: string;
@@ -368,7 +385,7 @@ export type ProfileData = {
     language: string;
     level: string;
   }[];
-  experience: any[];
+  experience: ProfileExperience[]; // แก้ไข type จาก any[] เป็น ProfileExperience[]
   education: {
     institution: string;
     degree: string;
@@ -401,7 +418,7 @@ export const localizedData: Record<Language, ProfileData> = {
       language: item.language.en,
       level: item.level.en
     })),
-    experience: [],
+    experience: [], // เริ่มต้นด้วย array ว่าง
     education: educationData.map(edu => ({
       institution: edu.institution.en,
       degree: edu.degree.en,
@@ -431,7 +448,7 @@ export const localizedData: Record<Language, ProfileData> = {
       language: item.language.th,
       level: item.level.th
     })),
-    experience: [],
+    experience: [], // เริ่มต้นด้วย array ว่าง
     education: educationData.map(edu => ({
       institution: edu.institution.th,
       degree: edu.degree.th,

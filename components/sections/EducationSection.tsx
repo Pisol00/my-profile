@@ -1,9 +1,10 @@
 'use client';
 
 import { forwardRef } from 'react';
-import { GraduationCap, Calendar, CheckCircle, BookOpen, MapPin } from 'lucide-react';
+import { GraduationCap, CheckCircle, BookOpen, MapPin } from 'lucide-react';
+import Image from 'next/image'; // เพิ่ม Image component
 import AnimatedSection from '@/components/common/AnimatedSection';
-import { useLanguage, useTheme } from '@/contexts';
+import { useLanguage } from '@/contexts';
 import { localizedData } from '@/translations';
 
 type EducationSectionProps = {
@@ -61,8 +62,6 @@ const EducationSection = forwardRef<HTMLElement, EducationSectionProps>(
                 disabled={!animationsEnabled}
                 className="mb-14 relative"
               >
-                
-                
                 <div className="flex items-start gap-8">
                   {/* Left side - icon and year */}
                   <div className="flex flex-col items-center">
@@ -78,13 +77,16 @@ const EducationSection = forwardRef<HTMLElement, EducationSectionProps>(
                   <div className="flex-1 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-blue-100 dark:border-blue-900/50 overflow-hidden hover:shadow-lg transition-all duration-300">
                     {/* Card header with institution logo */}
                     <div className="border-b border-blue-50 dark:border-blue-900/50 p-6 flex items-center gap-6">
-                      <div className="w-20 h-20 bg-white rounded-lg overflow-hidden flex items-center justify-center p-2 border border-blue-50 dark:border-blue-900/50">
-                        <img
+                      <div className="w-20 h-20 bg-white rounded-lg overflow-hidden flex items-center justify-center p-2 border border-blue-50 dark:border-blue-900/50 relative">
+                        {/* Use Next.js Image component instead of img tag */}
+                        <Image
                           src={index === 0 
                             ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_wx9ytkWpaORplO5wMqeYtEtP23Wb3bSigw&s"
                             : "https://upload.wikimedia.org/wikipedia/commons/9/90/Streesmutprakan_School_logo.png"}
                           alt={edu.institution}
-                          className="w-full h-auto object-contain"
+                          fill
+                          sizes="80px"
+                          className="object-contain p-1"
                         />
                       </div>
                       

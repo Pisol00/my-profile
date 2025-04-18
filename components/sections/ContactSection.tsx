@@ -2,10 +2,12 @@
 
 import { forwardRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Mail, Phone, Github, MapPin, ExternalLink, Send, MessageSquare } from 'lucide-react';
+import { Mail, Phone, Github, MapPin, ExternalLink, MessageSquare } from 'lucide-react';
+import Link from 'next/link'; // เพิ่ม Next.js Link
 import AnimatedSection from '@/components/common/AnimatedSection';
-import { useLanguage, useTheme } from '@/contexts';
+import { useLanguage } from '@/contexts';
 import { profileData } from '@/translations';
+import ContactForm from './ContactForm'; // นำเข้า ContactForm ใหม่
 
 type ContactSectionProps = {
   animationsEnabled: boolean;
@@ -66,13 +68,13 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       <h4 className="font-medium text-lg mb-1">
                         {currentLang === "en" ? "Email" : "อีเมล"}
                       </h4>
-                      <a 
+                      <Link 
                         href={`mailto:${profileData.email}`} 
                         className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1 group"
                       >
                         {profileData.email}
                         <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   
@@ -85,13 +87,13 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       <h4 className="font-medium text-lg mb-1">
                         {currentLang === "en" ? "Phone" : "โทรศัพท์"}
                       </h4>
-                      <a 
+                      <Link 
                         href={`tel:${profileData.phone}`} 
                         className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1 group"
                       >
                         {profileData.phone}
                         <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   
@@ -119,7 +121,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       <h4 className="font-medium text-lg mb-1">
                         GitHub
                       </h4>
-                      <a 
+                      <Link 
                         href={`https://github.com/${profileData.github}`}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -127,7 +129,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       >
                         github.com/{profileData.github}
                         <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -136,7 +138,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
               {/* Right side - Contact Form/Message */}
               <div className="md:col-span-3 p-8 md:p-12">
                 <h3 className="text-2xl font-bold mb-8 flex items-center gap-2">
-                  <Send size={24} className="text-blue-600 dark:text-blue-400" />
+                  <MessageSquare size={24} className="text-blue-600 dark:text-blue-400" />
                   <span>{currentLang === "en" ? "Send a Message" : "ส่งข้อความ"}</span>
                 </h3>
                 
@@ -147,59 +149,8 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       : "ฉันพร้อมรับโอกาสฝึกงาน ความร่วมมือ หรือตอบคำถามที่คุณอาจมี"}
                   </p>
                   
-                  <div className="space-y-4">
-                    <div className="flex flex-col sm:flex-row gap-4">
-                      <div className="flex-1">
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                          {currentLang === "en" ? "Your Name" : "ชื่อของคุณ"}
-                        </label>
-                        <input 
-                          type="text"
-                          className="w-full px-4 py-3 rounded-lg border border-blue-100 dark:border-blue-900/50 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600"
-                          placeholder={currentLang === "en" ? "Enter your name" : "ใส่ชื่อของคุณ"}
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                          {currentLang === "en" ? "Your Email" : "อีเมลของคุณ"}
-                        </label>
-                        <input 
-                          type="email"
-                          className="w-full px-4 py-3 rounded-lg border border-blue-100 dark:border-blue-900/50 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600"
-                          placeholder={currentLang === "en" ? "Enter your email" : "ใส่อีเมลของคุณ"}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        {currentLang === "en" ? "Subject" : "หัวข้อ"}
-                      </label>
-                      <input 
-                        type="text"
-                        className="w-full px-4 py-3 rounded-lg border border-blue-100 dark:border-blue-900/50 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600"
-                        placeholder={currentLang === "en" ? "How can I help you?" : "ฉันช่วยคุณได้อย่างไร?"}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        {currentLang === "en" ? "Message" : "ข้อความ"}
-                      </label>
-                      <textarea 
-                        rows={4}
-                        className="w-full px-4 py-3 rounded-lg border border-blue-100 dark:border-blue-900/50 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 resize-none"
-                        placeholder={currentLang === "en" ? "Your message" : "ข้อความของคุณ"}
-                      ></textarea>
-                    </div>
-                    <div>
-                      <Button 
-                        size="lg"
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-2 py-6"
-                      >
-                        <Send size={18} />
-                        {currentLang === "en" ? "Send Message" : "ส่งข้อความ"}
-                      </Button>
-                    </div>
-                  </div>
+                  {/* Use the new ContactForm component */}
+                  <ContactForm />
                 </div>
                 
                 {/* Alternative contact methods */}
@@ -216,10 +167,10 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       asChild
                       className="flex-1 border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400"
                     >
-                      <a href={`mailto:${profileData.email}`}>
+                      <Link href={`mailto:${profileData.email}`}>
                         <Mail size={18} className="mr-2" />
                         Email
-                      </a>
+                      </Link>
                     </Button>
                     <Button 
                       variant="outline" 
@@ -227,10 +178,10 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       asChild
                       className="flex-1 border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400"
                     >
-                      <a href={`tel:${profileData.phone}`}>
+                      <Link href={`tel:${profileData.phone}`}>
                         <Phone size={18} className="mr-2" />
                         {currentLang === "en" ? "Call" : "โทร"}
-                      </a>
+                      </Link>
                     </Button>
                   </div>
                 </div>

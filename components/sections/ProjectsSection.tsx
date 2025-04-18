@@ -3,8 +3,9 @@
 import { forwardRef, useState, useMemo } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Github, ExternalLink, Code2, FolderGit2 } from 'lucide-react';
+import Link from 'next/link'; // เพิ่ม Next.js Link
 import AnimatedSection from '@/components/common/AnimatedSection';
-import { useLanguage, useTheme } from '@/contexts';
+import { useLanguage } from '@/contexts';
 import { localizedData } from '@/translations';
 
 type ProjectsSectionProps = {
@@ -47,6 +48,30 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
       return Array.from(categories);
     }, [projects]);
 
+    // สร้าง custom component สำหรับ external link ที่ใช้ Link component ของ Next.js
+    const ExternalLinkWrapper = ({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) => {
+      // ถ้าเป็น external link ให้ใช้ <a> tag
+      if (href.startsWith('http')) {
+        return (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={className}
+          >
+            {children}
+          </a>
+        );
+      }
+      
+      // ถ้าเป็น internal link ให้ใช้ Next.js Link
+      return (
+        <Link href={href} className={className}>
+          {children}
+        </Link>
+      );
+    };
+
     return (
       <section 
         ref={ref} 
@@ -87,7 +112,7 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
               <button
                 key={index}
                 onClick={() => setActiveTab(category)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-all cursor-pointer ${
                   activeTab === category 
                     ? "bg-blue-600 text-white shadow-md shadow-blue-200 dark:shadow-blue-900/20" 
                     : "bg-blue-50 dark:bg-blue-900/20 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-800/30"
@@ -118,15 +143,12 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
                       </div>
                       <h3 className="font-bold text-xl">{project.title}</h3>
                     </div>
-                    <a 
-                      href={project.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
+                    <ExternalLinkWrapper 
+                      href={project.link}
                       className="bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-800/50 text-blue-600 dark:text-blue-400 p-2 rounded-full transition-colors"
-                      aria-label={`View ${project.title} on GitHub`}
                     >
-                      <Github size={18} />
-                    </a>
+                      <Github size={18} aria-label={`View ${project.title} on GitHub`} />
+                    </ExternalLinkWrapper>
                   </div>
 
                   {/* Project Content */}
@@ -150,15 +172,13 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
                     </div>
 
                     {/* Project Link */}
-                    <a
+                    <ExternalLinkWrapper
                       href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors font-medium"
                     >
                       <span>{t.viewProject}</span>
                       <ExternalLink size={14} />
-                    </a>
+                    </ExternalLinkWrapper>
                   </div>
                 </div>
               </AnimatedSection>
@@ -167,15 +187,13 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
 
           {/* "View More Projects" button at the bottom */}
           <div className="flex justify-center mt-12">
-            <a
+            <ExternalLinkWrapper
               href={`https://github.com/${localizedData[currentLang].github}`}
-              target="_blank"
-              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white dark:bg-gray-800 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all shadow-md hover:shadow-lg font-medium"
             >
               <Github size={18} />
               {currentLang === "en" ? "View More Projects on GitHub" : "ดูโปรเจกต์เพิ่มเติมบน GitHub"}
-            </a>
+            </ExternalLinkWrapper>
           </div>
         </div>
       </section>
