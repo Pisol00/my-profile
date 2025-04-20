@@ -220,7 +220,7 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
           </div>
 
           {/* "View More Projects" button at the bottom - for both mobile and desktop */}
-          <div className="flex justify-center mt-10 sm:mt-12">
+          {/* <div className="flex justify-center mt-10 sm:mt-12">
             <Link
               href={`https://github.com/${localizedData[currentLang].github}`}
               target="_blank"
@@ -230,7 +230,7 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
               <Github size={16} className="sm:w-[18px] sm:h-[18px]" />
               {currentLang === "en" ? "View More Projects on GitHub" : "ดูโปรเจกต์เพิ่มเติมบน GitHub"}
             </Link>
-          </div>
+          </div> */}
         </div>
       </section>
     );

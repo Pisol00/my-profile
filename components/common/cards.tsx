@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Github, ExternalLink, Code2, FolderGit2 } from 'lucide-react';
+import { Github, ExternalLink, Code2, FolderGit2, Folder } from 'lucide-react';
 import AnimatedSection from '@/components/common/animations/AnimatedSection';
 
 // ------------------------
@@ -84,11 +84,11 @@ export function ProjectCard({
         <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-gray-800">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300">
-              <FolderGit2 size={20} />
+              <Folder size={20} />
             </div>
             <h3 className="font-bold text-xl text-gray-900 dark:text-white">{title}</h3>
           </div>
-          <a 
+          {/* <a 
             href={link} 
             target="_blank" 
             rel="noopener noreferrer"
@@ -96,7 +96,7 @@ export function ProjectCard({
             aria-label={`View ${title} on GitHub`}
           >
             <Github size={18} />
-          </a>
+          </a> */}
         </div>
 
         {/* Content */}

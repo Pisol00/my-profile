@@ -106,15 +106,6 @@ export default function Footer({ scrollToSection, sections }: FooterProps) {
             <p className="text-gray-500 dark:text-gray-400 mb-2 text-sm sm:text-base">
               © {new Date().getFullYear()} {t.name}. {t.allRightsReserved}
             </p>
-            <p className="text-gray-500 dark:text-gray-400 flex items-center justify-center gap-1 text-xs sm:text-sm">
-              {currentLang === "en" 
-                ? "Built with" 
-                : "สร้างด้วย"} 
-              <Heart size={14} className="text-gray-400 dark:text-gray-500 mx-1" fill="currentColor" /> 
-              <span>
-                React, Next.js, {currentLang === "en" ? "and" : "และ"} Tailwind CSS
-              </span>
-            </p>
           </div>
         </div>
       </div>
