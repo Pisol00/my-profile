@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
-import { Mail, Send } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts';
 
@@ -37,7 +37,7 @@ export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   
-  // ฟังก์ชันจัดการการเปลี่ยนแปลงข้อมูลในฟอร์ม
+  // Handle form field changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     
@@ -55,18 +55,18 @@ export default function ContactForm() {
     }));
   };
   
-  // ฟังก์ชันตรวจสอบความถูกต้องของฟอร์ม
+  // Form validation
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
     
-    // ตรวจสอบชื่อ
+    // Name validation
     if (!formState.name.trim()) {
       newErrors.name = currentLang === 'en' 
         ? 'Name is required' 
         : 'กรุณากรอกชื่อ';
     }
     
-    // ตรวจสอบอีเมล
+    // Email validation
     if (!formState.email.trim()) {
       newErrors.email = currentLang === 'en'
         ? 'Email is required'
@@ -77,14 +77,14 @@ export default function ContactForm() {
         : 'กรุณากรอกที่อยู่อีเมลที่ถูกต้อง';
     }
     
-    // ตรวจสอบหัวข้อ
+    // Subject validation
     if (!formState.subject.trim()) {
       newErrors.subject = currentLang === 'en'
         ? 'Subject is required'
         : 'กรุณากรอกหัวข้อ';
     }
     
-    // ตรวจสอบข้อความ
+    // Message validation
     if (!formState.message.trim()) {
       newErrors.message = currentLang === 'en'
         ? 'Message is required'
@@ -99,11 +99,11 @@ export default function ContactForm() {
     return Object.keys(newErrors).length === 0;
   };
   
-  // ฟังก์ชันส่งฟอร์ม
+  // Form submission
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     
-    // ตรวจสอบความถูกต้องของข้อมูล
+    // Validate form
     if (!validateForm()) {
       return;
     }
@@ -112,16 +112,14 @@ export default function ContactForm() {
     setSubmitStatus('idle');
     
     try {
-      // ในโปรเจคจริง จะต้องเชื่อมต่อกับ API หรือ service ที่ใช้ส่งอีเมล
-      // เช่น Nodemailer, SendGrid, Mailchimp, หรือ AWS SES
-      
-      // จำลองการส่งข้อมูล
+      // In a real project, this would connect to an API or email service
+      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // สำเร็จ
+      // Success
       setSubmitStatus('success');
       
-      // รีเซ็ตฟอร์ม
+      // Reset form
       setFormState({
         name: '',
         email: '',
@@ -129,13 +127,13 @@ export default function ContactForm() {
         message: ''
       });
       
-      // แสดงข้อความสำเร็จสักครู่ แล้วรีเซ็ตสถานะ
+      // Hide success message after delay
       setTimeout(() => {
         setSubmitStatus('idle');
       }, 5000);
       
     } catch (error) {
-      // เกิดข้อผิดพลาด
+      // Error
       setSubmitStatus('error');
       console.error('Form submission error:', error);
     } finally {
@@ -145,7 +143,7 @@ export default function ContactForm() {
   
   return (
     <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-      {/* ข้อความแจ้งสถานะ */}
+      {/* Status messages */}
       {submitStatus === 'success' && (
         <div className="p-3 sm:p-4 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-lg border border-green-200 dark:border-green-800 flex items-center gap-2">
           <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-green-500 flex items-center justify-center text-white">
@@ -190,8 +188,8 @@ export default function ContactForm() {
             className={`w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg border ${
               errors.name 
                 ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
-                : 'border-blue-100 dark:border-blue-900/50 focus:ring-blue-500'
-            } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 dark:focus:ring-blue-600 text-sm`}
+                : 'border-gray-200 dark:border-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400'
+            } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 text-sm`}
             placeholder={currentLang === "en" ? "Enter your name" : "ใส่ชื่อของคุณ"}
             disabled={isSubmitting}
           />
@@ -211,8 +209,8 @@ export default function ContactForm() {
             className={`w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg border ${
               errors.email 
                 ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
-                : 'border-blue-100 dark:border-blue-900/50 focus:ring-blue-500'
-            } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 dark:focus:ring-blue-600 text-sm`}
+                : 'border-gray-200 dark:border-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400'
+            } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 text-sm`}
             placeholder={currentLang === "en" ? "Enter your email" : "ใส่อีเมลของคุณ"}
             disabled={isSubmitting}
           />
@@ -234,8 +232,8 @@ export default function ContactForm() {
           className={`w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg border ${
             errors.subject 
               ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
-              : 'border-blue-100 dark:border-blue-900/50 focus:ring-blue-500'
-          } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 dark:focus:ring-blue-600 text-sm`}
+              : 'border-gray-200 dark:border-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400'
+          } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 text-sm`}
           placeholder={currentLang === "en" ? "How can I help you?" : "ฉันช่วยคุณได้อย่างไร?"}
           disabled={isSubmitting}
         />
@@ -256,8 +254,8 @@ export default function ContactForm() {
           className={`w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg border ${
             errors.message 
               ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
-              : 'border-blue-100 dark:border-blue-900/50 focus:ring-blue-500'
-          } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 dark:focus:ring-blue-600 resize-none text-sm`}
+              : 'border-gray-200 dark:border-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400'
+          } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 resize-none text-sm`}
           placeholder={currentLang === "en" ? "Your message" : "ข้อความของคุณ"}
           disabled={isSubmitting}
         ></textarea>
@@ -270,12 +268,12 @@ export default function ContactForm() {
         <Button 
           type="submit"
           size="lg"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-2 py-2 h-10 sm:h-12 text-sm sm:text-base"
+          className="w-full bg-gray-900 hover:bg-black dark:bg-white dark:hover:bg-gray-100 dark:text-black text-white flex items-center justify-center gap-2 py-2 h-10 sm:h-12 text-sm sm:text-base"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
             <>
-              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 sm:h-5 sm:w-5 text-white dark:text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>

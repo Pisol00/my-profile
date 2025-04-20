@@ -21,6 +21,7 @@ interface EducationCardProps {
  * EducationCard Component
  * 
  * Displays an education item with institution details, highlights, and courses
+ * Updated with an elegant monochrome design
  */
 export function EducationCard({
   institution,
@@ -46,7 +47,7 @@ export function EducationCard({
       strokeWidth="2" 
       strokeLinecap="round" 
       strokeLinejoin="round" 
-      className="text-blue-500"
+      className="text-gray-500"
     >
       <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
     </svg>
@@ -63,7 +64,7 @@ export function EducationCard({
       strokeWidth="2" 
       strokeLinecap="round" 
       strokeLinejoin="round" 
-      className="text-blue-500"
+      className="text-gray-500"
     >
       <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
       <circle cx="12" cy="10" r="3"></circle>
@@ -81,7 +82,7 @@ export function EducationCard({
       strokeWidth="2" 
       strokeLinecap="round" 
       strokeLinejoin="round" 
-      className="text-blue-500 mt-0.5 flex-shrink-0"
+      className="text-gray-500 mt-0.5 flex-shrink-0"
     >
       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
       <path d="m9 11 3 3L22 4"></path>
@@ -115,19 +116,19 @@ export function EducationCard({
       <div className="flex items-start gap-8">
         {/* Left side - timeline indicator */}
         <div className="flex flex-col items-center">
-          <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/50 border-4 border-white dark:border-gray-900 flex items-center justify-center text-blue-600 dark:text-blue-300 z-10">
+          <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 border-4 border-white dark:border-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-300 z-10">
             <EducationIcon />
           </div>
-          <span className="mt-3 px-3 py-1 rounded-full text-xs font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-800/50">
+          <span className="mt-3 px-3 py-1 rounded-full text-xs font-medium bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-100 dark:border-gray-700">
             {duration}
           </span>
         </div>
         
         {/* Right side - main card */}
-        <div className="flex-1 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-blue-100 dark:border-blue-900/50 overflow-hidden hover:shadow-lg transition-all duration-300">
+        <div className="flex-1 bg-white dark:bg-gray-900 rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-lg transition-all duration-300 luxury-card">
           {/* Header with institution logo */}
-          <div className="border-b border-blue-50 dark:border-blue-900/50 p-6 flex items-center gap-6">
-            <div className="w-20 h-20 bg-white rounded-lg overflow-hidden flex items-center justify-center p-2 border border-blue-50 dark:border-blue-900/50 relative">
+          <div className="border-b border-gray-50 dark:border-gray-800 p-6 flex items-center gap-6">
+            <div className="w-20 h-20 bg-white dark:bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center p-2 border border-gray-50 dark:border-gray-700 relative">
               <Image
                 src={logo}
                 alt={institution}
@@ -188,7 +189,7 @@ export function EducationCard({
                   {courses.map((course, idx) => (
                     <span 
                       key={idx}
-                      className="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium border border-blue-100 dark:border-blue-800/50"
+                      className="px-3 py-1 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-xs font-medium border border-gray-100 dark:border-gray-700"
                     >
                       {course}
                     </span>

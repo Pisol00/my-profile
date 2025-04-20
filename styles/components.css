@@ -6,12 +6,14 @@
    Card Styles
    ======================== */
    .glass-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
+    border: 1px solid rgba(220, 220, 220, 0.1);
   }
   
   .dark .glass-card {
-    background: rgba(20, 20, 70, 0.1);
+    background: rgba(20, 20, 20, 0.1);
+    border: 1px solid rgba(50, 50, 50, 0.2);
   }
   
   /* Glass effect for backdrop elements */
@@ -19,14 +21,14 @@
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(220, 220, 220, 0.1);
   }
   
   .dark .glass-effect {
-    background: rgba(30, 30, 60, 0.2);
+    background: rgba(20, 20, 20, 0.2);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(80, 80, 150, 0.2);
+    border: 1px solid rgba(50, 50, 50, 0.2);
   }
   
   /* ========================
@@ -72,13 +74,13 @@
     padding: 0.75rem;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 0.5rem;
-    border: 1px solid rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
   
   .dark .info-card-mobile {
-    background-color: rgba(31, 41, 55, 0.8);
-    border-color: rgba(59, 130, 246, 0.2);
+    background-color: rgba(20, 20, 20, 0.8);
+    border-color: rgba(50, 50, 50, 0.2);
   }
   
   /* ========================
@@ -92,7 +94,7 @@
     bottom: -1.5rem;
     left: 0.9375rem;
     width: 2px;
-    background-color: rgba(59, 130, 246, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
     z-index: 0;
   }
   
@@ -100,16 +102,16 @@
     position: relative;
     z-index: 1;
     background-color: white;
-    border: 4px solid rgba(59, 130, 246, 0.3);
+    border: 4px solid rgba(0, 0, 0, 0.1);
   }
   
   .dark .timeline-marker {
-    background-color: #1F2937;
-    border-color: rgba(59, 130, 246, 0.4);
+    background-color: #121212;
+    border-color: rgba(255, 255, 255, 0.1);
   }
   
   .dark .timeline-line {
-    background-color: rgba(59, 130, 246, 0.3);
+    background-color: rgba(255, 255, 255, 0.1);
   }
   
   /* Education card for mobile */
@@ -117,14 +119,14 @@
     background-color: white;
     border-radius: 0.75rem;
     overflow: hidden;
-    border: 1px solid rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     margin-bottom: 1rem;
   }
   
   .dark .mobile-education-card {
-    background-color: #1F2937;
-    border-color: rgba(59, 130, 246, 0.2);
+    background-color: #121212;
+    border-color: rgba(50, 50, 50, 0.2);
   }
   
   .education-card-header {
@@ -132,11 +134,11 @@
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
-    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
   
   .dark .education-card-header {
-    border-color: rgba(59, 130, 246, 0.2);
+    border-color: rgba(50, 50, 50, 0.2);
   }
   
   .education-toggle-button {
@@ -146,14 +148,14 @@
     width: 2rem;
     height: 2rem;
     border-radius: 9999px;
-    background-color: rgba(59, 130, 246, 0.1);
-    color: rgba(37, 99, 235, 1);
+    background-color: rgba(0, 0, 0, 0.05);
+    color: rgba(0, 0, 0, 0.7);
     transition: all 0.2s;
   }
   
   .dark .education-toggle-button {
-    background-color: rgba(59, 130, 246, 0.2);
-    color: rgba(96, 165, 250, 1);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.7);
   }
   
   /* ========================
@@ -217,63 +219,70 @@
   }
   
   /* ========================
-     Landscape Mode Adjustments
+     Luxury Styles (Added for elegant theme)
      ======================== */
-  @media (max-height: 480px) and (orientation: landscape) {
-    /* Hero Section */
-    .hero-section-landscape {
-      min-height: auto !important;
-      padding-top: 5rem !important;
-      padding-bottom: 2rem !important;
-    }
-    
-    .profile-image-landscape {
-      width: 120px !important;
-      height: 120px !important;
-    }
-    
-    .landscape-row {
-      display: flex !important;
-      flex-direction: row !important;
-      align-items: center !important;
-    }
-    
-    .landscape-col-auto {
-      width: auto !important;
-    }
-    
-    .landscape-text-sm {
-      font-size: 0.875rem !important;
-    }
-    
-    .landscape-text-lg {
-      font-size: 1.25rem !important;
-    }
+  
+  /* Refined card styles with subtle shadow */
+  .luxury-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
   }
   
-  /* ========================
-     Print Styles
-     ======================== */
-  @media print {
-    section {
-      page-break-inside: avoid;
-    }
-    
-    .no-print {
-      display: none !important;
-    }
-    
-    body {
-      color: black;
-      background: white;
-    }
-    
-    a {
-      text-decoration: underline;
-      color: #2563eb !important;
-    }
-    
-    img {
-      max-width: 300px;
-    }
+  .luxury-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+  }
+  
+  .dark .luxury-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+  }
+  
+  .dark .luxury-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Refined borders */
+  .elegant-border {
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+  
+  .dark .elegant-border {
+    border: 1px solid rgba(255, 255, 255, 0.03);
+  }
+  
+  /* Subtle separators */
+  .elegant-separator {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.05), transparent);
+    margin: 2rem 0;
+  }
+  
+  .dark .elegant-separator {
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.05), transparent);
+  }
+  
+  /* Button styles */
+  .elegant-button {
+    background-color: white;
+    color: black;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .elegant-button:hover {
+    background-color: black;
+    color: white;
+  }
+  
+  .dark .elegant-button {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .dark .elegant-button:hover {
+    background-color: white;
+    color: black;
   }

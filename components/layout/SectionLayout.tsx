@@ -25,6 +25,7 @@ interface SectionLayoutProps {
  * 
  * A consistent layout wrapper for all sections of the website
  * Handles common section elements like title, background, and decorations
+ * Updated with elegant monochrome styling
  */
 const SectionLayout = forwardRef<HTMLElement, SectionLayoutProps>(
   ({
@@ -69,21 +70,21 @@ const SectionLayout = forwardRef<HTMLElement, SectionLayoutProps>(
 
         {/* Background overlay for text readability */}
         {bgImage && (
-          <div className="absolute inset-0 z-0 bg-background/30 dark:bg-background/40" />
+          <div className="absolute inset-0 z-0 bg-white/30 dark:bg-black/40" />
         )}
 
         {/* Decorative elements */}
         {decorations && (
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             {/* Decorative circles */}
-            <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-70"></div>
-            <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-70"></div>
+            <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-gray-100 dark:bg-gray-900/20 blur-3xl opacity-70"></div>
+            <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-gray-100 dark:bg-gray-900/20 blur-3xl opacity-70"></div>
             
             {/* Grid pattern */}
             <div className="absolute inset-0 opacity-5">
               <svg width="100%" height="100%">
                 <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1" className="text-blue-500 dark:text-blue-400" />
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-500 dark:text-gray-400" />
                 </pattern>
                 <rect width="100%" height="100%" fill="url(#grid)" />
               </svg>
@@ -100,12 +101,12 @@ const SectionLayout = forwardRef<HTMLElement, SectionLayoutProps>(
               className={`mb-16 text-center ${titleClassName}`}
             >
               {title && (
-                <h2 className="text-3xl md:text-5xl font-bold text-center mb-6">
+                <h2 className="text-3xl md:text-5xl font-bold text-center mb-6 text-gray-900 dark:text-white">
                   {title}
                 </h2>
               )}
               {subtitle && (
-                <p className={`text-center text-muted-foreground max-w-2xl mx-auto text-lg ${subtitleClassName}`}>
+                <p className={`text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg ${subtitleClassName}`}>
                   {subtitle}
                 </p>
               )}

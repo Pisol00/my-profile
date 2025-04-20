@@ -16,63 +16,63 @@
    --radius-xl: calc(var(--radius) + 4px);
    
    /* Base Colors - Light Theme */
-   --background: oklch(1 0 0);
-   --foreground: oklch(0.129 0.042 264.695);
+   --background: oklch(1 0 0); /* Pure white */
+   --foreground: oklch(0.1 0 0); /* Nearly black for text */
    
    /* Component Colors - Light Theme */
-   --card: oklch(1 0 0);
-   --card-foreground: oklch(0.129 0.042 264.695);
-   --popover: oklch(1 0 0);
-   --popover-foreground: oklch(0.129 0.042 264.695);
-   --primary: oklch(0.429 0.16 230); /* Blue */
-   --primary-foreground: oklch(0.984 0.003 247.858);
-   --secondary: oklch(0.968 0.007 247.896);
-   --secondary-foreground: oklch(0.208 0.042 265.755);
-   --muted: oklch(0.968 0.007 247.896);
-   --muted-foreground: oklch(0.554 0.046 257.417);
-   --accent: oklch(0.968 0.007 247.896);
-   --accent-foreground: oklch(0.208 0.042 265.755);
-   --destructive: oklch(0.577 0.245 27.325);
-   --border: oklch(0.929 0.013 255.508);
-   --input: oklch(0.929 0.013 255.508);
-   --ring: oklch(0.429 0.16 230); /* Blue */
+   --card: oklch(1 0 0); /* Pure white */
+   --card-foreground: oklch(0.1 0 0); /* Nearly black */
+   --popover: oklch(1 0 0); /* Pure white */
+   --popover-foreground: oklch(0.1 0 0); /* Nearly black */
+   --primary: oklch(0.2 0 0); /* Dark gray instead of blue */
+   --primary-foreground: oklch(1 0 0); /* White */
+   --secondary: oklch(0.97 0 0); /* Very light gray */
+   --secondary-foreground: oklch(0.1 0 0); /* Nearly black */
+   --muted: oklch(0.97 0 0); /* Very light gray */
+   --muted-foreground: oklch(0.4 0 0); /* Medium gray */
+   --accent: oklch(0.97 0 0); /* Very light gray */
+   --accent-foreground: oklch(0.1 0 0); /* Nearly black */
+   --destructive: oklch(0.5 0 0); /* Medium gray instead of red */
+   --border: oklch(0.92 0 0); /* Light gray */
+   --input: oklch(0.92 0 0); /* Light gray */
+   --ring: oklch(0.2 0 0); /* Dark gray */
    
    /* Effects */
-   --shadow: 0 4px 20px rgba(120, 120, 255, 0.1);
+   --shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Subtle shadow */
    --hero-gradient: linear-gradient(135deg, 
-     oklch(90% 0.05 265) 0%, 
-     oklch(95% 0.03 240) 100%);
+     oklch(1 0 0) 0%, 
+     oklch(0.97 0 0) 100%); /* Subtle white to light gray gradient */
  }
  
  /* Dark Theme Variables */
  .dark {
    /* Base Colors - Dark Theme */
-   --background: oklch(0.129 0.042 264.695);
-   --foreground: oklch(0.984 0.003 247.858);
+   --background: oklch(0.07 0 0); /* Nearly pure black */
+   --foreground: oklch(0.95 0 0); /* Nearly white for text */
    
    /* Component Colors - Dark Theme */
-   --card: oklch(0.208 0.042 265.755);
-   --card-foreground: oklch(0.984 0.003 247.858);
-   --popover: oklch(0.208 0.042 265.755);
-   --popover-foreground: oklch(0.984 0.003 247.858);
-   --primary: oklch(0.529 0.18 230); /* Blue in dark mode */
-   --primary-foreground: oklch(0.208 0.042 265.755);
-   --secondary: oklch(0.279 0.041 260.031);
-   --secondary-foreground: oklch(0.984 0.003 247.858);
-   --muted: oklch(0.279 0.041 260.031);
-   --muted-foreground: oklch(0.704 0.04 256.788);
-   --accent: oklch(0.279 0.041 260.031);
-   --accent-foreground: oklch(0.984 0.003 247.858);
-   --destructive: oklch(0.704 0.191 22.216);
-   --border: oklch(1 0 0 / 10%);
-   --input: oklch(1 0 0 / 15%);
-   --ring: oklch(0.551 0.027 264.364);
+   --card: oklch(0.12 0 0); /* Very dark gray */
+   --card-foreground: oklch(0.95 0 0); /* Nearly white */
+   --popover: oklch(0.12 0 0); /* Very dark gray */
+   --popover-foreground: oklch(0.95 0 0); /* Nearly white */
+   --primary: oklch(0.8 0 0); /* Light gray instead of blue */
+   --primary-foreground: oklch(0.1 0 0); /* Nearly black */
+   --secondary: oklch(0.18 0 0); /* Dark gray */
+   --secondary-foreground: oklch(0.95 0 0); /* Nearly white */
+   --muted: oklch(0.18 0 0); /* Dark gray */
+   --muted-foreground: oklch(0.7 0 0); /* Medium light gray */
+   --accent: oklch(0.18 0 0); /* Dark gray */
+   --accent-foreground: oklch(0.95 0 0); /* Nearly white */
+   --destructive: oklch(0.6 0 0); /* Medium gray instead of red */
+   --border: oklch(0.2 0 0); /* Dark gray */
+   --input: oklch(0.2 0 0); /* Dark gray */
+   --ring: oklch(0.7 0 0); /* Medium light gray */
    
    /* Effects - Dark Theme */
-   --shadow: 0 4px 20px rgba(20, 20, 50, 0.25);
+   --shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Stronger shadow for dark mode */
    --hero-gradient: linear-gradient(135deg, 
-     oklch(20% 0.06 265) 0%, 
-     oklch(16% 0.04 220) 100%);
+     oklch(0.12 0 0) 0%, 
+     oklch(0.07 0 0) 100%); /* Subtle dark gray to black gradient */
  }
  
  /* ========================

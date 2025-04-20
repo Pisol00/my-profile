@@ -23,13 +23,13 @@ export function SkillCard({ title, icon, skills, animationsEnabled = true, delay
       delay={delay}
       disabled={!animationsEnabled}
     >
-      <div className="bg-white dark:bg-gray-800 rounded-xl border border-blue-100 dark:border-blue-900/30 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden h-full">
+      <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden h-full luxury-card">
         {/* Header */}
-        <div className="p-6 border-b border-blue-100 dark:border-blue-900/30 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-300">
+        <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300">
             {icon}
           </div>
-          <h3 className="text-xl font-bold">{title}</h3>
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
         </div>
 
         {/* Skills */}
@@ -38,9 +38,9 @@ export function SkillCard({ title, icon, skills, animationsEnabled = true, delay
             {skills.map((skill, idx) => (
               <div 
                 key={idx} 
-                className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 py-2 px-3 rounded-lg border border-blue-100 dark:border-blue-800/50"
+                className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 py-2 px-3 rounded-lg border border-gray-100 dark:border-gray-700"
               >
-                <Code2 size={14} className="text-blue-500 dark:text-blue-400" />
+                <Code2 size={14} className="text-gray-500 dark:text-gray-400" />
                 <span className="text-sm font-medium">{skill}</span>
               </div>
             ))}
@@ -79,20 +79,20 @@ export function ProjectCard({
       animation="fade-in"
       disabled={!animationsEnabled}
     >
-      <div className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-blue-100 dark:border-blue-900/50 hover:border-blue-300 dark:hover:border-blue-700 shadow-md hover:shadow-xl hover:shadow-blue-100 dark:hover:shadow-blue-900/10 transition-all duration-300 h-full flex flex-col">
+      <div className="group relative bg-white dark:bg-gray-900 rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 shadow-md hover:shadow-xl hover:shadow-gray-100 dark:hover:shadow-gray-900/10 transition-all duration-300 h-full flex flex-col luxury-card">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-blue-50 dark:border-blue-900/50">
+        <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-gray-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-300">
+            <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300">
               <FolderGit2 size={20} />
             </div>
-            <h3 className="font-bold text-xl">{title}</h3>
+            <h3 className="font-bold text-xl text-gray-900 dark:text-white">{title}</h3>
           </div>
           <a 
             href={link} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-800/50 text-blue-600 dark:text-blue-400 p-2 rounded-full transition-colors"
+            className="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 p-2 rounded-full transition-colors"
             aria-label={`View ${title} on GitHub`}
           >
             <Github size={18} />
@@ -111,7 +111,7 @@ export function ProjectCard({
               <Badge 
                 key={techIndex} 
                 variant="outline" 
-                className="bg-blue-50/50 dark:bg-blue-900/10 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800/50 hover:bg-blue-100 dark:hover:bg-blue-800/30 py-1"
+                className="bg-gray-50/50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 py-1"
               >
                 <Code2 size={12} className="mr-1" />
                 {tech}
@@ -124,7 +124,7 @@ export function ProjectCard({
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors font-medium"
+            className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-medium"
           >
             <span>{viewProjectText}</span>
             <ExternalLink size={14} />
@@ -173,7 +173,7 @@ export function EducationCard({
       <div className="flex items-start gap-8">
         {/* Left side - timeline indicator */}
         <div className="flex flex-col items-center">
-          <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/50 border-4 border-white dark:border-gray-900 flex items-center justify-center text-blue-600 dark:text-blue-300 z-10">
+          <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 border-4 border-white dark:border-black flex items-center justify-center text-gray-600 dark:text-gray-300 z-10">
             {/* Education Icon */}
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
@@ -190,16 +190,16 @@ export function EducationCard({
               <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
             </svg>
           </div>
-          <span className="mt-3 px-3 py-1 rounded-full text-xs font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-800/50">
+          <span className="mt-3 px-3 py-1 rounded-full text-xs font-medium bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-100 dark:border-gray-700">
             {duration}
           </span>
         </div>
         
         {/* Right side - main card */}
-        <div className="flex-1 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-blue-100 dark:border-blue-900/50 overflow-hidden hover:shadow-lg transition-all duration-300">
+        <div className="flex-1 bg-white dark:bg-gray-900 rounded-2xl shadow-md border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-lg transition-all duration-300 luxury-card">
           {/* Header with institution logo */}
-          <div className="border-b border-blue-50 dark:border-blue-900/50 p-6 flex items-center gap-6">
-            <div className="w-20 h-20 bg-white rounded-lg overflow-hidden flex items-center justify-center p-2 border border-blue-50 dark:border-blue-900/50">
+          <div className="border-b border-gray-100 dark:border-gray-800 p-6 flex items-center gap-6">
+            <div className="w-20 h-20 bg-white dark:bg-gray-900 rounded-lg overflow-hidden flex items-center justify-center p-2 border border-gray-100 dark:border-gray-800">
               <img
                 src={logo}
                 alt={institution}
@@ -208,7 +208,7 @@ export function EducationCard({
             </div>
             
             <div>
-              <h3 className="text-xl font-bold">{institution}</h3>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">{institution}</h3>
               <div className="flex items-center gap-2 mt-2 text-sm text-gray-600 dark:text-gray-300">
                 {/* Book Icon */}
                 <svg 
@@ -221,7 +221,7 @@ export function EducationCard({
                   strokeWidth="2" 
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
-                  className="text-blue-500"
+                  className="text-gray-500"
                 >
                   <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
                 </svg>
@@ -239,7 +239,7 @@ export function EducationCard({
                   strokeWidth="2" 
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
-                  className="text-blue-500"
+                  className="text-gray-500"
                 >
                   <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
                   <circle cx="12" cy="10" r="3"></circle>
@@ -260,7 +260,7 @@ export function EducationCard({
             {/* Highlights */}
             {highlights.length > 0 && (
               <>
-                <h4 className="font-medium text-gray-800 dark:text-gray-200 mb-4">
+                <h4 className="font-medium text-gray-900 dark:text-white mb-4">
                   {highlights.length > 0 ? 'Program Highlights' : ''}
                 </h4>
                 
@@ -278,7 +278,7 @@ export function EducationCard({
                         strokeWidth="2" 
                         strokeLinecap="round" 
                         strokeLinejoin="round" 
-                        className="text-blue-500 mt-0.5 flex-shrink-0"
+                        className="text-gray-500 mt-0.5 flex-shrink-0"
                       >
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                         <path d="m9 11 3 3L22 4"></path>
@@ -295,14 +295,14 @@ export function EducationCard({
             {/* Key courses */}
             {courses.length > 0 && (
               <div className="mt-6">
-                <h4 className="font-medium text-gray-800 dark:text-gray-200 mb-3">
+                <h4 className="font-medium text-gray-900 dark:text-white mb-3">
                   Key Courses
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {courses.map((course, idx) => (
                     <span 
                       key={idx}
-                      className="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium border border-blue-100 dark:border-blue-800/50"
+                      className="px-3 py-1 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-xs font-medium border border-gray-100 dark:border-gray-700"
                     >
                       {course}
                     </span>

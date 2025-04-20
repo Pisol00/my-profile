@@ -3,11 +3,11 @@
 import { forwardRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Mail, Phone, Github, MapPin, ExternalLink, MessageSquare } from 'lucide-react';
-import Link from 'next/link'; // เพิ่ม Next.js Link
+import Link from 'next/link';
 import AnimatedSection from '@/components/common/animations/AnimatedSection';
 import { useLanguage } from '@/contexts';
 import { profileData } from '@/translations';
-import ContactForm from './ContactForm'; // นำเข้า ContactForm ใหม่
+import ContactForm from './ContactForm';
 
 type ContactSectionProps = {
   animationsEnabled: boolean;
@@ -18,18 +18,18 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
     const { currentLang, t } = useLanguage();
     
     return (
-      <section ref={ref} className="py-16 sm:py-20 md:py-24 bg-white dark:bg-gray-900 relative overflow-hidden">
+      <section ref={ref} className="py-16 sm:py-20 md:py-24 bg-white dark:bg-black relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* Decorative circles */}
-          <div className="absolute -top-20 -left-20 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-70"></div>
-          <div className="absolute -bottom-20 -right-20 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-70"></div>
+          <div className="absolute -top-20 -left-20 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gray-50 dark:bg-gray-900/20 blur-3xl opacity-70"></div>
+          <div className="absolute -bottom-20 -right-20 w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gray-50 dark:bg-gray-900/20 blur-3xl opacity-70"></div>
           
           {/* Subtle grid pattern */}
           <div className="absolute inset-0 opacity-5">
             <svg width="100%" height="100%">
               <pattern id="contact-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1" className="text-blue-500 dark:text-blue-400" />
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray-500 dark:text-gray-400" />
               </pattern>
               <rect width="100%" height="100%" fill="url(#contact-grid)" />
             </svg>
@@ -38,7 +38,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
 
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
           <AnimatedSection animation="fade-in" disabled={!animationsEnabled} className="mb-10 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4 sm:mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4 sm:mb-6 text-gray-900 dark:text-white">
               {t.contact}
             </h2>
             <p className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-base sm:text-lg">
@@ -49,28 +49,28 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
           </AnimatedSection>
 
           {/* Main content with split design */}
-          <div className="max-w-6xl mx-auto bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-xl overflow-hidden border border-blue-100 dark:border-blue-900/50">
+          <div className="max-w-6xl mx-auto bg-white dark:bg-gray-900 rounded-lg sm:rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-800 luxury-card">
             <div className="grid md:grid-cols-5">
               {/* Left side - Contact Info */}
-              <div className="md:col-span-2 bg-blue-50 dark:bg-blue-900/30 p-5 sm:p-8 md:p-12">
-                <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2">
-                  <MessageSquare size={20} className="sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
+              <div className="md:col-span-2 bg-gray-50 dark:bg-gray-800/50 p-5 sm:p-8 md:p-12">
+                <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2 text-gray-900 dark:text-white">
+                  <MessageSquare size={20} className="sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400" />
                   <span>{currentLang === "en" ? "Contact Info" : "ข้อมูลติดต่อ"}</span>
                 </h3>
                 
                 <div className="space-y-6 sm:space-y-8">
                   {/* Email */}
                   <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
                       <Mail size={18} className="sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-base sm:text-lg mb-1">
+                      <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
                         {currentLang === "en" ? "Email" : "อีเมล"}
                       </h4>
                       <Link 
                         href={`mailto:${profileData.email}`} 
-                        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1 group text-sm sm:text-base break-all"
+                        className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1 group text-sm sm:text-base break-all"
                       >
                         {profileData.email}
                         <ExternalLink size={12} className="sm:w-3.5 sm:h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -80,16 +80,16 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                   
                   {/* Phone */}
                   <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
                       <Phone size={18} className="sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-base sm:text-lg mb-1">
+                      <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
                         {currentLang === "en" ? "Phone" : "โทรศัพท์"}
                       </h4>
                       <Link 
                         href={`tel:${profileData.phone}`} 
-                        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1 group text-sm sm:text-base"
+                        className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1 group text-sm sm:text-base"
                       >
                         {profileData.phone}
                         <ExternalLink size={12} className="sm:w-3.5 sm:h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -99,11 +99,11 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                   
                   {/* Location */}
                   <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
                       <MapPin size={18} className="sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-base sm:text-lg mb-1">
+                      <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
                         {currentLang === "en" ? "Location" : "ที่อยู่"}
                       </h4>
                       <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
@@ -114,18 +114,18 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                   
                   {/* GitHub */}
                   <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
                       <Github size={18} className="sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-base sm:text-lg mb-1">
+                      <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
                         GitHub
                       </h4>
                       <Link 
                         href={`https://github.com/${profileData.github}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1 group text-sm sm:text-base"
+                        className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1 group text-sm sm:text-base"
                       >
                         github.com/{profileData.github}
                         <ExternalLink size={12} className="sm:w-3.5 sm:h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -137,8 +137,8 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
               
               {/* Right side - Contact Form/Message */}
               <div className="md:col-span-3 p-5 sm:p-8 md:p-12">
-                <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2">
-                  <MessageSquare size={20} className="sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
+                <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2 text-gray-900 dark:text-white">
+                  <MessageSquare size={20} className="sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400" />
                   <span>{currentLang === "en" ? "Send a Message" : "ส่งข้อความ"}</span>
                 </h3>
                 
@@ -154,7 +154,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                 </div>
                 
                 {/* Alternative contact methods */}
-                <div className="border-t border-blue-100 dark:border-blue-900/30 pt-4 sm:pt-6 mt-6 sm:mt-8">
+                <div className="border-t border-gray-100 dark:border-gray-800 pt-4 sm:pt-6 mt-6 sm:mt-8">
                   <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-3 sm:mb-4">
                     {currentLang === "en"
                       ? "Prefer a direct approach? Contact me via:"
@@ -165,7 +165,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       variant="outline" 
                       size="lg"
                       asChild
-                      className="flex-1 border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400 py-2 sm:py-2.5 h-auto text-xs sm:text-sm"
+                      className="flex-1 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 py-2 sm:py-2.5 h-auto text-xs sm:text-sm"
                     >
                       <Link href={`mailto:${profileData.email}`}>
                         <Mail size={14} className="sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
@@ -176,7 +176,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       variant="outline" 
                       size="lg"
                       asChild
-                      className="flex-1 border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400 py-2 sm:py-2.5 h-auto text-xs sm:text-sm"
+                      className="flex-1 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 py-2 sm:py-2.5 h-auto text-xs sm:text-sm"
                     >
                       <Link href={`tel:${profileData.phone}`}>
                         <Phone size={14} className="sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />

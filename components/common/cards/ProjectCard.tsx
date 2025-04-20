@@ -19,6 +19,7 @@ interface ProjectCardProps {
  * ProjectCard Component
  * 
  * Displays a project with its description, technologies, and links
+ * Updated with an elegant, luxury monochrome design
  */
 export function ProjectCard({ 
   title, 
@@ -65,18 +66,18 @@ export function ProjectCard({
       animation="fade-in"
       disabled={!animationsEnabled}
     >
-      <div className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-blue-100 dark:border-blue-900/50 hover:border-blue-300 dark:hover:border-blue-700 shadow-md hover:shadow-xl hover:shadow-blue-100 dark:hover:shadow-blue-900/10 transition-all duration-300 h-full flex flex-col">
+      <div className="group relative bg-white dark:bg-gray-900 rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 shadow-md hover:shadow-xl hover:shadow-gray-100 dark:hover:shadow-gray-900/10 transition-all duration-300 h-full flex flex-col luxury-card">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-blue-50 dark:border-blue-900/50">
+        <div className="flex items-center justify-between p-6 border-b border-gray-50 dark:border-gray-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-300">
+            <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300">
               <FolderGit2 size={20} />
             </div>
             <h3 className="font-bold text-xl">{title}</h3>
           </div>
           <ExternalLinkWrapper 
             href={link} 
-            className="bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-800/50 text-blue-600 dark:text-blue-400 p-2 rounded-full transition-colors"
+            className="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 p-2 rounded-full transition-colors"
           >
             <Github size={18} aria-label={`View ${title} on GitHub`} />
           </ExternalLinkWrapper>
@@ -94,7 +95,7 @@ export function ProjectCard({
               <Badge 
                 key={techIndex} 
                 variant="outline" 
-                className="bg-blue-50/50 dark:bg-blue-900/10 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800/50 hover:bg-blue-100 dark:hover:bg-blue-800/30 py-1"
+                className="bg-gray-50/50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 py-1"
               >
                 <Code2 size={12} className="mr-1" />
                 {tech}
@@ -105,7 +106,7 @@ export function ProjectCard({
           {/* Link */}
           <ExternalLinkWrapper
             href={link}
-            className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors font-medium"
+            className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-300 transition-colors font-medium"
           >
             <span>{viewProjectText}</span>
             <ExternalLink size={14} />
