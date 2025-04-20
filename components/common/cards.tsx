@@ -3,7 +3,7 @@
 import { ReactNode } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Github, ExternalLink, Code2, FolderGit2 } from 'lucide-react';
-import AnimatedSection from '@/components/common/AnimatedSection';
+import AnimatedSection from '@/components/common/animations/AnimatedSection';
 
 // ------------------------
 // SkillCard Component

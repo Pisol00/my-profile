@@ -1,89 +1,16 @@
-// translations/index.ts - แก้ไข Type
+/**
+ * translations/index.ts
+ * Main exports for translations and localized data
+ */
 
-export type Language = 'th' | 'en';
+import { 
+  Language, 
+  TranslationType, 
+  ProfileData,
+  ExperienceItem
+} from './types';
 
-// รูปแบบข้อมูลแปลทั่วไป
-export type CommonTranslations = {
-  // ข้อความทั่วไป
-  name: string;
-  title: string;
-  bio: string;
-  location: string;
-  allRightsReserved: string;
-  contactMe: string;
-  phone: string;
-};
-
-// รูปแบบข้อมูลแปลสำหรับเมนู
-export type NavTranslations = {
-  home: string;
-  skills: string;
-  projects: string;
-  education: string;
-  contact: string;
-};
-
-// รูปแบบข้อมูลแปลสำหรับ Skills Section
-export type SkillsTranslations = {
-  technicalSkills: string;
-  frontend: string;
-  backend: string;
-  toolsTech: string;
-  otherLang: string;
-  softSkills: string;
-  languages: string;
-};
-
-// รูปแบบข้อมูลแปลสำหรับ Projects Section
-export type ProjectsTranslations = {
-  projectsHighlight: string;
-  viewProject: string;
-  viewMoreProjects: string;
-};
-
-// รูปแบบข้อมูลแปลสำหรับ Education Section
-export type EducationTranslations = {
-  education: string;
-  academicJourney: string;
-  degree: string;
-  programHighlights: string;
-  keyCourses: string;
-};
-
-// รูปแบบข้อมูลแปลสำหรับ Contact Section
-export type ContactTranslations = {
-  contact: string;
-  contactIntro: string;
-  yourName: string;
-  yourEmail: string;
-  subject: string;
-  message: string;
-  sendMessage: string;
-  contactVia: string;
-  call: string;
-  email: string;
-  github: string;
-  directApproach: string;
-};
-
-// แก้ไข: เพิ่ม type สำหรับข้อมูลประสบการณ์
-export type ExperienceItem = {
-  company: string;
-  position: string;
-  duration: string;
-  description: string;
-  technologies: string[];
-};
-
-// รวมรูปแบบข้อมูลแปลทั้งหมด
-export type TranslationType = CommonTranslations & 
-  NavTranslations & 
-  SkillsTranslations & 
-  ProjectsTranslations & 
-  EducationTranslations & 
-  ContactTranslations;
-
-// ข้อมูลแปลภาษาอังกฤษ
+// English translations
 const en: TranslationType = {
   // Common
   name: "PISOL UATTANKANJANA",
@@ -116,14 +43,12 @@ const en: TranslationType = {
   viewMoreProjects: "View More Projects on GitHub",
   
   // Education
-  education: "Education",
   academicJourney: "My academic journey and qualifications",
   degree: "Branch : Software development",
   programHighlights: "Program Highlights",
   keyCourses: "Key Courses",
   
   // Contact
-  contact: "Contact",
   contactIntro: "Feel free to reach out for collaborations, internship opportunities, or just to say hello",
   yourName: "Your Name",
   yourEmail: "Your Email",
@@ -137,7 +62,7 @@ const en: TranslationType = {
   directApproach: "Prefer a direct approach? Contact me via:",
 };
 
-// ข้อมูลแปลภาษาไทย
+// Thai translations
 const th: TranslationType = {
   // Common
   name: "พิศลย์ อุตตาลกาญจนา",
@@ -170,14 +95,12 @@ const th: TranslationType = {
   viewMoreProjects: "ดูโปรเจกต์เพิ่มเติมบน GitHub",
   
   // Education
-  education: "การศึกษา",
   academicJourney: "เส้นทางการศึกษาและคุณสมบัติของฉัน",
   degree: "สาขา : การพัฒนาซอฟต์แวร์",
   programHighlights: "จุดเด่นของหลักสูตร",
   keyCourses: "วิชาหลัก",
   
   // Contact
-  contact: "ติดต่อ",
   contactIntro: "อย่าลังเลที่จะติดต่อเพื่อความร่วมมือ โอกาสในการฝึกงาน หรือเพียงแค่ทักทาย",
   yourName: "ชื่อของคุณ",
   yourEmail: "อีเมลของคุณ",
@@ -191,10 +114,10 @@ const th: TranslationType = {
   directApproach: "ต้องการติดต่อโดยตรง? ติดต่อฉันผ่าน:",
 };
 
-// รวมข้อมูลแปลทั้งหมด
+// Combine translations into a single object
 export const translations: Record<Language, TranslationType> = { en, th };
 
-// ข้อมูลโปรไฟล์ (ข้อมูลพื้นฐานที่ไม่ต้องแปล)
+// Basic profile data (shared across languages)
 export const profileData = {
   avatar: "/profile-image.jpg",
   email: "pisol.uatt@gmail.com",
@@ -206,6 +129,7 @@ export const profileData = {
     tools: ["Docker", "Jenkins", "Git", "GitHub", "AWS", "Google Cloud", "Nginx"],
     other: ["Java OOP", "C"]
   },
+  // Multi-language soft skills
   softSkills: [
     {
       en: "Problem-Solving & Critical Thinking",
@@ -224,6 +148,7 @@ export const profileData = {
       th: "ทักษะการสื่อสาร"
     }
   ],
+  // Multi-language spoken languages
   languages: [
     {
       language: { en: "Thai", th: "ไทย" },
@@ -236,7 +161,13 @@ export const profileData = {
   ],
 };
 
-// ข้อมูลการศึกษา
+// Type definition for multi-language fields
+interface MultiLanguageField {
+  en: string;
+  th: string;
+}
+
+// Education data with translations
 export const educationData = [
   {
     institution: {
@@ -305,7 +236,7 @@ export const educationData = [
   }
 ];
 
-// ข้อมูลโปรเจค
+// Project data with translations
 export const projectsData = [
   {
     title: "Job4ALL",
@@ -354,112 +285,67 @@ export const projectsData = [
   }
 ];
 
-// แก้ไข: สร้าง type สำหรับ experience ที่ชัดเจน แทนที่จะใช้ any[]
-export type ProfileExperience = {
-  company: string;
-  position: string;
-  duration: string;
-  description: string;
-  technologies: string[];
-};
+/**
+ * Helper function to extract language-specific content
+ * @param obj - Object with language keys
+ * @param language - Target language
+ */
+function getLanguageValue<T extends MultiLanguageField>(obj: T, language: Language): string {
+  return obj[language];
+}
 
-// สร้าง localizedData สำหรับความเข้ากันได้กับโค้ดเดิม
-export type ProfileData = {
-  name: string;
-  title: string;
-  bio: string;
-  avatar: string;
-  location: string;
-  email: string;
-  github: string;
-  phone: string;
-  address?: string;
-  skills: {
-    frontend: string[];
-    backend: string[];
-    tools: string[];
-    other: string[];
-  };
-  softSkills: string[];
-  languages: {
-    language: string;
-    level: string;
-  }[];
-  experience: ProfileExperience[]; // แก้ไข type จาก any[] เป็น ProfileExperience[]
-  education: {
-    institution: string;
-    degree: string;
-    duration: string;
-    description?: string;
-  }[];
-  projects: {
-    title: string;
-    description: string;
-    technologies: string[];
-    link: string;
-  }[];
-};
+/**
+ * Generate localized profile data for each language
+ */
+export function generateLocalizedData(): Record<Language, ProfileData> {
+  const result: Record<Language, ProfileData> = {} as Record<Language, ProfileData>;
+  
+  // Generate for each language
+  ['en', 'th'].forEach((lang) => {
+    const language = lang as Language;
+    const t = translations[language];
+    
+    result[language] = {
+      name: t.name,
+      title: t.title,
+      bio: t.bio,
+      avatar: profileData.avatar,
+      location: t.location,
+      email: profileData.email,
+      github: profileData.github,
+      phone: profileData.phone,
+      address: language === 'en' 
+        ? "667, Soi Chalong Krung 1, Lat Krabang Subdistrict, Lat Krabang District, Bangkok 10520, Thailand"
+        : "667, ซอยฉลองกรุง 1, แขวงลาดกระบัง, เขตลาดกระบัง, กรุงเทพมหานคร 10520, ประเทศไทย",
+      skills: {
+        frontend: [...profileData.skills.frontend],
+        backend: [...profileData.skills.backend],
+        tools: [...profileData.skills.tools],
+        other: [...profileData.skills.other]
+      },
+      softSkills: profileData.softSkills.map(item => item[language]),
+      languages: profileData.languages.map(item => ({
+        language: item.language[language],
+        level: item.level[language]
+      })),
+      experience: [], // Not currently used
+      education: educationData.map(edu => ({
+        institution: edu.institution[language],
+        degree: edu.degree[language],
+        duration: edu.duration[language],
+        description: edu.description?.[language]
+      })),
+      projects: projectsData.map(project => ({
+        title: project.title,
+        description: project.description[language],
+        technologies: [...project.technologies],
+        link: project.link
+      }))
+    };
+  });
+  
+  return result;
+}
 
-// สร้าง localizedData จากข้อมูลที่มีอยู่แล้ว
-export const localizedData: Record<Language, ProfileData> = {
-  en: {
-    name: en.name,
-    title: en.title,
-    bio: en.bio,
-    avatar: profileData.avatar,
-    location: en.location,
-    email: profileData.email,
-    github: profileData.github,
-    phone: profileData.phone,
-    address: "667, Soi Chalong Krung 1, Lat Krabang Subdistrict, Lat Krabang District, Bangkok 10520, Thailand",
-    skills: profileData.skills,
-    softSkills: profileData.softSkills.map(item => item.en),
-    languages: profileData.languages.map(item => ({
-      language: item.language.en,
-      level: item.level.en
-    })),
-    experience: [], // เริ่มต้นด้วย array ว่าง
-    education: educationData.map(edu => ({
-      institution: edu.institution.en,
-      degree: edu.degree.en,
-      duration: edu.duration.en,
-      description: edu.description?.en
-    })),
-    projects: projectsData.map(project => ({
-      title: project.title,
-      description: project.description.en,
-      technologies: project.technologies,
-      link: project.link
-    }))
-  },
-  th: {
-    name: th.name,
-    title: th.title,
-    bio: th.bio,
-    avatar: profileData.avatar,
-    location: th.location,
-    email: profileData.email,
-    github: profileData.github,
-    phone: profileData.phone,
-    address: "667, ซอยฉลองกรุง 1, แขวงลาดกระบัง, เขตลาดกระบัง, กรุงเทพมหานคร 10520, ประเทศไทย",
-    skills: profileData.skills,
-    softSkills: profileData.softSkills.map(item => item.th),
-    languages: profileData.languages.map(item => ({
-      language: item.language.th,
-      level: item.level.th
-    })),
-    experience: [], // เริ่มต้นด้วย array ว่าง
-    education: educationData.map(edu => ({
-      institution: edu.institution.th,
-      degree: edu.degree.th,
-      duration: edu.duration.th,
-      description: edu.description?.th
-    })),
-    projects: projectsData.map(project => ({
-      title: project.title,
-      description: project.description.th,
-      technologies: project.technologies,
-      link: project.link
-    }))
-  }
-};
+// Pre-generate the localized data
+export const localizedData = generateLocalizedData();

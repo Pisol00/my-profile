@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 /**
- * useScrollToSection - สำหรับการเลื่อนไปยังส่วนต่างๆ ของหน้าเว็บ
+ * useScrollToSection - Smoothly scrolls to a section when ref is provided
+ * @returns A callback function that accepts a ref and scrolls to it
  */
 export function useScrollToSection() {
   return useCallback((ref: React.RefObject<HTMLElement>) => {
@@ -12,33 +13,31 @@ export function useScrollToSection() {
 }
 
 /**
- * useLocalStorage - จัดการข้อมูลใน localStorage พร้อมทั้ง sync กับ state ของ React
+ * useLocalStorage - Syncs React state with localStorage
+ * @param key - The localStorage key
+ * @param initialValue - The initial value if no value exists in localStorage
+ * @returns A tuple of [storedValue, setValue] similar to useState
  */
 export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
-  // สร้าง state เพื่อจัดเก็บข้อมูลปัจจุบัน
+  // State to store the current value
   const [storedValue, setStoredValue] = useState<T>(initialValue);
 
-  // ดึงข้อมูลจาก localStorage เมื่อ component ถูกเรนเดอร์ครั้งแรก
+  // Initialize from localStorage on mount
   useEffect(() => {
     try {
-      // ดึงข้อมูลจาก localStorage โดยใช้ key
       const item = window.localStorage.getItem(key);
-      // แปลงค่าที่ได้เป็น json หรือใช้ค่า initialValue หากไม่มีข้อมูล
       const value = item ? JSON.parse(item) : initialValue;
       setStoredValue(value);
     } catch (error) {
-      // ถ้าเกิดข้อผิดพลาด (เช่น localStorage ไม่รองรับ) ใช้ค่า initialValue
       console.error(`Error reading localStorage key "${key}":`, error);
       setStoredValue(initialValue);
     }
   }, [key, initialValue]);
 
-  // ฟังก์ชันสำหรับอัพเดทค่าใน state และ localStorage
+  // Update function that syncs localStorage and state
   const setValue = useCallback((value: T) => {
     try {
-      // บันทึกค่าลงใน state
       setStoredValue(value);
-      // บันทึกค่าใน localStorage
       window.localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
       console.error(`Error setting localStorage key "${key}":`, error);
@@ -49,30 +48,29 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T)
 }
 
 /**
- * useMediaQuery - ตรวจสอบ media query และอัพเดท state เมื่อมีการเปลี่ยนแปลง
+ * useMediaQuery - Tracks whether a media query matches
+ * @param query - The media query to track
+ * @returns Boolean indicating if the media query matches
  */
 export function useMediaQuery(query: string): boolean {
   const [matches, setMatches] = useState(false);
 
   useEffect(() => {
-    // ตรวจสอบ browser environment
+    // Return early during SSR
     if (typeof window === 'undefined') {
       return;
     }
 
-    // ตั้งค่าเริ่มต้น
     const media = window.matchMedia(query);
     setMatches(media.matches);
 
-    // ฟังก์ชันสำหรับอัพเดท state เมื่อ media query เปลี่ยนแปลง
+    // Update state when media query changes
     const listener = (e: MediaQueryListEvent) => {
       setMatches(e.matches);
     };
 
-    // ลงทะเบียน listener
     media.addEventListener('change', listener);
 
-    // cleanup เมื่อ component unmount
     return () => {
       media.removeEventListener('change', listener);
     };
@@ -82,23 +80,20 @@ export function useMediaQuery(query: string): boolean {
 }
 
 /**
- * useScrollPosition - ติดตามตำแหน่งการเลื่อนหน้าเว็บ
+ * useScrollPosition - Tracks window scroll position
+ * @returns Current scroll position (scrollY)
  */
 export function useScrollPosition() {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   useEffect(() => {
-    function handleScroll() {
+    const handleScroll = () => {
       setScrollPosition(window.scrollY);
-    }
+    };
 
-    // ลงทะเบียน event listener
-    window.addEventListener('scroll', handleScroll);
-
-    // เรียกใช้ครั้งแรกเพื่อตั้งค่าเริ่มต้น
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
-    // cleanup เมื่อ component unmount
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -108,9 +103,12 @@ export function useScrollPosition() {
 }
 
 /**
- * useIsVisible - ตรวจสอบว่า element อยู่ในพื้นที่มองเห็นหรือไม่
+ * useIsVisible - Tracks if an element is visible in the viewport
+ * @param threshold - Percentage of element that must be visible (0-1)
+ * @returns [ref, isVisible] - Ref to attach to element and boolean for visibility
  */
-export function useIsVisible(ref: React.RefObject<HTMLElement>, threshold = 0.1) {
+export function useIsVisible<T extends HTMLElement = HTMLElement>(threshold = 0.1) {
+  const ref = useRef<T>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -129,15 +127,41 @@ export function useIsVisible(ref: React.RefObject<HTMLElement>, threshold = 0.1)
     return () => {
       observer.unobserve(element);
     };
-  }, [ref, threshold]);
+  }, [threshold]);
 
-  return isVisible;
+  return [ref, isVisible] as const;
 }
 
+/**
+ * useReducedMotion - Detects if user prefers reduced motion
+ * @returns Boolean indicating if reduced motion is preferred
+ */
+export function useReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+    
+    mediaQuery.addEventListener('change', handleChange);
+    return () => {
+      mediaQuery.removeEventListener('change', handleChange);
+    };
+  }, []);
+  
+  return prefersReducedMotion;
+}
+
+// Export all hooks as a single object for convenience
 export default {
   useScrollToSection,
   useLocalStorage,
   useMediaQuery,
   useScrollPosition,
-  useIsVisible
+  useIsVisible,
+  useReducedMotion
 };

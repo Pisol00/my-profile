@@ -10,7 +10,7 @@ import {
   Globe,
   User
 } from 'lucide-react';
-import AnimatedSection from '@/components/common/AnimatedSection';
+import AnimatedSection from '@/components/common/animations/AnimatedSection';
 import { useLanguage } from '@/contexts';
 import { profileData } from '@/translations';
 import { SkillCard } from '@/components/common/cards';

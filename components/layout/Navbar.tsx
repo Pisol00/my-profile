@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Languages, Home, Star, Code2, GraduationCap, MessageSquare, MoonStar, Sun, Menu, X } from "lucide-react";
 import { useLanguage, useTheme } from '@/contexts';
-import NavItem from '@/components/common/NavItem';
-import MobileNavItem from '@/components/common/MobileNavItem';
+import NavItem from '@/components/common/ui/NavItem';
+import MobileNavItem from '@/components/common/ui/MobileNavItem';
 
 type NavbarProps = {
   scrollToSection: (ref: React.RefObject<HTMLElement>) => void;

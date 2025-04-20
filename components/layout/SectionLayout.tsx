@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, forwardRef } from 'react';
-import AnimatedSection from '@/components/common/AnimatedSection';
+import AnimatedSection from '@/components/common/animations/AnimatedSection';
 
 interface SectionLayoutProps {
   children: ReactNode;
@@ -16,21 +16,23 @@ interface SectionLayoutProps {
   className?: string;
   animationsEnabled?: boolean;
   decorations?: boolean;
+  titleClassName?: string;
+  subtitleClassName?: string;
 }
 
 /**
  * SectionLayout Component
  * 
- * ใช้เป็น layout หลักสำหรับทุก section ในเว็บไซต์
- * ช่วยลดความซ้ำซ้อนของโค้ดระหว่าง sections
+ * A consistent layout wrapper for all sections of the website
+ * Handles common section elements like title, background, and decorations
  */
 const SectionLayout = forwardRef<HTMLElement, SectionLayoutProps>(
   ({
     children,
     title,
     subtitle,
-    bgColor = '', // สีพื้นหลัง เช่น 'bg-white dark:bg-gray-900'
-    bgGradient = '', // gradient เช่น 'bg-gradient-to-b from-blue-50 to-white dark:from-blue-950/20 dark:to-gray-900'
+    bgColor = '',
+    bgGradient = '',
     bgImage = '',
     blurAmount = '5px',
     overlayOpacity = 0.5,
@@ -38,8 +40,10 @@ const SectionLayout = forwardRef<HTMLElement, SectionLayoutProps>(
     className = '',
     animationsEnabled = true,
     decorations = true,
+    titleClassName = '',
+    subtitleClassName = '',
   }, ref) => {
-    // กำหนด background class ตามค่าที่ส่งมา
+    // Determine background class based on props
     const bgClass = bgColor || bgGradient || 'bg-background';
 
     return (
@@ -48,7 +52,7 @@ const SectionLayout = forwardRef<HTMLElement, SectionLayoutProps>(
         id={id}
         className={`relative py-24 overflow-hidden ${bgClass} ${className}`}
       >
-        {/* พื้นหลังที่เป็นรูปภาพ (ถ้ามี) */}
+        {/* Background image (if provided) */}
         {bgImage && (
           <div
             className="absolute inset-0 z-0"
@@ -63,19 +67,19 @@ const SectionLayout = forwardRef<HTMLElement, SectionLayoutProps>(
           />
         )}
 
-        {/* Overlay */}
+        {/* Background overlay for text readability */}
         {bgImage && (
           <div className="absolute inset-0 z-0 bg-background/30 dark:bg-background/40" />
         )}
 
-        {/* Decorative elements (ถ้าเปิดใช้งาน) */}
+        {/* Decorative elements */}
         {decorations && (
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {/* วงกลมตกแต่ง */}
+            {/* Decorative circles */}
             <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-70"></div>
             <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-blue-50 dark:bg-blue-900/20 blur-3xl opacity-70"></div>
             
-            {/* ลายเส้นตาราง */}
+            {/* Grid pattern */}
             <div className="absolute inset-0 opacity-5">
               <svg width="100%" height="100%">
                 <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -87,25 +91,28 @@ const SectionLayout = forwardRef<HTMLElement, SectionLayoutProps>(
           </div>
         )}
 
-        {/* Content */}
+        {/* Content container */}
         <div className="container relative z-10 mx-auto max-w-7xl px-4">
-          {/* Title และ Subtitle (ถ้ามี) */}
+          {/* Section header with title and subtitle */}
           {(title || subtitle) && (
-            <AnimatedSection disabled={!animationsEnabled} className="mb-16 text-center">
+            <AnimatedSection 
+              disabled={!animationsEnabled} 
+              className={`mb-16 text-center ${titleClassName}`}
+            >
               {title && (
                 <h2 className="text-3xl md:text-5xl font-bold text-center mb-6">
                   {title}
                 </h2>
               )}
               {subtitle && (
-                <p className="text-center text-muted-foreground max-w-2xl mx-auto text-lg">
+                <p className={`text-center text-muted-foreground max-w-2xl mx-auto text-lg ${subtitleClassName}`}>
                   {subtitle}
                 </p>
               )}
             </AnimatedSection>
           )}
 
-          {/* Main Content */}
+          {/* Main content */}
           {children}
         </div>
       </section>

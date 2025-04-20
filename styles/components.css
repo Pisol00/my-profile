@@ -1,0 +1,279 @@
+/* 
+ * components.css - Specific styles for components
+ */
+
+/* ========================
+   Card Styles
+   ======================== */
+   .glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+  }
+  
+  .dark .glass-card {
+    background: rgba(20, 20, 70, 0.1);
+  }
+  
+  /* Glass effect for backdrop elements */
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .dark .glass-effect {
+    background: rgba(30, 30, 60, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(80, 80, 150, 0.2);
+  }
+  
+  /* ========================
+     Hero Section Styles
+     ======================== */
+  .hero-bg {
+    background: var(--hero-gradient);
+  }
+  
+  /* Profile image that changes size responsively */
+  .profile-image-responsive {
+    width: 160px;
+    height: 160px;
+  }
+  
+  @media (min-width: 640px) {
+    .profile-image-responsive {
+      width: 200px;
+      height: 200px;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .profile-image-responsive {
+      width: 240px;
+      height: 240px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .profile-image-responsive {
+      width: 280px;
+      height: 280px;
+    }
+  }
+  
+  /* Info card style for mobile layout */
+  .info-card-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .dark .info-card-mobile {
+    background-color: rgba(31, 41, 55, 0.8);
+    border-color: rgba(59, 130, 246, 0.2);
+  }
+  
+  /* ========================
+     Education Section Styles
+     ======================== */
+  
+  /* Timeline styles for desktop */
+  .timeline-line {
+    position: absolute;
+    top: 1.5rem;
+    bottom: -1.5rem;
+    left: 0.9375rem;
+    width: 2px;
+    background-color: rgba(59, 130, 246, 0.2);
+    z-index: 0;
+  }
+  
+  .timeline-marker {
+    position: relative;
+    z-index: 1;
+    background-color: white;
+    border: 4px solid rgba(59, 130, 246, 0.3);
+  }
+  
+  .dark .timeline-marker {
+    background-color: #1F2937;
+    border-color: rgba(59, 130, 246, 0.4);
+  }
+  
+  .dark .timeline-line {
+    background-color: rgba(59, 130, 246, 0.3);
+  }
+  
+  /* Education card for mobile */
+  .mobile-education-card {
+    background-color: white;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+  }
+  
+  .dark .mobile-education-card {
+    background-color: #1F2937;
+    border-color: rgba(59, 130, 246, 0.2);
+  }
+  
+  .education-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+  }
+  
+  .dark .education-card-header {
+    border-color: rgba(59, 130, 246, 0.2);
+  }
+  
+  .education-toggle-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    background-color: rgba(59, 130, 246, 0.1);
+    color: rgba(37, 99, 235, 1);
+    transition: all 0.2s;
+  }
+  
+  .dark .education-toggle-button {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: rgba(96, 165, 250, 1);
+  }
+  
+  /* ========================
+     Gradient Styles
+     ======================== */
+  
+  /* Gradient text */
+  .gradient-text {
+    color: var(--primary);
+    font-weight: bold;
+  }
+  
+  /* Gradient button */
+  .gradient-button {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    transition: 0.3s;
+  }
+  
+  .gradient-button:hover {
+    opacity: 0.9;
+  }
+  
+  /* ========================
+     Responsive Section Padding
+     ======================== */
+  @media (max-width: 640px) {
+    section {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+    
+    .p-section-sm {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+  }
+  
+  @media (min-width: 641px) and (max-width: 1023px) {
+    section {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    
+    .p-section-md {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    section {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+    
+    .p-section-lg {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+  }
+  
+  /* ========================
+     Landscape Mode Adjustments
+     ======================== */
+  @media (max-height: 480px) and (orientation: landscape) {
+    /* Hero Section */
+    .hero-section-landscape {
+      min-height: auto !important;
+      padding-top: 5rem !important;
+      padding-bottom: 2rem !important;
+    }
+    
+    .profile-image-landscape {
+      width: 120px !important;
+      height: 120px !important;
+    }
+    
+    .landscape-row {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+    }
+    
+    .landscape-col-auto {
+      width: auto !important;
+    }
+    
+    .landscape-text-sm {
+      font-size: 0.875rem !important;
+    }
+    
+    .landscape-text-lg {
+      font-size: 1.25rem !important;
+    }
+  }
+  
+  /* ========================
+     Print Styles
+     ======================== */
+  @media print {
+    section {
+      page-break-inside: avoid;
+    }
+    
+    .no-print {
+      display: none !important;
+    }
+    
+    body {
+      color: black;
+      background: white;
+    }
+    
+    a {
+      text-decoration: underline;
+      color: #2563eb !important;
+    }
+    
+    img {
+      max-width: 300px;
+    }
+  }

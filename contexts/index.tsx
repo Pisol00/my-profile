@@ -6,13 +6,28 @@ import { Language, translations } from '@/translations';
 // =============================
 // Theme Context
 // =============================
-type ThemeContextType = {
+interface ThemeContextType {
   isDarkMode: boolean;
   toggleDarkMode: () => void;
-};
+}
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+/**
+ * Custom hook for accessing theme context
+ */
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  if (context === undefined && typeof window !== 'undefined') {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context || { isDarkMode: false, toggleDarkMode: () => {} };
+}
+
+/**
+ * ThemeProvider component
+ * Manages dark/light mode state
+ */
 function ThemeProvider({ children }: { children: ReactNode }) {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [isClient, setIsClient] = useState(false);
@@ -20,31 +35,21 @@ function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setIsClient(true);
     
-    // ตรวจสอบ preference ของระบบ
+    // Check system preference and localStorage
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    // ใช้ค่าจาก localStorage หรือถ้าไม่มีให้ใช้ค่าจากระบบ
     const savedTheme = localStorage.getItem('darkMode');
     const initialDarkMode = savedTheme !== null ? savedTheme === 'true' : systemPrefersDark;
     
     setIsDarkMode(initialDarkMode);
-
-    if (initialDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    applyTheme(initialDarkMode);
     
-    // ติดตามการเปลี่ยนแปลง system preference
+    // Listen for system preference changes
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
-      // เปลี่ยนเฉพาะกรณีที่ผู้ใช้ไม่ได้ตั้งค่าไว้เอง
+      // Only change if user hasn't set a preference
       if (localStorage.getItem('darkMode') === null) {
         setIsDarkMode(e.matches);
-        if (e.matches) {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
+        applyTheme(e.matches);
       }
     };
     
@@ -52,19 +57,24 @@ function ThemeProvider({ children }: { children: ReactNode }) {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  const toggleDarkMode = () => {
-    const newDarkMode = !isDarkMode;
-    setIsDarkMode(newDarkMode);
-    localStorage.setItem('darkMode', String(newDarkMode));
-
-    if (newDarkMode) {
+  // Apply theme to document
+  const applyTheme = (dark: boolean) => {
+    if (dark) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
   };
 
-  // ส่งค่า undefined ถ้าอยู่ฝั่ง server เพื่อหลีกเลี่ยงปัญหา hydration
+  // Toggle theme function
+  const toggleDarkMode = () => {
+    const newDarkMode = !isDarkMode;
+    setIsDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', String(newDarkMode));
+    applyTheme(newDarkMode);
+  };
+
+  // Return undefined during SSR to avoid hydration issues
   const value = useMemo(() => 
     isClient ? { isDarkMode, toggleDarkMode } : undefined
   , [isClient, isDarkMode]);
@@ -76,65 +86,21 @@ function ThemeProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Custom hook สำหรับใช้งาน theme
-function useTheme() {
-  const context = useContext(ThemeContext);
-  if (context === undefined && typeof window !== 'undefined') {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context || { isDarkMode: false, toggleDarkMode: () => {} };
-}
-
 // =============================
 // Language Context
 // =============================
-type LanguageContextType = {
+interface LanguageContextType {
   currentLang: Language;
   t: Record<string, string>;
   toggleLanguage: () => void;
-};
+}
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-function LanguageProvider({ children }: { children: ReactNode }) {
-  const [currentLang, setCurrentLang] = useState<Language>('en');
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-    
-    // ใช้ค่าภาษาจาก localStorage หรือ browser language
-    const browserLang = navigator.language.startsWith('th') ? 'th' : 'en';
-    const savedLang = (localStorage.getItem('preferredLanguage') as Language) || browserLang;
-    
-    setCurrentLang(savedLang);
-    document.documentElement.lang = savedLang;
-  }, []);
-
-  const toggleLanguage = () => {
-    const newLang = currentLang === 'en' ? 'th' : 'en';
-    setCurrentLang(newLang);
-    localStorage.setItem('preferredLanguage', newLang);
-    document.documentElement.lang = newLang;
-  };
-
-  // คำแปลภาษาปัจจุบัน - ใช้ useMemo เพื่อไม่ให้ re-render บ่อย
-  const t = useMemo(() => translations[currentLang], [currentLang]);
-
-  // ส่งค่า undefined ถ้าอยู่ฝั่ง server เพื่อหลีกเลี่ยงปัญหา hydration
-  const value = useMemo(() => 
-    isClient ? { currentLang, t, toggleLanguage } : undefined
-  , [isClient, currentLang, t]);
-
-  return (
-    <LanguageContext.Provider value={value}>
-      {children}
-    </LanguageContext.Provider>
-  );
-}
-
-// Custom hook สำหรับใช้งานภาษา
-function useLanguage() {
+/**
+ * Custom hook for accessing language context
+ */
+export function useLanguage() {
   const context = useContext(LanguageContext);
   if (context === undefined && typeof window !== 'undefined') {
     throw new Error('useLanguage must be used within a LanguageProvider');
@@ -146,13 +112,55 @@ function useLanguage() {
   };
 }
 
+/**
+ * LanguageProvider component
+ * Manages language state and translations
+ */
+function LanguageProvider({ children }: { children: ReactNode }) {
+  const [currentLang, setCurrentLang] = useState<Language>('en');
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    
+    // Use language from localStorage or browser preference
+    const browserLang = navigator.language.startsWith('th') ? 'th' : 'en';
+    const savedLang = (localStorage.getItem('preferredLanguage') as Language) || browserLang;
+    
+    setCurrentLang(savedLang);
+    document.documentElement.lang = savedLang;
+  }, []);
+
+  // Toggle language function
+  const toggleLanguage = () => {
+    const newLang = currentLang === 'en' ? 'th' : 'en';
+    setCurrentLang(newLang);
+    localStorage.setItem('preferredLanguage', newLang);
+    document.documentElement.lang = newLang;
+  };
+
+  // Get current translations using memoization
+  const t = useMemo(() => translations[currentLang], [currentLang]);
+
+  // Return undefined during SSR to avoid hydration issues
+  const value = useMemo(() => 
+    isClient ? { currentLang, t, toggleLanguage } : undefined
+  , [isClient, currentLang, t]);
+
+  return (
+    <LanguageContext.Provider value={value}>
+      {children}
+    </LanguageContext.Provider>
+  );
+}
+
 // =============================
 // Combined Provider
 // =============================
 
 /**
- * AppProviders - รวม Provider ทั้งหมดไว้ในที่เดียว
- * ทำให้สะดวกในการใช้งานและลดความซ้ำซ้อน
+ * AppProviders - combines all context providers
+ * Makes it easier to wrap the app with all required providers
  */
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
@@ -163,5 +171,3 @@ export function AppProviders({ children }: { children: ReactNode }) {
     </ThemeProvider>
   );
 }
-
-export { useTheme, useLanguage };

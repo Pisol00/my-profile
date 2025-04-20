@@ -1,0 +1,156 @@
+/* 
+ * animations.css - Optimized animation styles
+ */
+
+/* Float animation for profile images */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  /* Slow bounce animation for scroll indicators */
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(4px);
+    }
+  }
+  
+  .animate-bounce-slow {
+    animation: bounce 2s infinite;
+  }
+  
+  /* Fade in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+  
+  /* Slide in animation variants */
+  @keyframes slideInUp {
+    from { 
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-slide-up {
+    animation: slideInUp 0.5s ease-out forwards;
+  }
+  
+  @keyframes slideInLeft {
+    from { 
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .animate-slide-left {
+    animation: slideInLeft 0.5s ease-out forwards;
+  }
+  
+  @keyframes slideInRight {
+    from { 
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .animate-slide-right {
+    animation: slideInRight 0.5s ease-out forwards;
+  }
+  
+  /* Hover effects */
+  .card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+  }
+  
+  .button-hover {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .button-hover:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+  }
+  
+  /* Animation delay utilities */
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+  
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+  
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+  
+  .delay-400 {
+    animation-delay: 400ms;
+  }
+  
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+  
+  /* Performance optimizations for animations */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float,
+    .animate-bounce-slow,
+    .animate-fade-in,
+    .animate-slide-up,
+    .animate-slide-left,
+    .animate-slide-right {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+  
+  /* Optimize for mobile devices */
+  @media (max-width: 640px) {
+    .animate-float {
+      animation-duration: 4s; /* Faster on mobile */
+    }
+    
+    .animate-bounce-slow {
+      animation-duration: 1.5s; /* Faster on mobile */
+    }
+    
+    /* Simplify transitions on low-end devices */
+    @media (pointer: coarse) {
+      .reduce-animation {
+        transition-duration: 0.2s !important;
+        animation-duration: 2s !important;
+      }
+    }
+  }

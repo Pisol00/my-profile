@@ -3,7 +3,7 @@
 import { forwardRef, useState } from 'react';
 import { GraduationCap, CheckCircle, BookOpen, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
-import AnimatedSection from '@/components/common/AnimatedSection';
+import AnimatedSection from '@/components/common/animations/AnimatedSection';
 import { useLanguage } from '@/contexts';
 import { localizedData } from '@/translations';
 

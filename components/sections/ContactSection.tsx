@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Mail, Phone, Github, MapPin, ExternalLink, MessageSquare } from 'lucide-react';
 import Link from 'next/link'; // เพิ่ม Next.js Link
-import AnimatedSection from '@/components/common/AnimatedSection';
+import AnimatedSection from '@/components/common/animations/AnimatedSection';
 import { useLanguage } from '@/contexts';
 import { profileData } from '@/translations';
 import ContactForm from './ContactForm'; // นำเข้า ContactForm ใหม่

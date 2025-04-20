@@ -4,7 +4,7 @@ import { forwardRef, useState, useMemo } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Github, ExternalLink, Code2, FolderGit2 } from 'lucide-react';
 import Link from 'next/link'; // เพิ่ม Next.js Link
-import AnimatedSection from '@/components/common/AnimatedSection';
+import AnimatedSection from '@/components/common/animations/AnimatedSection';
 import { useLanguage } from '@/contexts';
 import { localizedData } from '@/translations';
 

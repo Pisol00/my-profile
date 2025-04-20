@@ -14,7 +14,7 @@ interface AnimatedSectionProps {
   disabled?: boolean;
 }
 
-// animations style map - แยกส่วน styles ออกมาเพื่อความเป็นระเบียบ
+// Extracted animation styles into a separate object for better organization
 const animationStyles: Record<AnimationType, { initial: CSSProperties, visible: CSSProperties }> = {
   'fade-in': {
     initial: { opacity: 0, transform: 'translateY(10px)' },
@@ -41,8 +41,8 @@ const animationStyles: Record<AnimationType, { initial: CSSProperties, visible: 
 /**
  * AnimatedSection Component
  * 
- * ใช้สำหรับสร้าง section ที่มี animation เมื่อเลื่อนมาถึง
- * ปรับปรุงประสิทธิภาพด้วย memo และการแยกส่วน styles
+ * A component that animates its children when they enter the viewport
+ * Can be disabled for performance or accessibility reasons
  */
 const AnimatedSection = memo(({
   children,
@@ -57,7 +57,7 @@ const AnimatedSection = memo(({
   const [isVisible, setIsVisible] = useState(false);
   
   useEffect(() => {
-    // ถ้า disabled ให้แสดงผลทันทีโดยไม่มี animation
+    // Skip animation if disabled
     if (disabled) {
       setIsVisible(true);
       return () => {};
@@ -66,10 +66,11 @@ const AnimatedSection = memo(({
     const section = sectionRef.current;
     if (!section) return () => {};
     
+    // Create intersection observer to detect when element enters viewport
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // ให้เวลาสักนิดก่อนจะแสดง animation เพื่อให้ browser จัดการกับ layout ก่อน
+          // Small delay to ensure browser has handled layout tasks
           setTimeout(() => {
             setIsVisible(true);
           }, 50);
@@ -92,15 +93,15 @@ const AnimatedSection = memo(({
     };
   }, [threshold, disabled]);
 
-  // ถ้า disabled ให้แสดงผลโดยไม่มี style พิเศษ
+  // If animations are disabled, render without animation styles
   if (disabled) {
     return <div id={id} className={className}>{children}</div>;
   }
 
-  // เลือก styles ตาม animation type
+  // Get the appropriate styles for the selected animation
   const { initial, visible } = animationStyles[animation];
   
-  // สร้าง transition style ที่ใช้สำหรับทุก animation
+  // Create transition styles - same for all animations
   const transitionStyle: CSSProperties = {
     transition: `opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
     willChange: 'opacity, transform',
@@ -108,7 +109,7 @@ const AnimatedSection = memo(({
     WebkitBackfaceVisibility: 'hidden',
   };
   
-  // รวม styles ต่างๆ
+  // Combine all styles
   const styles: CSSProperties = {
     ...initial,
     ...(isVisible ? visible : {}),

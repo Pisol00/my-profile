@@ -1,6 +1,6 @@
 'use client'
 import React, { ReactNode } from 'react';
-import AnimatedSection from '@/components/common/AnimatedSection';
+import AnimatedSection from '@/components/common/animations/AnimatedSection';
 
 interface ClearerBgSectionProps {
   children: ReactNode;

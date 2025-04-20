@@ -5,8 +5,8 @@ import Image from 'next/image';
 import { Mail, Github, MapPin, Phone, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import AnimatedSection from '@/components/common/AnimatedSection';
-import InfoBadge from '@/components/common/InfoBadge';
+import AnimatedSection from '@/components/common/animations/AnimatedSection';
+import InfoBadge from '@/components/common/ui/InfoBadge';
 import { useLanguage } from '@/contexts';
 import { profileData, localizedData } from '@/translations';
 
