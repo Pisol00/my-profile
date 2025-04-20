@@ -18,7 +18,7 @@ const en: TranslationType = {
   // Common
   name: "PISOL UATTANKANJANA",
   title: "SOFTWARE ENGINEERING",
-  bio: "A third-year Information Technology student at King Mongkut's Institute of Technology Ladkrabang, seeking a 2-month internship in Full-Stack Development. Passionate about web and application development, eager to apply knowledge, optimize systems, and develop problem-solving and teamwork skills through real-world experience.",
+  bio: "A third-year Information Technology student at King Mongkut's Institute of Technology Ladkrabang with a focus on software development. Passionate about web and application development with experience in both front-end and back-end technologies. Dedicated to creating efficient digital solutions, optimizing systems, and continuously improving problem-solving and teamwork skills through hands-on projects.",
   location: "Bangkok, Thailand",
   allRightsReserved: "All rights reserved.",
   contactMe: "Contact Me",
@@ -70,7 +70,7 @@ const th: TranslationType = {
   // Common
   name: "พิศลย์ อุตตาลกาญจนา",
   title: "วิศวกรรมซอฟต์แวร์",
-  bio: "นักศึกษาชั้นปีที่ 3 สาขาเทคโนโลยีสารสนเทศ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง กำลังมองหาการฝึกงาน 2 เดือนในด้าน Full-Stack Development มีความชื่นชอบในการพัฒนาเว็บและแอปพลิเคชัน กระตือรือร้นที่จะนำความรู้ไปประยุกต์ใช้ เพิ่มประสิทธิภาพระบบ และพัฒนาทักษะการแก้ปัญหาและการทำงานเป็นทีมผ่านประสบการณ์จริง",
+  bio: "นักศึกษาชั้นปีที่ 3 สาขาเทคโนโลยีสารสนเทศ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง เน้นด้านการพัฒนาซอฟต์แวร์ มีความชื่นชอบในการพัฒนาเว็บและแอปพลิเคชัน มีประสบการณ์ทั้งด้าน front-end และ back-end มุ่งมั่นสร้างโซลูชั่นดิจิทัลที่มีประสิทธิภาพ ปรับปรุงระบบ และพัฒนาทักษะการแก้ปัญหาและการทำงานเป็นทีมผ่านโปรเจกต์ต่างๆ",
   location: "กรุงเทพมหานคร, ประเทศไทย",
   allRightsReserved: "สงวนลิขสิทธิ์",
   contactMe: "ติดต่อฉัน",

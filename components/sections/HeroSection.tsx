@@ -34,13 +34,13 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
     // Text options for typing animation
     const typingTexts = [
       currentLang === "en" ? "SOFTWARE ENGINEERING" : "วิศวกรรมซอฟต์แวร์",
-      currentLang === "en" ? "FULL STACK DEVELOPER" : "นักพัฒนา FULL STACK"
+      currentLang === "en" ? "FULL STACK DEVELOPER" : "นักพัฒนาซอฟต์แวร์แบบ Full Stack"
     ];
 
     return (
       <section
         ref={ref}
-        className="min-h-[90vh] pt-16 pb-8 sm:pt-20 sm:pb-12 md:pt-24 md:pb-16 flex flex-col justify-center relative overflow-hidden bg-white dark:bg-black"
+        className="min-h-[100vh] pt-16 pb-8 sm:pt-20 sm:pb-12 md:pt-24 md:pb-16 flex flex-col justify-center relative overflow-hidden bg-white dark:bg-black"
       >
         {/* Background with subtle gradient circles */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-60">
