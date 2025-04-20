@@ -9,6 +9,7 @@ import AnimatedSection from '@/components/common/animations/AnimatedSection';
 import InfoBadge from '@/components/common/ui/InfoBadge';
 import { useLanguage } from '@/contexts';
 import { profileData, localizedData } from '@/translations';
+import TypedText from '@/components/common/animations/TypedText';
 
 type HeroSectionProps = {
   animationsEnabled: boolean;
@@ -30,10 +31,16 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
     const firstName = nameParts[0] || "";
     const lastName = nameParts.length > 1 ? nameParts[1] : "";
 
+    // Text options for typing animation
+    const typingTexts = [
+      currentLang === "en" ? "SOFTWARE ENGINEERING" : "วิศวกรรมซอฟต์แวร์",
+      currentLang === "en" ? "FULL STACK DEVELOPER" : "นักพัฒนา FULL STACK"
+    ];
+
     return (
       <section
         ref={ref}
-        className="min-h-screen pt-20 pb-8 sm:pt-24 sm:pb-12 md:pt-28 md:pb-16 relative overflow-hidden bg-white dark:bg-black hero-adjust-height"
+        className="min-h-[90vh] pt-16 pb-8 sm:pt-20 sm:pb-12 md:pt-24 md:pb-16 flex flex-col justify-center relative overflow-hidden bg-white dark:bg-black"
       >
         {/* Background with subtle gradient circles */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-60">
@@ -63,9 +70,9 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
           </div>
         </div>
 
-        <div className="container mx-auto px-5 sm:px-6 relative z-10">
+        <div className="container mx-auto px-5 sm:px-6 relative z-10 flex-1 flex flex-col justify-center">
           {/* Split layout between mobile/tablet and desktop */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between md:gap-12">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-center md:gap-12">
 
             {/* Profile image - top on mobile/tablet, right on desktop */}
             <div className="md:order-2 md:w-2/5 mb-8 md:mb-0 flex justify-center">
@@ -82,12 +89,12 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
                 <div className="absolute -inset-1 rounded-full border-2 border-gray-200 dark:border-gray-700"></div>
 
                 {/* Main Image Container - responsive sizes */}
-                <div className="relative w-44 h-44 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80 overflow-hidden rounded-full border-4 border-white dark:border-gray-800 shadow-xl">
+                <div className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 overflow-hidden rounded-full border-4 border-white dark:border-gray-800 shadow-xl">
                   <Image
                     src="/profile-image.jpg"
                     alt={profile.name}
                     fill
-                    sizes="(max-width: 640px) 176px, (max-width: 768px) 224px, (max-width: 1024px) 256px, 320px"
+                    sizes="(max-width: 640px) 160px, (max-width: 768px) 192px, (max-width: 1024px) 224px, 256px"
                     priority
                     className="object-cover hover:scale-105 transition-transform duration-700"
                     style={{ objectPosition: "center top" }}
@@ -113,17 +120,22 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
                   </span>
                 </h1>
 
-                <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 md:mb-6 text-gray-600 dark:text-gray-300">
-                  {profile.title}
+                <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 md:mb-5 text-gray-600 dark:text-gray-300">
+                  <TypedText 
+                    texts={typingTexts} 
+                    typingSpeed={80} 
+                    deletingSpeed={40} 
+                    delayBetweenTexts={2000}
+                  />
                 </h2>
 
                 {/* Bio */}
-                <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300 mb-6 md:mb-8 max-w-2xl mx-auto md:mx-0 leading-relaxed">
+                <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300 mb-4 sm:mb-5 max-w-2xl mx-auto md:mx-0 leading-relaxed">
                   {profile.bio}
                 </p>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 md:mb-8 justify-center md:justify-start">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4 sm:mb-5 justify-center md:justify-start">
                   <Button
                     asChild
                     size="lg"
@@ -153,7 +165,7 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
                 </div>
 
                 {/* Quick Info - mobile card style vs desktop badge style */}
-                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-6 md:mb-0 justify-center md:justify-start">
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-0 justify-center md:justify-start">
                   {/* Mobile - Card Style */}
                   <div className="sm:hidden grid grid-cols-1 gap-3 w-full">
                     <div className="flex items-center justify-center gap-2 p-3 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
@@ -192,12 +204,12 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
             </div>
           </div>
 
-          {/* Scroll Indicator*/}
-          <div className="hidden sm:flex justify-center mt-8 md:mt-12">
+          {/* Scroll Indicator - Only visible on tablet and desktop */}
+          <div className="hidden sm:flex justify-center mt-auto pt-4">
             <button
               onClick={onScrollToNext}
               aria-label="Scroll to skills section"
-              className="cursor-pointer bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-full border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all shadow-md"
+              className="cursor-pointer bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-full border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all shadow-md "
             >
               <ChevronDown size={20} className="sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400" />
             </button>
