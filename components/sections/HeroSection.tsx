@@ -33,7 +33,7 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
     return (
       <section
         ref={ref}
-        className="min-h-screen pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-16 md:pb-20 relative overflow-hidden bg-white dark:bg-black hero-adjust-height"
+        className="min-h-screen pt-20 pb-8 sm:pt-24 sm:pb-12 md:pt-28 md:pb-16 relative overflow-hidden bg-white dark:bg-black hero-adjust-height"
       >
         {/* Background with subtle gradient circles */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-60">
@@ -93,15 +93,6 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
                     style={{ objectPosition: "center top" }}
                   />
                 </div>
-
-                {/* Floating decoration elements - responsive sizes */}
-                {/* <div className="absolute -top-4 -right-4 sm:-top-6 sm:-right-6 w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 lg:w-20 lg:h-20 bg-white dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700 shadow-md flex items-center justify-center animate-float">
-                  <span className="text-xl sm:text-2xl md:text-2xl lg:text-3xl">👨‍💻</span>
-                </div>
-                
-                <div className="absolute -bottom-3 -left-3 sm:-bottom-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-white dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700 shadow-md flex items-center justify-center animate-float" style={{animationDelay: "1s"}}>
-                  <span className="text-lg sm:text-xl md:text-xl lg:text-2xl">🚀</span>
-                </div> */}
               </AnimatedSection>
             </div>
 
@@ -201,12 +192,12 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
             </div>
           </div>
 
-          {/* Scroll Indicator */}
-          <div className="flex justify-center mt-8 md:mt-12">
+          {/* Scroll Indicator*/}
+          <div className="hidden sm:flex justify-center mt-8 md:mt-12">
             <button
               onClick={onScrollToNext}
               aria-label="Scroll to skills section"
-              className="cursor-pointer bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-full border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all shadow-md "
+              className="cursor-pointer bg-white dark:bg-gray-800 p-2.5 sm:p-3 rounded-full border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all shadow-md"
             >
               <ChevronDown size={20} className="sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400" />
             </button>

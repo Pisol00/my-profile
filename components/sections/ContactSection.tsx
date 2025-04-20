@@ -48,142 +48,290 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
             </p>
           </AnimatedSection>
 
-          {/* Main content with split design */}
-          <div className="max-w-6xl mx-auto bg-white dark:bg-gray-900 rounded-lg sm:rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-800 luxury-card">
-            <div className="grid md:grid-cols-5">
-              {/* Left side - Contact Info */}
-              <div className="md:col-span-2 bg-gray-50 dark:bg-gray-800/50 p-5 sm:p-8 md:p-12">
-                <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2 text-gray-900 dark:text-white">
-                  <MessageSquare size={20} className="sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400" />
-                  <span>{currentLang === "en" ? "Contact Info" : "ข้อมูลติดต่อ"}</span>
-                </h3>
+          {/* Desktop View - Split Card Design */}
+          <div className="hidden md:block">
+            <div className="max-w-6xl mx-auto bg-white dark:bg-gray-900 rounded-lg sm:rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-800 luxury-card">
+              <div className="grid md:grid-cols-5">
+                {/* Left side - Contact Info */}
+                <div className="md:col-span-2 bg-gray-50 dark:bg-gray-800/50 p-5 sm:p-8 md:p-12">
+                  <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2 text-gray-900 dark:text-white">
+                    <MessageSquare size={20} className="sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400" />
+                    <span>{currentLang === "en" ? "Contact Info" : "ข้อมูลติดต่อ"}</span>
+                  </h3>
+                  
+                  <div className="space-y-6 sm:space-y-8">
+                    {/* Email */}
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
+                        <Mail size={18} className="sm:w-5 sm:h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
+                          {currentLang === "en" ? "Email" : "อีเมล"}
+                        </h4>
+                        <Link 
+                          href={`mailto:${profileData.email}`} 
+                          className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1 group text-sm sm:text-base break-all"
+                        >
+                          {profileData.email}
+                          <ExternalLink size={12} className="sm:w-3.5 sm:h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </Link>
+                      </div>
+                    </div>
+                    
+                    {/* Phone */}
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
+                        <Phone size={18} className="sm:w-5 sm:h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
+                          {currentLang === "en" ? "Phone" : "โทรศัพท์"}
+                        </h4>
+                        <Link 
+                          href={`tel:${profileData.phone}`} 
+                          className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1 group text-sm sm:text-base"
+                        >
+                          {profileData.phone}
+                          <ExternalLink size={12} className="sm:w-3.5 sm:h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </Link>
+                      </div>
+                    </div>
+                    
+                    {/* Location */}
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
+                        <MapPin size={18} className="sm:w-5 sm:h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
+                          {currentLang === "en" ? "Location" : "ที่อยู่"}
+                        </h4>
+                        <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
+                          {t.location}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    {/* GitHub */}
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
+                        <Github size={18} className="sm:w-5 sm:h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
+                          GitHub
+                        </h4>
+                        <Link 
+                          href={`https://github.com/${profileData.github}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1 group text-sm sm:text-base"
+                        >
+                          github.com/{profileData.github}
+                          <ExternalLink size={12} className="sm:w-3.5 sm:h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 
-                <div className="space-y-6 sm:space-y-8">
-                  {/* Email */}
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
-                      <Mail size={18} className="sm:w-5 sm:h-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
-                        {currentLang === "en" ? "Email" : "อีเมล"}
-                      </h4>
-                      <Link 
-                        href={`mailto:${profileData.email}`} 
-                        className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1 group text-sm sm:text-base break-all"
-                      >
-                        {profileData.email}
-                        <ExternalLink size={12} className="sm:w-3.5 sm:h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </Link>
-                    </div>
+                {/* Right side - Contact Form/Message */}
+                <div className="md:col-span-3 p-5 sm:p-8 md:p-12">
+                  <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2 text-gray-900 dark:text-white">
+                    <MessageSquare size={20} className="sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400" />
+                    <span>{currentLang === "en" ? "Send a Message" : "ส่งข้อความ"}</span>
+                  </h3>
+                  
+                  <div className="mb-6 sm:mb-8">
+                    <p className="text-gray-600 dark:text-gray-300 mb-5 sm:mb-6 text-sm sm:text-base">
+                      {currentLang === "en"
+                        ? "I'm currently available for internship opportunities, collaborations, or any questions you might have."
+                        : "ฉันพร้อมรับโอกาสฝึกงาน ความร่วมมือ หรือตอบคำถามที่คุณอาจมี"}
+                    </p>
+                    
+                    {/* Use the ContactForm component */}
+                    <ContactForm />
                   </div>
                   
-                  {/* Phone */}
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
-                      <Phone size={18} className="sm:w-5 sm:h-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
-                        {currentLang === "en" ? "Phone" : "โทรศัพท์"}
-                      </h4>
-                      <Link 
-                        href={`tel:${profileData.phone}`} 
-                        className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1 group text-sm sm:text-base"
+                  {/* Alternative contact methods */}
+                  <div className="border-t border-gray-100 dark:border-gray-800 pt-4 sm:pt-6 mt-6 sm:mt-8">
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-3 sm:mb-4">
+                      {currentLang === "en"
+                        ? "Prefer a direct approach? Contact me via:"
+                        : "ต้องการติดต่อโดยตรง? ติดต่อฉันผ่าน:"}
+                    </p>
+                    <div className="flex gap-2 sm:gap-3">
+                      <Button 
+                        variant="outline" 
+                        size="lg"
+                        asChild
+                        className="flex-1 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 py-2 sm:py-2.5 h-auto text-xs sm:text-sm"
                       >
-                        {profileData.phone}
-                        <ExternalLink size={12} className="sm:w-3.5 sm:h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </Link>
-                    </div>
-                  </div>
-                  
-                  {/* Location */}
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
-                      <MapPin size={18} className="sm:w-5 sm:h-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
-                        {currentLang === "en" ? "Location" : "ที่อยู่"}
-                      </h4>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
-                        {t.location}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  {/* GitHub */}
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
-                      <Github size={18} className="sm:w-5 sm:h-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
-                        GitHub
-                      </h4>
-                      <Link 
-                        href={`https://github.com/${profileData.github}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1 group text-sm sm:text-base"
+                        <Link href={`mailto:${profileData.email}`}>
+                          <Mail size={14} className="sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
+                          Email
+                        </Link>
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="lg"
+                        asChild
+                        className="flex-1 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 py-2 sm:py-2.5 h-auto text-xs sm:text-sm"
                       >
-                        github.com/{profileData.github}
-                        <ExternalLink size={12} className="sm:w-3.5 sm:h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </Link>
+                        <Link href={`tel:${profileData.phone}`}>
+                          <Phone size={14} className="sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
+                          {currentLang === "en" ? "Call" : "โทร"}
+                        </Link>
+                      </Button>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              {/* Right side - Contact Form/Message */}
-              <div className="md:col-span-3 p-5 sm:p-8 md:p-12">
-                <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2 text-gray-900 dark:text-white">
-                  <MessageSquare size={20} className="sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400" />
+            </div>
+          </div>
+
+          {/* Mobile View - Stacked Card Design */}
+          <div className="md:hidden">
+            {/* Contact Info Card */}
+            <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 shadow-md overflow-hidden mb-6 luxury-card">
+              <div className="p-5 border-b border-gray-100 dark:border-gray-800">
+                <h3 className="text-lg font-bold flex items-center gap-2 text-gray-900 dark:text-white">
+                  <MessageSquare size={18} className="text-gray-600 dark:text-gray-400" />
+                  <span>{currentLang === "en" ? "Contact Info" : "ข้อมูลติดต่อ"}</span>
+                </h3>
+              </div>
+
+              <div className="p-5 space-y-5">
+                {/* Contact Method Cards - Compact Mobile Layout */}
+                <div className="grid gap-3">
+                  {/* Email Card */}
+                  <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-100 dark:border-gray-800">
+                    <div className="w-9 h-9 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
+                      <Mail size={16} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-medium text-sm mb-0.5 text-gray-900 dark:text-white">
+                        {currentLang === "en" ? "Email" : "อีเมล"}
+                      </h4>
+                      <Link 
+                        href={`mailto:${profileData.email}`} 
+                        className="text-gray-600 dark:text-gray-300 text-xs truncate block"
+                      >
+                        {profileData.email}
+                      </Link>
+                    </div>
+                    <Link 
+                      href={`mailto:${profileData.email}`} 
+                      className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+                    >
+                      <ExternalLink size={14} />
+                    </Link>
+                  </div>
+
+                  {/* Phone Card */}
+                  <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-100 dark:border-gray-800">
+                    <div className="w-9 h-9 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
+                      <Phone size={16} />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-medium text-sm mb-0.5 text-gray-900 dark:text-white">
+                        {currentLang === "en" ? "Phone" : "โทรศัพท์"}
+                      </h4>
+                      <span className="text-gray-600 dark:text-gray-300 text-xs">
+                        {profileData.phone}
+                      </span>
+                    </div>
+                    <Link 
+                      href={`tel:${profileData.phone}`} 
+                      className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+                    >
+                      <ExternalLink size={14} />
+                    </Link>
+                  </div>
+
+                  {/* Location Card */}
+                  <div className="flex items-start gap-3 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-100 dark:border-gray-800">
+                    <div className="w-9 h-9 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700 mt-0.5">
+                      <MapPin size={16} />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-medium text-sm mb-0.5 text-gray-900 dark:text-white">
+                        {currentLang === "en" ? "Location" : "ที่อยู่"}
+                      </h4>
+                      <p className="text-gray-600 dark:text-gray-300 text-xs">
+                        {t.location}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* GitHub Card */}
+                  <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-100 dark:border-gray-800">
+                    <div className="w-9 h-9 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center text-gray-600 dark:text-gray-400 shadow-sm border border-gray-100 dark:border-gray-700">
+                      <Github size={16} />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-medium text-sm mb-0.5 text-gray-900 dark:text-white">
+                        GitHub
+                      </h4>
+                      <span className="text-gray-600 dark:text-gray-300 text-xs">
+                        github.com/{profileData.github}
+                      </span>
+                    </div>
+                    <Link 
+                      href={`https://github.com/${profileData.github}`}
+                      target="_blank"
+                      rel="noopener noreferrer" 
+                      className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+                    >
+                      <ExternalLink size={14} />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Form Card */}
+            <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 shadow-md overflow-hidden mb-6 luxury-card">
+              <div className="p-5 border-b border-gray-100 dark:border-gray-800">
+                <h3 className="text-lg font-bold flex items-center gap-2 text-gray-900 dark:text-white">
+                  <MessageSquare size={18} className="text-gray-600 dark:text-gray-400" />
                   <span>{currentLang === "en" ? "Send a Message" : "ส่งข้อความ"}</span>
                 </h3>
+              </div>
+
+              <div className="p-5">
+                <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm">
+                  {currentLang === "en"
+                    ? "I'm currently available for internship opportunities, collaborations, or any questions you might have."
+                    : "ฉันพร้อมรับโอกาสฝึกงาน ความร่วมมือ หรือตอบคำถามที่คุณอาจมี"}
+                </p>
                 
-                <div className="mb-6 sm:mb-8">
-                  <p className="text-gray-600 dark:text-gray-300 mb-5 sm:mb-6 text-sm sm:text-base">
-                    {currentLang === "en"
-                      ? "I'm currently available for internship opportunities, collaborations, or any questions you might have."
-                      : "ฉันพร้อมรับโอกาสฝึกงาน ความร่วมมือ หรือตอบคำถามที่คุณอาจมี"}
-                  </p>
-                  
-                  {/* Use the ContactForm component */}
-                  <ContactForm />
-                </div>
+                {/* Mobile ContactForm */}
+                <ContactForm isMobile={true} />
                 
-                {/* Alternative contact methods */}
-                <div className="border-t border-gray-100 dark:border-gray-800 pt-4 sm:pt-6 mt-6 sm:mt-8">
-                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-3 sm:mb-4">
-                    {currentLang === "en"
-                      ? "Prefer a direct approach? Contact me via:"
-                      : "ต้องการติดต่อโดยตรง? ติดต่อฉันผ่าน:"}
-                  </p>
-                  <div className="flex gap-2 sm:gap-3">
-                    <Button 
-                      variant="outline" 
-                      size="lg"
-                      asChild
-                      className="flex-1 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 py-2 sm:py-2.5 h-auto text-xs sm:text-sm"
-                    >
-                      <Link href={`mailto:${profileData.email}`}>
-                        <Mail size={14} className="sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
-                        Email
-                      </Link>
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="lg"
-                      asChild
-                      className="flex-1 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 py-2 sm:py-2.5 h-auto text-xs sm:text-sm"
-                    >
-                      <Link href={`tel:${profileData.phone}`}>
-                        <Phone size={14} className="sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
-                        {currentLang === "en" ? "Call" : "โทร"}
-                      </Link>
-                    </Button>
-                  </div>
+                {/* Quick contact buttons for mobile */}
+                <div className="mt-6 pt-4 border-t border-gray-100 dark:border-gray-800 grid grid-cols-2 gap-3">
+                  <Button 
+                    variant="outline" 
+                    asChild
+                    className="border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 py-2 h-auto text-xs"
+                  >
+                    <Link href={`mailto:${profileData.email}`}>
+                      <Mail size={14} className="mr-1.5" />
+                      Email
+                    </Link>
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    asChild
+                    className="border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 py-2 h-auto text-xs"
+                  >
+                    <Link href={`tel:${profileData.phone}`}>
+                      <Phone size={14} className="mr-1.5" />
+                      {currentLang === "en" ? "Call" : "โทร"}
+                    </Link>
+                  </Button>
                 </div>
               </div>
             </div>

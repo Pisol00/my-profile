@@ -57,7 +57,7 @@ const EducationSection = forwardRef<HTMLElement, EducationSectionProps>(
           </AnimatedSection>
 
           {/* Mobile/tablet view */}
-          <div className="md:hidden">
+          <div className="md:hidden max-w-md mx-auto">
             {/* Collapsible cards for mobile */}
             <div className="space-y-6">
               {allEducation.map((edu, index) => (
@@ -68,8 +68,11 @@ const EducationSection = forwardRef<HTMLElement, EducationSectionProps>(
                   disabled={!animationsEnabled}
                   className="bg-white dark:bg-gray-900 rounded-xl shadow-md border border-gray-100 dark:border-gray-800 overflow-hidden luxury-card"
                 >
-                  {/* Card header - always visible */}
-                  <div className="p-4 flex items-center gap-3">
+                  {/* Card header - always visible, clickable to expand */}
+                  <div 
+                    className="p-4 flex items-center gap-3 cursor-pointer"
+                    onClick={() => toggleExpand(index)}
+                  >
                     <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gray-50 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-gray-700">
                       <GraduationCap size={20} className="sm:w-6 sm:h-6" />
                     </div>
@@ -81,133 +84,133 @@ const EducationSection = forwardRef<HTMLElement, EducationSectionProps>(
                       </div>
                     </div>
                     
-                    {/* Expand/collapse button */}
-                    <button 
-                      onClick={() => toggleExpand(index)}
-                      className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
-                      aria-label={expandedItems[index] ? "Show less" : "Show more"}
+                    {/* Expand/collapse button with animation */}
+                    <div 
+                      className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 transition-transform duration-300"
                     >
                       {expandedItems[index] ? 
-                        <ChevronUp size={18} className="sm:w-5 sm:h-5" /> : 
-                        <ChevronDown size={18} className="sm:w-5 sm:h-5" />
+                        <ChevronUp size={18} className="sm:w-5 sm:h-5 transition-transform duration-300" /> : 
+                        <ChevronDown size={18} className="sm:w-5 sm:h-5 transition-transform duration-300" />
                       }
-                    </button>
+                    </div>
                   </div>
                   
-                  {/* Expanded content - shown when toggled */}
-                  {expandedItems[index] && (
-                    <div className="border-t border-gray-100 dark:border-gray-800">
-                      {/* Basic info */}
-                      <div className="p-4 bg-gray-50/50 dark:bg-gray-800/50">
-                        <div className="flex items-center gap-2 mb-2">
-                          <BookOpen size={14} className="sm:w-4 sm:h-4 text-gray-500" />
-                          <span className="text-xs sm:text-sm">{edu.degree}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <MapPin size={14} className="sm:w-4 sm:h-4 text-gray-500" />
-                          <span className="text-xs sm:text-sm">
-                            {currentLang === "en" 
-                              ? "Samut Prakan, Thailand" 
-                              : "สมุทรปราการ, ประเทศไทย"}
-                          </span>
-                        </div>
+                  {/* Expandable content - shown when toggled */}
+                  <div 
+                    className={`border-t border-gray-100 dark:border-gray-800 transition-all duration-300 ease-in-out overflow-hidden ${
+                      expandedItems[index] ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                  >
+                    {/* Basic info */}
+                    <div className="p-4 bg-gray-50/50 dark:bg-gray-800/50">
+                      <div className="flex items-center gap-2 mb-2">
+                        <BookOpen size={14} className="sm:w-4 sm:h-4 text-gray-500" />
+                        <span className="text-xs sm:text-sm">{edu.degree}</span>
                       </div>
-                      
-                      {/* Institution info */}
-                      <div className="p-4 flex items-center gap-4 border-b border-gray-100 dark:border-gray-800">
-                        <div className="w-16 h-16 bg-white dark:bg-gray-900 rounded-lg overflow-hidden flex items-center justify-center p-1 border border-gray-100 dark:border-gray-800 relative">
-                          <Image
-                            src={index === 0 
-                              ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_wx9ytkWpaORplO5wMqeYtEtP23Wb3bSigw&s"
-                              : "https://upload.wikimedia.org/wikipedia/commons/9/90/Streesmutprakan_School_logo.png"}
-                            alt={edu.institution}
-                            fill
-                            sizes="64px"
-                            className="object-contain p-1"
-                          />
-                        </div>
-                        
-                        {index === 1 && edu.description && (
-                          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 flex-1">
-                            {edu.description.substring(0, 120)}
-                            {edu.description.length > 120 ? '...' : ''}
-                          </p>
-                        )}
-                      </div>
-                      
-                      {/* Program highlights */}
-                      <div className="p-4">
-                        <h4 className="font-medium text-sm sm:text-base mb-3 text-gray-900 dark:text-white">
-                          {index === 0 ? 
-                            (currentLang === "en" ? "Program Highlights" : "จุดเด่นของหลักสูตร") :
-                            (currentLang === "en" ? "Key Features" : "ลักษณะเด่น")
-                          }
-                        </h4>
-                        
-                        <div className="space-y-2">
-                          {index === 0 ? (
-                            // University highlights
-                            <>
-                              <div className="flex items-start gap-2">
-                                <CheckCircle size={14} className="sm:w-4 sm:h-4 text-gray-500 mt-0.5 flex-shrink-0" />
-                                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
-                                  {currentLang === "en" 
-                                    ? "Focus on software development and modern web technologies" 
-                                    : "เน้นการพัฒนาซอฟต์แวร์และเทคโนโลยีเว็บสมัยใหม่"}
-                                </span>
-                              </div>
-                              <div className="flex items-start gap-2">
-                                <CheckCircle size={14} className="sm:w-4 sm:h-4 text-gray-500 mt-0.5 flex-shrink-0" />
-                                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
-                                  {currentLang === "en" 
-                                    ? "Project-based curriculum with real-world applications" 
-                                    : "หลักสูตรที่เน้นโปรเจกต์จริงและการประยุกต์ใช้งานในโลกจริง"}
-                                </span>
-                              </div>
-                              
-                              {/* Key courses */}
-                              <div className="mt-3 pt-3 border-t border-gray-100/50 dark:border-gray-800/30">
-                                <div className="text-xs sm:text-sm font-medium mb-2 text-gray-900 dark:text-white">
-                                  {currentLang === "en" ? "Key Courses" : "วิชาหลัก"}:
-                                </div>
-                                <div className="flex flex-wrap gap-1.5">
-                                  {[
-                                    currentLang === "en" ? "Software Engineering" : "วิศวกรรมซอฟต์แวร์",
-                                    currentLang === "en" ? "Web Development" : "การพัฒนาเว็บ",
-                                    currentLang === "en" ? "Database" : "ฐานข้อมูล"
-                                  ].map((course, i) => (
-                                    <span key={i} className="inline-block px-2 py-1 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-[10px] sm:text-xs border border-gray-100 dark:border-gray-700">
-                                      {course}
-                                    </span>
-                                  ))}
-                                </div>
-                              </div>
-                            </>
-                          ) : (
-                            // School highlights
-                            <>
-                              <div className="flex items-start gap-2">
-                                <CheckCircle size={14} className="sm:w-4 sm:h-4 text-gray-500 mt-0.5 flex-shrink-0" />
-                                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
-                                  {currentLang === "en" 
-                                    ? "Advanced curriculum in Science and Mathematics" 
-                                    : "หลักสูตรขั้นสูงในวิชาวิทยาศาสตร์และคณิตศาสตร์"}
-                                </span>
-                              </div>
-                              <div className="flex items-start gap-2">
-                                <CheckCircle size={14} className="sm:w-4 sm:h-4 text-gray-500 mt-0.5 flex-shrink-0" />
-                                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
-                                  {currentLang === "en" 
-                                    ? "Specialized laboratory training" 
-                                    : "การฝึกปฏิบัติในห้องปฏิบัติการเฉพาะทาง"}
-                                </span>
-                              </div>
-                            </>
-                          )}
-                        </div>
+                      <div className="flex items-center gap-2">
+                        <MapPin size={14} className="sm:w-4 sm:h-4 text-gray-500" />
+                        <span className="text-xs sm:text-sm">
+                          {currentLang === "en" 
+                            ? "Samut Prakan, Thailand" 
+                            : "สมุทรปราการ, ประเทศไทย"}
+                        </span>
                       </div>
                     </div>
-                  )}
+                    
+                    {/* Institution info */}
+                    <div className="p-4 flex items-center gap-4 border-b border-gray-100 dark:border-gray-800">
+                      <div className="w-16 h-16 bg-white dark:bg-gray-900 rounded-lg overflow-hidden flex items-center justify-center p-1 border border-gray-100 dark:border-gray-800 relative">
+                        <Image
+                          src={index === 0 
+                            ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_wx9ytkWpaORplO5wMqeYtEtP23Wb3bSigw&s"
+                            : "https://upload.wikimedia.org/wikipedia/commons/9/90/Streesmutprakan_School_logo.png"}
+                          alt={edu.institution}
+                          fill
+                          sizes="64px"
+                          className="object-contain p-1"
+                        />
+                      </div>
+                      
+                      {index === 1 && edu.description && (
+                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 flex-1">
+                          {edu.description.substring(0, 120)}
+                          {edu.description.length > 120 ? '...' : ''}
+                        </p>
+                      )}
+                    </div>
+                    
+                    {/* Program highlights */}
+                    <div className="p-4">
+                      <h4 className="font-medium text-sm sm:text-base mb-3 text-gray-900 dark:text-white">
+                        {index === 0 ? 
+                          (currentLang === "en" ? "Program Highlights" : "จุดเด่นของหลักสูตร") :
+                          (currentLang === "en" ? "Key Features" : "ลักษณะเด่น")
+                        }
+                      </h4>
+                      
+                      <div className="space-y-2">
+                        {index === 0 ? (
+                          // University highlights
+                          <>
+                            <div className="flex items-start gap-2">
+                              <CheckCircle size={14} className="sm:w-4 sm:h-4 text-gray-500 mt-0.5 flex-shrink-0" />
+                              <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                                {currentLang === "en" 
+                                  ? "Focus on software development and modern web technologies" 
+                                  : "เน้นการพัฒนาซอฟต์แวร์และเทคโนโลยีเว็บสมัยใหม่"}
+                              </span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <CheckCircle size={14} className="sm:w-4 sm:h-4 text-gray-500 mt-0.5 flex-shrink-0" />
+                              <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                                {currentLang === "en" 
+                                  ? "Project-based curriculum with real-world applications" 
+                                  : "หลักสูตรที่เน้นโปรเจกต์จริงและการประยุกต์ใช้งานในโลกจริง"}
+                              </span>
+                            </div>
+                            
+                            {/* Key courses */}
+                            <div className="mt-3 pt-3 border-t border-gray-100/50 dark:border-gray-800/30">
+                              <div className="text-xs sm:text-sm font-medium mb-2 text-gray-900 dark:text-white">
+                                {currentLang === "en" ? "Key Courses" : "วิชาหลัก"}:
+                              </div>
+                              <div className="flex flex-wrap gap-1.5">
+                                {[
+                                  currentLang === "en" ? "Software Engineering" : "วิศวกรรมซอฟต์แวร์",
+                                  currentLang === "en" ? "Web Development" : "การพัฒนาเว็บ",
+                                  currentLang === "en" ? "Database" : "ฐานข้อมูล"
+                                ].map((course, i) => (
+                                  <span key={i} className="inline-block px-2 py-1 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-[10px] sm:text-xs border border-gray-100 dark:border-gray-700">
+                                    {course}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          // School highlights
+                          <>
+                            <div className="flex items-start gap-2">
+                              <CheckCircle size={14} className="sm:w-4 sm:h-4 text-gray-500 mt-0.5 flex-shrink-0" />
+                              <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                                {currentLang === "en" 
+                                  ? "Advanced curriculum in Science and Mathematics" 
+                                  : "หลักสูตรขั้นสูงในวิชาวิทยาศาสตร์และคณิตศาสตร์"}
+                              </span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <CheckCircle size={14} className="sm:w-4 sm:h-4 text-gray-500 mt-0.5 flex-shrink-0" />
+                              <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                                {currentLang === "en" 
+                                  ? "Specialized laboratory training" 
+                                  : "การฝึกปฏิบัติในห้องปฏิบัติการเฉพาะทาง"}
+                              </span>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
                 </AnimatedSection>
               ))}
             </div>

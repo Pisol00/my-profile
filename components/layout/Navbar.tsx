@@ -112,38 +112,42 @@ export default function Navbar({ scrollToSection, sections }: NavbarProps) {
         </div>
       </div>
 
-      {/* Mobile menu - better touch targets and display */}
-      {mobileMenuOpen && (
-        <div className="bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800">
-          <div className="flex flex-col space-y-0.5">
-            <MobileNavItem
-              label={t.home}
-              onClick={() => handleSectionClick(sections.hero)}
-              icon={<Home size={16} />}
-            />
-            <MobileNavItem
-              label={t.skills}
-              onClick={() => handleSectionClick(sections.skills)}
-              icon={<Star size={16} />}
-            />
-            <MobileNavItem
-              label={t.projects}
-              onClick={() => handleSectionClick(sections.projects)}
-              icon={<Code2 size={16} />}
-            />
-            <MobileNavItem
-              label={t.education}
-              onClick={() => handleSectionClick(sections.education)}
-              icon={<GraduationCap size={16} />}
-            />
-            <MobileNavItem
-              label={t.contact}
-              onClick={() => handleSectionClick(sections.contact)}
-              icon={<MessageSquare size={16} />}
-            />
-          </div>
+      {/* Mobile menu - with animation */}
+      <div 
+        className={`md:hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 overflow-hidden transition-all duration-300 ease-in-out ${
+          mobileMenuOpen ? 'max-h-[300px] opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className={`flex flex-col space-y-0.5 p-2 transition-all duration-300 ease-in-out ${
+          mobileMenuOpen ? 'translate-y-0' : '-translate-y-4'
+        }`}>
+          <MobileNavItem
+            label={t.home}
+            onClick={() => handleSectionClick(sections.hero)}
+            icon={<Home size={16} />}
+          />
+          <MobileNavItem
+            label={t.skills}
+            onClick={() => handleSectionClick(sections.skills)}
+            icon={<Star size={16} />}
+          />
+          <MobileNavItem
+            label={t.projects}
+            onClick={() => handleSectionClick(sections.projects)}
+            icon={<Code2 size={16} />}
+          />
+          <MobileNavItem
+            label={t.education}
+            onClick={() => handleSectionClick(sections.education)}
+            icon={<GraduationCap size={16} />}
+          />
+          <MobileNavItem
+            label={t.contact}
+            onClick={() => handleSectionClick(sections.contact)}
+            icon={<MessageSquare size={16} />}
+          />
         </div>
-      )}
+      </div>
     </nav>
   );
 }
