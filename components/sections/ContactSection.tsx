@@ -107,7 +107,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                         {currentLang === "en" ? "Location" : "ที่อยู่"}
                       </h4>
                       <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
-                        {currentLang === "en" ? profileData.location : t.location}
+                        {t.location}
                       </p>
                     </div>
                   </div>

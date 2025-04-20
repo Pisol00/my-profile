@@ -39,13 +39,13 @@ const SocialLink = ({ href, icon, label }: SocialLinkProps) => (
 );
 
 type FooterProps = {
-  scrollToSection: (ref: React.RefObject<HTMLElement>) => void;
+  scrollToSection: (ref: React.RefObject<HTMLElement | null>) => void;
   sections: {
-    hero: React.RefObject<HTMLElement>;
-    skills: React.RefObject<HTMLElement>;
-    projects: React.RefObject<HTMLElement>;
-    education: React.RefObject<HTMLElement>;
-    contact: React.RefObject<HTMLElement>;
+    hero: React.RefObject<HTMLElement | null>;
+    skills: React.RefObject<HTMLElement | null>;
+    projects: React.RefObject<HTMLElement | null>;
+    education: React.RefObject<HTMLElement | null>;
+    contact: React.RefObject<HTMLElement | null>;
   };
 };
 
@@ -104,7 +104,7 @@ export default function Footer({ scrollToSection, sections }: FooterProps) {
           {/* Copyright */}
           <div className="text-center">
             <p className="text-gray-500 dark:text-gray-400 mb-2 text-sm sm:text-base">
-              © {new Date().getFullYear()} {currentLang === "en" ? profileData.name : t.name}. {t.allRightsReserved}
+              © {new Date().getFullYear()} {t.name}. {t.allRightsReserved}
             </p>
             <p className="text-gray-500 dark:text-gray-400 flex items-center justify-center gap-1 text-xs sm:text-sm">
               {currentLang === "en" 

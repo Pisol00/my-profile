@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
  * @returns A callback function that accepts a ref and scrolls to it
  */
 export function useScrollToSection() {
-  return useCallback((ref: React.RefObject<HTMLElement>) => {
+  return useCallback((ref: React.RefObject<HTMLElement | null>) => {
     if (ref.current) {
       ref.current.scrollIntoView({ behavior: 'smooth' });
     }

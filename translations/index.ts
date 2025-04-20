@@ -10,6 +10,9 @@ import {
   ExperienceItem
 } from './types';
 
+// Re-export types for easier imports elsewhere
+export type { Language, TranslationType, ProfileData, ExperienceItem };
+
 // English translations
 const en: TranslationType = {
   // Common

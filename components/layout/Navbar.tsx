@@ -8,13 +8,13 @@ import NavItem from '@/components/common/ui/NavItem';
 import MobileNavItem from '@/components/common/ui/MobileNavItem';
 
 type NavbarProps = {
-  scrollToSection: (ref: React.RefObject<HTMLElement>) => void;
+  scrollToSection: (ref: React.RefObject<HTMLElement | null>) => void;
   sections: {
-    hero: React.RefObject<HTMLElement>;
-    skills: React.RefObject<HTMLElement>;
-    projects: React.RefObject<HTMLElement>;
-    education: React.RefObject<HTMLElement>;
-    contact: React.RefObject<HTMLElement>;
+    hero: React.RefObject<HTMLElement | null>;
+    skills: React.RefObject<HTMLElement | null>;
+    projects: React.RefObject<HTMLElement | null>;
+    education: React.RefObject<HTMLElement | null>;
+    contact: React.RefObject<HTMLElement | null>;
   };
 };
 
@@ -23,7 +23,7 @@ export default function Navbar({ scrollToSection, sections }: NavbarProps) {
   const { isDarkMode, toggleDarkMode } = useTheme();
   const { currentLang, t, toggleLanguage } = useLanguage();
 
-  const handleSectionClick = (ref: React.RefObject<HTMLElement>) => {
+  const handleSectionClick = (ref: React.RefObject<HTMLElement | null>) => {
     scrollToSection(ref);
     setMobileMenuOpen(false);
   };

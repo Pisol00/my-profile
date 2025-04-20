@@ -20,12 +20,9 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
     const { currentLang, t } = useLanguage();
     
     // ข้อมูลโปรไฟล์ปัจจุบัน (ตามภาษา)
+    // Simplify profile creation by combining profileData with localized data
     const profile = {
       ...profileData,
-      name: t.name,
-      title: t.title,
-      bio: t.bio,
-      location: t.location,
       ...localizedData[currentLang]
     };
     
@@ -130,7 +127,7 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
                 className="text-center md:text-left"
               >
                 {/* Status Badge - Desktop Only */}
-                <div className="hidden md:inline-block mb-6">
+                {/* <div className="hidden md:inline-block mb-6">
                   <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300 text-sm font-medium border border-blue-200 dark:border-blue-800 gap-2">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
@@ -140,7 +137,7 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
                       ? "Available for Internship"
                       : "พร้อมรับการฝึกงาน"}
                   </span>
-                </div>
+                </div> */}
 
                 {/* ชื่อและตำแหน่ง */}
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 sm:mb-3 md:mb-4 tracking-tight">
