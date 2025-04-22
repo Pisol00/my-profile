@@ -1,7 +1,7 @@
 'use client';
 
 import { forwardRef, useState, useMemo } from 'react';
-import { Github, ExternalLink, ArrowRight, Code, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Github, ExternalLink, Calendar, ChevronRight, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import AnimatedSection from '@/components/common/animations/AnimatedSection';
 import { useLanguage } from '@/contexts';
@@ -16,39 +16,36 @@ type ProjectsSectionProps = {
 const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
   ({ animationsEnabled }, ref) => {
     const { currentLang, t } = useLanguage();
-    const [activeTab, setActiveTab] = useState("all"); // For projects filtering
+    const [activeTab, setActiveTab] = useState("all"); // For projects filtering by year
     const [activeMobileIndex, setActiveMobileIndex] = useState(0); // For mobile carousel
 
     // Get the projects data directly from localizedData
     const projects = localizedData[currentLang].projects;
 
-    // Filter projects by technology
+    // Get unique years from projects
+    const projectYears = useMemo(() => {
+      const years = new Set<string>();
+      years.add("all");
+      
+      projects.forEach(project => {
+        if (project.year) {
+          years.add(project.year);
+        }
+      });
+      
+      // Convert to array and sort chronologically (most recent first)
+      return Array.from(years).sort((a, b) => {
+        if (a === "all") return -1;
+        if (b === "all") return 1;
+        return parseInt(b) - parseInt(a);
+      });
+    }, [projects]);
+
+    // Filter projects by year
     const filteredProjects = useMemo(() => {
       if (activeTab === "all") return projects;
-      return projects.filter(project =>
-        project.technologies.some(tech =>
-          tech.toLowerCase().includes(activeTab.toLowerCase())
-        )
-      );
+      return projects.filter(project => project.year === activeTab);
     }, [projects, activeTab]);
-
-    // Get unique technology categories
-    const projectCategories = useMemo(() => {
-      const categories = new Set<string>();
-      categories.add("all");
-
-      projects.forEach(project => {
-        project.technologies.forEach(tech => {
-          if (tech.includes("React")) categories.add("React");
-          else if (tech.includes("Node")) categories.add("Node.js");
-          else if (tech.includes("Django") || tech.includes("Flask") || tech.includes("Python")) categories.add("Python");
-          else if (tech.includes("Java")) categories.add("Java");
-          else if (tech.includes("Docker") || tech.includes("AWS") || tech.includes("Cloud")) categories.add("DevOps");
-        });
-      });
-
-      return Array.from(categories);
-    }, [projects]);
 
     // Mobile carousel navigation
     const nextProject = () => {
@@ -103,20 +100,26 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
 
           {/* Desktop View */}
           <div className="hidden md:block">
-            {/* Project Category Filter - Responsive scrollable on tablet/desktop */}
+            {/* Project Year Filter - Responsive scrollable on tablet/desktop */}
             <div className="flex flex-wrap justify-center gap-2 mb-8 sm:mb-12 overflow-x-auto pb-2 -mx-2 px-2">
-              {projectCategories.map((category, index) => (
+              {projectYears.map((year, index) => (
                 <button
                   key={index}
-                  onClick={() => setActiveTab(category)}
-                  className={`px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer flex-shrink-0 ${activeTab === category
+                  onClick={() => setActiveTab(year)}
+                  className={`px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer flex-shrink-0 ${
+                    activeTab === year
                       ? "bg-gray-900 text-white dark:bg-white dark:text-black shadow-md shadow-gray-200 dark:shadow-gray-900/20"
                       : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                    }`}
+                  }`}
                 >
-                  {category === "all"
-                    ? currentLang === "en" ? "All Projects" : "ทั้งหมด"
-                    : category}
+                  {year === "all" ? (
+                    currentLang === "en" ? "All Projects" : "ทั้งหมด"
+                  ) : (
+                    <div className="flex items-center gap-1.5">
+                      {/* <Calendar size={14} /> */}
+                      <span>{year}</span>
+                    </div>
+                  )}
                 </button>
               ))}
             </div>
@@ -131,6 +134,7 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
                   technologies={project.technologies}
                   link={project.link}
                   viewProjectText={t.viewProject}
+                  year={project.year}
                   animationsEnabled={animationsEnabled}
                   delay={100 + index * 50}
                 />
@@ -140,24 +144,30 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
 
           {/* Mobile View - Carousel Style */}
           <div className="md:hidden">
-            {/* Mobile Category Filter */}
+            {/* Mobile Year Filter */}
             <div className="mb-8">
               <div className="flex flex-wrap justify-center gap-2 overflow-x-auto pb-2">
-                {projectCategories.map((category, index) => (
+                {projectYears.map((year, index) => (
                   <button
                     key={index}
                     onClick={() => {
-                      setActiveTab(category);
+                      setActiveTab(year);
                       setActiveMobileIndex(0); // Reset to first project when changing category
                     }}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer flex-shrink-0 ${activeTab === category
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer flex-shrink-0 ${
+                      activeTab === year
                         ? "bg-gray-900 text-white dark:bg-white dark:text-black shadow-sm"
                         : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                      }`}
+                    }`}
                   >
-                    {category === "all"
-                      ? currentLang === "en" ? "All" : "ทั้งหมด"
-                      : category}
+                    {year === "all" ? (
+                      currentLang === "en" ? "All" : "ทั้งหมด"
+                    ) : (
+                      <div className="flex items-center gap-1">
+                        <Calendar size={12} />
+                        <span>{year}</span>
+                      </div>
+                    )}
                   </button>
                 ))}
               </div>
@@ -175,6 +185,7 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
                       technologies={filteredProjects[activeMobileIndex].technologies}
                       link={filteredProjects[activeMobileIndex].link}
                       viewProjectText={t.viewProject}
+                      year={filteredProjects[activeMobileIndex].year}
                       animationsEnabled={animationsEnabled}
                     />
                   </div>
@@ -195,10 +206,11 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
                       {filteredProjects.map((_, index) => (
                         <div
                           key={index}
-                          className={`w-2 h-2 rounded-full transition-all ${index === activeMobileIndex
+                          className={`w-2 h-2 rounded-full transition-all ${
+                            index === activeMobileIndex
                               ? "w-4 bg-gray-900 dark:bg-white"
                               : "bg-gray-300 dark:bg-gray-700"
-                            }`}
+                          }`}
                         ></div>
                       ))}
                     </div>
@@ -215,8 +227,6 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
                 </div>
               )}
             </div>
-
-
           </div>
 
           {/* "View More Projects" button at the bottom - for both mobile and desktop */}

@@ -146,5 +146,6 @@ export interface ProfileData {
     description: string;
     technologies: string[];
     link: string;
+    year?: string; // Added year field
   }[];
 }

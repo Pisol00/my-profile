@@ -240,9 +240,11 @@ export const educationData = [
 ];
 
 // Project data with translations
+// Project data with translations
 export const projectsData = [
   {
     title: "Kin-Arai-Dee KMITL",
+    year: "2022",
     description: {
       en: "An academic project in Problem Solving and Computer Programming, built using ReactJS, TailwindCSS, Flask, and SQLite.",
       th: "โปรเจคเชิงวิชาการด้าน Problem Solving and Computer Programming สร้างด้วย ReactJS, TailwindCSS, Flask และ SQLite"
@@ -252,6 +254,7 @@ export const projectsData = [
   },
   {
     title: "HongFah Online",
+    year: "2023",
     description: {
       en: "An academic project in Object-Oriented Programming, built using Java Swing and Firebase.",
       th: "โปรเจคเชิงวิชาการด้าน Object-Oriented Programming สร้างด้วย Java Swing และ Firebase"
@@ -261,6 +264,7 @@ export const projectsData = [
   },
   {
     title: "I-Landed-Airline",
+    year: "2023",
     description: {
       en: "An academic project in Problem Solving and Computer Programming, built using ReactJS, TailwindCSS, Flask, and SQLite.",
       th: "โปรเจคเชิงวิชาการด้าน Problem Solving and Computer Programming สร้างด้วย ReactJS, TailwindCSS, Flask และ SQLite"
@@ -270,6 +274,7 @@ export const projectsData = [
   },
   {
     title: "ShopDee",
+    year: "2024",
     description: {
       en: "An academic project in Server-Side Development, building a marketplace platform for buying and selling new and second-hand clothing using Django, HTML, CSS, Bootstrap 5, and PostgreSQL.",
       th: "โปรเจคเชิงวิชาการด้าน Server-Side Development สร้างแพลตฟอร์มตลาดสำหรับซื้อและขายเสื้อผ้าใหม่และมือสองโดยใช้ Django, HTML, CSS, Bootstrap 5 และ PostgreSQL"
@@ -279,6 +284,7 @@ export const projectsData = [
   },
   {
     title: "Connextra",
+    year: "2024",
     description: {
       en: "An academic project on Cloud Computing, developing a real-time chat application using React, Node.js, TypeScript, and AWS services (S3, RDS, EC2, Lambda, WebSocket, Serverless Framework).",
       th: "โปรเจคเชิงวิชาการด้าน Cloud Computing พัฒนาแอปพลิเคชันแชทแบบเรียลไทม์โดยใช้ React, Node.js, TypeScript และบริการ AWS (S3, RDS, EC2, Lambda, WebSocket, Serverless Framework)"
@@ -288,6 +294,7 @@ export const projectsData = [
   },
   {
     title: "Job4ALL",
+    year: "2024",
     description: {
       en: "A DevOps-focused academic project developing a job search platform for people with disabilities using React Native, Node.js, and MongoDB. It incorporates CI/CD pipelines via Jenkins and Docker for automated testing and deployment.",
       th: "โปรเจคเชิงวิชาการเน้น DevOps พัฒนาแพลตฟอร์มค้นหางานสำหรับผู้พิการโดยใช้ React Native, Node.js และ MongoDB รวมถึงการรวม CI/CD ผ่าน Jenkins และ Docker สำหรับการทดสอบอัตโนมัติและการติดตั้ง"
@@ -297,6 +304,7 @@ export const projectsData = [
   },
   {
     title: "AroiDee",
+    year: "2024",
     description: {
       en: "An academic project on Cloud Computing, developing a real-time chat application using React, Node.js, TypeScript, and AWS services (S3, RDS, EC2, Lambda, WebSocket, Serverless Framework).",
       th: "โปรเจคเชิงวิชาการด้าน Cloud Computing พัฒนาแอปพลิเคชันแชทแบบเรียลไทม์โดยใช้ React, Node.js, TypeScript และบริการ AWS (S3, RDS, EC2, Lambda, WebSocket, Serverless Framework)"
@@ -306,6 +314,7 @@ export const projectsData = [
   },
   {
     title: "KhonsongDee",
+    year: "2024",
     description: {
       en: "An academic project on Cloud Computing, developing a real-time chat application using React, Node.js, TypeScript, and AWS services (S3, RDS, EC2, Lambda, WebSocket, Serverless Framework).",
       th: "โปรเจคเชิงวิชาการด้าน Cloud Computing พัฒนาแอปพลิเคชันแชทแบบเรียลไทม์โดยใช้ React, Node.js, TypeScript และบริการ AWS (S3, RDS, EC2, Lambda, WebSocket, Serverless Framework)"
@@ -315,6 +324,7 @@ export const projectsData = [
   },
   {
     title: "Learning Management System (LMS)",
+    year: "2024",
     description: {
       en: "An academic project on Cloud Computing, developing a real-time chat application using React, Node.js, TypeScript, and AWS services (S3, RDS, EC2, Lambda, WebSocket, Serverless Framework).",
       th: "โปรเจคเชิงวิชาการด้าน Cloud Computing พัฒนาแอปพลิเคชันแชทแบบเรียลไทม์โดยใช้ React, Node.js, TypeScript และบริการ AWS (S3, RDS, EC2, Lambda, WebSocket, Serverless Framework)"
@@ -378,7 +388,8 @@ export function generateLocalizedData(): Record<Language, ProfileData> {
         title: project.title,
         description: project.description[language],
         technologies: [...project.technologies],
-        link: project.link
+        link: project.link,
+        year: project.year // Add year information to localized data
       }))
     };
   });

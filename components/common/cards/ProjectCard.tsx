@@ -1,7 +1,7 @@
 'use client';
 
 import { Badge } from '@/components/ui/badge';
-import { Github, ExternalLink, Code2, FolderGit2 } from 'lucide-react';
+import {  ExternalLink, Code2, Folder} from 'lucide-react';
 import AnimatedSection from '@/components/common/animations/AnimatedSection';
 import Link from 'next/link';
 
@@ -11,6 +11,7 @@ interface ProjectCardProps {
   technologies: string[];
   link: string;
   viewProjectText: string;
+  year?: string; // Added year as an optional prop
   animationsEnabled?: boolean;
   delay?: number;
 }
@@ -27,6 +28,7 @@ export function ProjectCard({
   technologies, 
   link, 
   viewProjectText,
+  year,
   animationsEnabled = true, 
   delay = 0 
 }: ProjectCardProps) {
@@ -71,16 +73,19 @@ export function ProjectCard({
         <div className="flex items-center justify-between p-6 border-b border-gray-50 dark:border-gray-800">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300">
-              <FolderGit2 size={20} />
+              <Folder size={20} />
             </div>
-            <h3 className="font-bold text-xl">{title}</h3>
+            <div>
+              <h3 className="font-bold text-xl">{title}</h3>
+              {year && (
+                <div className="flex items-center mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  
+                  <span>{year}</span>
+                </div>
+              )}
+            </div>
           </div>
-          <ExternalLinkWrapper 
-            href={link} 
-            className="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 p-2 rounded-full transition-colors"
-          >
-            <Github size={18} aria-label={`View ${title} on GitHub`} />
-          </ExternalLinkWrapper>
+
         </div>
 
         {/* Content */}
@@ -97,7 +102,7 @@ export function ProjectCard({
                 variant="outline" 
                 className="bg-gray-50/50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 py-1"
               >
-                <Code2 size={12} className="mr-1" />
+                {/* <Code2 size={12} className="mr-1" /> */}
                 {tech}
               </Badge>
             ))}
