@@ -1,63 +1,63 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronLeft, Server, Layout, Database, Users, ShoppingBag, Code, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import AnimatedSection from '@/components/common/animations/AnimatedSection';
+import { AppProviders } from '@/contexts';
 
-// Simplified page without context-dependent components
+// Wrap page content in providers
 export default function ShopdeePage() {
+  return (
+    <AppProviders>
+      <ShopDeeContent />
+    </AppProviders>
+  );
+}
+
+// Actual page content
+function ShopDeeContent() {
   const [animationsEnabled, setAnimationsEnabled] = useState(true);
+  const [currentLang, setCurrentLang] = useState<'en' | 'th'>('en');
   
-  // Check if animations should be enabled (based on user preferences)
+  // Check if animations should be enabled
   useEffect(() => {
-    const checkPerformance = () => {
-      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-      setAnimationsEnabled(!mediaQuery.matches);
-      
-      const handleMediaQueryChange = (e: MediaQueryListEvent) => {
-        setAnimationsEnabled(!e.matches);
-      };
-      
-      mediaQuery.addEventListener('change', handleMediaQueryChange);
-      
-      return () => {
-        mediaQuery.removeEventListener('change', handleMediaQueryChange);
-      };
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setAnimationsEnabled(!mediaQuery.matches);
+    
+    const handleMediaQueryChange = (e: MediaQueryListEvent) => {
+      setAnimationsEnabled(!e.matches);
     };
-
-    checkPerformance();
-  }, []);
-  
-  // Using a fixed language for now - will be replaced with context later
-  // when the provider issue is resolved
-  const currentLang = 'en';
-  
-  // Check if animations should be enabled (based on user preferences)
-  useEffect(() => {
-    const checkPerformance = () => {
-      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-      setAnimationsEnabled(!mediaQuery.matches);
-      
-      const handleMediaQueryChange = (e: MediaQueryListEvent) => {
-        setAnimationsEnabled(!e.matches);
-      };
-      
-      mediaQuery.addEventListener('change', handleMediaQueryChange);
-      
-      return () => {
-        mediaQuery.removeEventListener('change', handleMediaQueryChange);
-      };
+    
+    mediaQuery.addEventListener('change', handleMediaQueryChange);
+    
+    // Clean up event listener
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaQueryChange);
     };
-
-    checkPerformance();
   }, []);
 
-  // Content in both languages
-  const content = {
+  // Check for language preference
+  useEffect(() => {
+    // Try to get saved language preference
+    const savedLang = localStorage.getItem('preferredLanguage');
+    if (savedLang === 'th' || savedLang === 'en') {
+      setCurrentLang(savedLang);
+    } else {
+      // Check browser language
+      const browserLang = navigator.language.startsWith('th') ? 'th' : 'en';
+      setCurrentLang(browserLang as 'th' | 'en');
+    }
+  }, []);
+
+  // Translations
+  const t = {
+    backButton: currentLang === 'en' ? 'Back to Projects' : 'กลับไปยังหน้าโปรเจค',
+    githubButton: currentLang === 'en' ? 'View on GitHub' : 'ดูบน GitHub',
     title: currentLang === 'en' ? 'Shopdee - E-Commerce Marketplace' : 'Shopdee - แพลตฟอร์มอีคอมเมิร์ซแบบ Marketplace',
     subtitle: currentLang === 'en' 
       ? 'A StockX and GOAT-inspired marketplace platform for fashion items' 
@@ -65,116 +65,28 @@ export default function ShopdeePage() {
     overview: {
       title: currentLang === 'en' ? 'Project Overview' : 'ภาพรวมโปรเจค',
       content: currentLang === 'en' 
-        ? 'Shopdee is an e-commerce marketplace platform developed with Django Framework, inspired by websites like StockX and GOAT. The platform facilitates buying and selling of fashion items, particularly sneakers, clothing, bags, and accessories. Users can register, log in, browse product listings, purchase items, sell items, and track their orders and sales.' 
-        : 'Shopdee เป็นแพลตฟอร์มอีคอมเมิร์ซแบบ marketplace ที่พัฒนาด้วย Django Framework โดยมีแนวคิดคล้ายกับเว็บไซต์ StockX และ GOAT ที่ให้บริการซื้อขายสินค้าแฟชั่น โดยเฉพาะรองเท้าสนีกเกอร์ เสื้อผ้า กระเป๋า และอุปกรณ์เสริมต่างๆ ผู้ใช้สามารถลงทะเบียน เข้าสู่ระบบ ดูรายการสินค้า ซื้อสินค้า ขายสินค้า และติดตามคำสั่งซื้อและการขายของตนได้'
+        ? 'Shopdee is an e-commerce marketplace platform developed with Django Framework, inspired by websites like StockX and GOAT. The platform facilitates buying and selling of fashion items, particularly sneakers, clothing, bags, and accessories.' 
+        : 'Shopdee เป็นแพลตฟอร์มอีคอมเมิร์ซแบบ marketplace ที่พัฒนาด้วย Django Framework โดยมีแนวคิดคล้ายกับเว็บไซต์ StockX และ GOAT ที่ให้บริการซื้อขายสินค้าแฟชั่น โดยเฉพาะรองเท้าสนีกเกอร์ เสื้อผ้า กระเป๋า และอุปกรณ์เสริมต่างๆ'
     },
     projectStructure: {
       title: currentLang === 'en' ? 'Project Structure' : 'โครงสร้างโปรเจค',
       content: currentLang === 'en'
         ? 'Shopdee is divided into three main Django apps:'
         : 'โปรเจค Shopdee แบ่งออกเป็น 3 แอปหลักใน Django:',
-      apps: [
-        {
-          name: 'authen',
-          description: currentLang === 'en'
-            ? 'Manages user authentication systems (registration, login, logout)'
-            : 'จัดการระบบการยืนยันตัวตนของผู้ใช้ (สมัครสมาชิก, เข้าสู่ระบบ, ออกจากระบบ)'
-        },
-        {
-          name: 'shop',
-          description: currentLang === 'en'
-            ? 'Handles the core shop system, including products, orders, and payment processing'
-            : 'จัดการระบบหลักของร้านค้า รวมถึงสินค้า, คำสั่งซื้อ, และกระบวนการชำระเงิน'
-        },
-        {
-          name: 'employee',
-          description: currentLang === 'en'
-            ? 'Manages the system for employees and administrators'
-            : 'จัดการระบบสำหรับพนักงานและผู้ดูแลระบบ'
-        }
-      ]
     },
     keyFeatures: {
       title: currentLang === 'en' ? 'Key Features' : 'คุณสมบัติหลัก',
-      features: [
-        {
-          icon: <Users size={22} />,
-          title: currentLang === 'en' ? 'User Management' : 'ระบบผู้ใช้งาน',
-          description: currentLang === 'en'
-            ? 'User registration, login, profile management, and shipping address management.'
-            : 'การลงทะเบียนผู้ใช้, เข้าสู่ระบบ, จัดการโปรไฟล์, จัดการที่อยู่จัดส่ง'
-        },
-        {
-          icon: <ShoppingBag size={22} />,
-          title: currentLang === 'en' ? 'Product System' : 'ระบบสินค้า',
-          description: currentLang === 'en'
-            ? 'Product listings, collections, brands, categories, filtering, and search functionality.'
-            : 'การแสดงรายการสินค้า, คอลเลกชัน, แบรนด์, หมวดหมู่, การกรอง และฟังก์ชันการค้นหา'
-        },
-        {
-          icon: <Layout size={22} />,
-          title: currentLang === 'en' ? 'Marketplace Trading' : 'การซื้อขายสินค้า',
-          description: currentLang === 'en'
-            ? 'Buying products, selling products, shopping cart system, payment processing.'
-            : 'การซื้อสินค้า, การขายสินค้า, ระบบตะกร้าสินค้า, การชำระเงิน'
-        },
-        {
-          icon: <Server size={22} />,
-          title: currentLang === 'en' ? 'Order Management' : 'การจัดการคำสั่งซื้อ',
-          description: currentLang === 'en'
-            ? 'Order tracking, sales tracking, filtering by status, order details.'
-            : 'การติดตามคำสั่งซื้อ, การติดตามการขาย, การกรองตามสถานะ, รายละเอียดคำสั่งซื้อ'
-        },
-        {
-          icon: <Database size={22} />,
-          title: currentLang === 'en' ? 'Admin Dashboard' : 'แดชบอร์ดสำหรับผู้ดูแลระบบ',
-          description: currentLang === 'en'
-            ? 'Collection overview, sales analytics, managing brands, collections, and sellers.'
-            : 'ภาพรวมคอลเลกชัน, การวิเคราะห์ยอดขาย, การจัดการแบรนด์, คอลเลกชัน และผู้ขาย'
-        }
-      ]
     },
     technologies: {
       title: currentLang === 'en' ? 'Technologies Used' : 'เทคโนโลยีที่ใช้ในการพัฒนา',
-      categories: [
-        {
-          name: currentLang === 'en' ? 'Backend' : 'แบ็คเอนด์',
-          items: ['Django Framework', 'PostgreSQL', 'Django Authentication', 'Django ORM', 'Django Migrations']
-        },
-        {
-          name: currentLang === 'en' ? 'Frontend' : 'ฟร้อนท์เอนด์',
-          items: ['HTML/CSS/JavaScript', 'Bootstrap', 'jQuery', 'Font Awesome', 'SweetAlert']
-        },
-        {
-          name: currentLang === 'en' ? 'Storage' : 'พื้นที่จัดเก็บข้อมูล',
-          items: ['AWS S3', 'boto3']
-        },
-        {
-          name: currentLang === 'en' ? 'Architecture' : 'สถาปัตยกรรม',
-          items: ['MVC Pattern', 'Class-Based Views', 'Mixins', 'Transactions']
-        }
-      ]
     },
     implementation: {
       title: currentLang === 'en' ? 'Implementation Details' : 'รายละเอียดการพัฒนา',
       dataStructure: {
         title: currentLang === 'en' ? 'Data Structure' : 'โครงสร้างข้อมูล',
-        items: [
-          currentLang === 'en' ? 'Brand - Stores brand information with details and image links' : 'แบรนด์ (Brand) - เก็บข้อมูลแบรนด์พร้อมรายละเอียดและลิงก์รูปภาพ',
-          currentLang === 'en' ? 'Category - Divides products into main categories like shoes, clothing, bags, and accessories' : 'หมวดหมู่ (Category) - แบ่งสินค้าเป็นหมวดหมู่หลักต่างๆ เช่น รองเท้า, เสื้อผ้า, กระเป๋า และอุปกรณ์เสริม',
-          currentLang === 'en' ? 'Collection - Groups products of the same series or collection' : 'คอลเลกชัน (Collection) - รวมกลุ่มสินค้าที่เป็นซีรีส์หรือคอลเลกชันเดียวกัน',
-          currentLang === 'en' ? 'Product - Information about specific items with size, condition, and price' : 'สินค้า (Product) - ข้อมูลสินค้าเฉพาะชิ้นที่มีขนาด สภาพ และราคาเฉพาะ'
-        ]
       },
       displaySystem: {
         title: currentLang === 'en' ? 'Display System' : 'ระบบการแสดงผล',
-        items: [
-          currentLang === 'en' ? 'Homepage - Displays latest and popular products' : 'หน้าแรก (Homepage) - แสดงสินค้าล่าสุดและยอดนิยม',
-          currentLang === 'en' ? 'Explore - Shows all products with filters and search' : 'หน้าสำรวจ (Explore) - แสดงสินค้าทั้งหมดพร้อมตัวกรองและการค้นหา',
-          currentLang === 'en' ? 'Collection Details - Shows collection information with images, starting price, and latest selling price' : 'หน้ารายละเอียดคอลเลกชัน - แสดงข้อมูลเกี่ยวกับคอลเลกชันพร้อมรูปภาพ, ราคาเริ่มต้น, และราคาขายล่าสุด',
-          currentLang === 'en' ? 'Size Selection - Allows users to select the size they want to buy or sell' : 'หน้าเลือกขนาด - ให้ผู้ใช้เลือกขนาดสินค้าที่ต้องการซื้อหรือขาย',
-          currentLang === 'en' ? 'Conditional Display - Shows products based on selected size and condition (new/used)' : 'หน้าแสดงสินค้าตามเงื่อนไข - แสดงสินค้าตามขนาดและสภาพที่เลือก (ใหม่/มือสอง)'
-        ]
       }
     },
     gallery: {
@@ -186,12 +98,108 @@ export default function ShopdeePage() {
     conclusion: {
       title: currentLang === 'en' ? 'Conclusion' : 'บทสรุป',
       content: currentLang === 'en'
-        ? 'The Shopdee project demonstrates the ability to develop a comprehensive e-commerce system from user management to product management, buying/selling processes, and data analytics. The design prioritizes user experience and system security.'
-        : 'โปรเจค Shopdee แสดงให้เห็นถึงความสามารถในการพัฒนาระบบอีคอมเมิร์ซแบบครบวงจร ตั้งแต่การจัดการผู้ใช้ การจัดการสินค้า กระบวนการซื้อขาย และระบบการวิเคราะห์ข้อมูล โดยมีการออกแบบที่คำนึงถึงประสบการณ์ผู้ใช้และความปลอดภัยของระบบ'
+        ? 'The Shopdee project demonstrates the ability to develop a comprehensive e-commerce system from user management to product management, buying/selling processes, and data analytics.'
+        : 'โปรเจค Shopdee แสดงให้เห็นถึงความสามารถในการพัฒนาระบบอีคอมเมิร์ซแบบครบวงจร ตั้งแต่การจัดการผู้ใช้ การจัดการสินค้า กระบวนการซื้อขาย และระบบการวิเคราะห์ข้อมูล'
     },
-    backButton: currentLang === 'en' ? 'Back to Projects' : 'กลับไปยังหน้าโปรเจค',
-    githubButton: currentLang === 'en' ? 'View on GitHub' : 'ดูบน GitHub'
   };
+
+  // Project structure apps
+  const projectApps = [
+    {
+      name: 'authen',
+      description: currentLang === 'en'
+        ? 'Manages user authentication systems (registration, login, logout)'
+        : 'จัดการระบบการยืนยันตัวตนของผู้ใช้ (สมัครสมาชิก, เข้าสู่ระบบ, ออกจากระบบ)'
+    },
+    {
+      name: 'shop',
+      description: currentLang === 'en'
+        ? 'Handles the core shop system, including products, orders, and payment processing'
+        : 'จัดการระบบหลักของร้านค้า รวมถึงสินค้า, คำสั่งซื้อ, และกระบวนการชำระเงิน'
+    },
+    {
+      name: 'employee',
+      description: currentLang === 'en'
+        ? 'Manages the system for employees and administrators'
+        : 'จัดการระบบสำหรับพนักงานและผู้ดูแลระบบ'
+    }
+  ];
+
+  // Key features
+  const keyFeatures = [
+    {
+      icon: <Users size={22} />,
+      title: currentLang === 'en' ? 'User Management' : 'ระบบผู้ใช้งาน',
+      description: currentLang === 'en'
+        ? 'User registration, login, profile management, and shipping address management.'
+        : 'การลงทะเบียนผู้ใช้, เข้าสู่ระบบ, จัดการโปรไฟล์, จัดการที่อยู่จัดส่ง'
+    },
+    {
+      icon: <ShoppingBag size={22} />,
+      title: currentLang === 'en' ? 'Product System' : 'ระบบสินค้า',
+      description: currentLang === 'en'
+        ? 'Product listings, collections, brands, categories, filtering, and search functionality.'
+        : 'การแสดงรายการสินค้า, คอลเลกชัน, แบรนด์, หมวดหมู่, การกรอง และฟังก์ชันการค้นหา'
+    },
+    {
+      icon: <Layout size={22} />,
+      title: currentLang === 'en' ? 'Marketplace Trading' : 'การซื้อขายสินค้า',
+      description: currentLang === 'en'
+        ? 'Buying products, selling products, shopping cart system, payment processing.'
+        : 'การซื้อสินค้า, การขายสินค้า, ระบบตะกร้าสินค้า, การชำระเงิน'
+    },
+    {
+      icon: <Server size={22} />,
+      title: currentLang === 'en' ? 'Order Management' : 'การจัดการคำสั่งซื้อ',
+      description: currentLang === 'en'
+        ? 'Order tracking, sales tracking, filtering by status, order details.'
+        : 'การติดตามคำสั่งซื้อ, การติดตามการขาย, การกรองตามสถานะ, รายละเอียดคำสั่งซื้อ'
+    },
+    {
+      icon: <Database size={22} />,
+      title: currentLang === 'en' ? 'Admin Dashboard' : 'แดชบอร์ดสำหรับผู้ดูแลระบบ',
+      description: currentLang === 'en'
+        ? 'Collection overview, sales analytics, managing brands, collections, and sellers.'
+        : 'ภาพรวมคอลเลกชัน, การวิเคราะห์ยอดขาย, การจัดการแบรนด์, คอลเลกชัน และผู้ขาย'
+    }
+  ];
+
+  // Technology categories
+  const technologyCategories = [
+    {
+      name: currentLang === 'en' ? 'Backend' : 'แบ็คเอนด์',
+      items: ['Django Framework', 'PostgreSQL', 'Django Authentication', 'Django ORM', 'Django Migrations']
+    },
+    {
+      name: currentLang === 'en' ? 'Frontend' : 'ฟร้อนท์เอนด์',
+      items: ['HTML/CSS/JavaScript', 'Bootstrap', 'jQuery', 'Font Awesome', 'SweetAlert']
+    },
+    {
+      name: currentLang === 'en' ? 'Storage' : 'พื้นที่จัดเก็บข้อมูล',
+      items: ['AWS S3', 'boto3']
+    },
+    {
+      name: currentLang === 'en' ? 'Architecture' : 'สถาปัตยกรรม',
+      items: ['MVC Pattern', 'Class-Based Views', 'Mixins', 'Transactions']
+    }
+  ];
+
+  // Data structure items
+  const dataStructureItems = [
+    currentLang === 'en' ? 'Brand - Stores brand information with details and image links' : 'แบรนด์ (Brand) - เก็บข้อมูลแบรนด์พร้อมรายละเอียดและลิงก์รูปภาพ',
+    currentLang === 'en' ? 'Category - Divides products into main categories like shoes, clothing, bags, and accessories' : 'หมวดหมู่ (Category) - แบ่งสินค้าเป็นหมวดหมู่หลักต่างๆ เช่น รองเท้า, เสื้อผ้า, กระเป๋า และอุปกรณ์เสริม',
+    currentLang === 'en' ? 'Collection - Groups products of the same series or collection' : 'คอลเลกชัน (Collection) - รวมกลุ่มสินค้าที่เป็นซีรีส์หรือคอลเลกชันเดียวกัน',
+    currentLang === 'en' ? 'Product - Information about specific items with size, condition, and price' : 'สินค้า (Product) - ข้อมูลสินค้าเฉพาะชิ้นที่มีขนาด สภาพ และราคาเฉพาะ'
+  ];
+
+  // Display system items
+  const displaySystemItems = [
+    currentLang === 'en' ? 'Homepage - Displays latest and popular products' : 'หน้าแรก (Homepage) - แสดงสินค้าล่าสุดและยอดนิยม',
+    currentLang === 'en' ? 'Explore - Shows all products with filters and search' : 'หน้าสำรวจ (Explore) - แสดงสินค้าทั้งหมดพร้อมตัวกรองและการค้นหา',
+    currentLang === 'en' ? 'Collection Details - Shows collection information with images, starting price, and latest selling price' : 'หน้ารายละเอียดคอลเลกชัน - แสดงข้อมูลเกี่ยวกับคอลเลกชันพร้อมรูปภาพ, ราคาเริ่มต้น, และราคาขายล่าสุด',
+    currentLang === 'en' ? 'Size Selection - Allows users to select the size they want to buy or sell' : 'หน้าเลือกขนาด - ให้ผู้ใช้เลือกขนาดสินค้าที่ต้องการซื้อหรือขาย',
+    currentLang === 'en' ? 'Conditional Display - Shows products based on selected size and condition (new/used)' : 'หน้าแสดงสินค้าตามเงื่อนไข - แสดงสินค้าตามขนาดและสภาพที่เลือก (ใหม่/มือสอง)'
+  ];
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
@@ -204,9 +212,9 @@ export default function ShopdeePage() {
             asChild
             className="rounded-full bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
           >
-            <Link href="/#projects">
+            <Link href="/">
               <ChevronLeft size={16} className="mr-1" />
-              {currentLang === 'en' ? 'Back to Projects' : 'กลับไปยังหน้าโปรเจค'}
+              {t.backButton}
             </Link>
           </Button>
         </div>
@@ -238,10 +246,10 @@ export default function ShopdeePage() {
             className="text-center"
           >
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white">
-              {content.title}
+              {t.title}
             </h1>
             <p className="text-gray-600 dark:text-gray-300 text-lg sm:text-xl md:text-2xl max-w-3xl mx-auto">
-              {content.subtitle}
+              {t.subtitle}
             </p>
             
             {/* Tech stack tags */}
@@ -272,7 +280,7 @@ export default function ShopdeePage() {
               >
                 <Link href="https://github.com/Pisol00" target="_blank" rel="noopener noreferrer">
                   <Github size={18} className="mr-2" />
-                  {content.githubButton}
+                  {t.githubButton}
                 </Link>
               </Button>
             </div>
@@ -290,10 +298,10 @@ export default function ShopdeePage() {
             className="mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
-              {content.overview.title}
+              {t.overview.title}
             </h2>
             <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg leading-relaxed">
-              {content.overview.content}
+              {t.overview.content}
             </p>
           </AnimatedSection>
         </div>
@@ -308,14 +316,14 @@ export default function ShopdeePage() {
             className="mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
-              {content.projectStructure.title}
+              {t.projectStructure.title}
             </h2>
             <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg mb-6">
-              {content.projectStructure.content}
+              {t.projectStructure.content}
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {content.projectStructure.apps.map((app, index) => (
+              {projectApps.map((app, index) => (
                 <div key={index} className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 p-6 shadow-sm hover:shadow-md transition-all luxury-card">
                   <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white">
                     {app.name}
@@ -340,11 +348,11 @@ export default function ShopdeePage() {
             className="mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
-              {content.keyFeatures.title}
+              {t.keyFeatures.title}
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {content.keyFeatures.features.map((feature, index) => (
+              {keyFeatures.map((feature, index) => (
                 <div 
                   key={index} 
                   className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 p-6 shadow-sm hover:shadow-md transition-all luxury-card"
@@ -379,11 +387,11 @@ export default function ShopdeePage() {
             className="mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
-              {content.technologies.title}
+              {t.technologies.title}
             </h2>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              {content.technologies.categories.map((category, index) => (
+              {technologyCategories.map((category, index) => (
                 <div key={index} className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 p-6 shadow-sm hover:shadow-md transition-all luxury-card">
                   <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">
                     {category.name}
@@ -413,17 +421,17 @@ export default function ShopdeePage() {
             className="mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
-              {content.implementation.title}
+              {t.implementation.title}
             </h2>
             
             <div className="space-y-8">
               {/* Data Structure */}
               <div>
                 <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
-                  {content.implementation.dataStructure.title}
+                  {t.implementation.dataStructure.title}
                 </h3>
                 <ul className="space-y-3 pl-5 list-disc">
-                  {content.implementation.dataStructure.items.map((item, index) => (
+                  {dataStructureItems.map((item, index) => (
                     <li key={index} className="text-gray-600 dark:text-gray-300">
                       {item}
                     </li>
@@ -434,10 +442,10 @@ export default function ShopdeePage() {
               {/* Display System */}
               <div>
                 <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
-                  {content.implementation.displaySystem.title}
+                  {t.implementation.displaySystem.title}
                 </h3>
                 <ul className="space-y-3 pl-5 list-disc">
-                  {content.implementation.displaySystem.items.map((item, index) => (
+                  {displaySystemItems.map((item, index) => (
                     <li key={index} className="text-gray-600 dark:text-gray-300">
                       {item}
                     </li>
@@ -459,13 +467,13 @@ export default function ShopdeePage() {
             className="mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
-              {content.gallery.title}
+              {t.gallery.title}
             </h2>
             <p className="text-gray-600 dark:text-gray-300 text-base mb-6">
-              {content.gallery.description}
+              {t.gallery.description}
             </p>
             
-            {/* Image placeholders - In a real project, these would be actual screenshots */}
+            {/* Image placeholders */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="aspect-video bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
                 <span className="text-gray-500 dark:text-gray-400">Homepage Screenshot</span>
@@ -493,10 +501,10 @@ export default function ShopdeePage() {
             className="mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
-              {content.conclusion.title}
+              {t.conclusion.title}
             </h2>
             <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg">
-              {content.conclusion.content}
+              {t.conclusion.content}
             </p>
             
             <div className="mt-6 flex justify-center">
@@ -505,9 +513,9 @@ export default function ShopdeePage() {
                 className="mt-8 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
                 asChild
               >
-                <Link href="/#projects">
+                <Link href="/">
                   <ChevronLeft size={18} className="mr-2" />
-                  {content.backButton}
+                  {t.backButton}
                 </Link>
               </Button>
             </div>
