@@ -3,23 +3,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronLeft, Server, Layout, Database, Users, ShoppingBag, Code, Github } from 'lucide-react';
+import { ChevronLeft, Server, Layout, Database, Users, ShoppingBag, Code2, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import AnimatedSection from '@/components/common/animations/AnimatedSection';
-import { AppProviders } from '@/contexts';
 
-// Wrap page content in providers
-export default function ShopdeePage() {
-  return (
-    <AppProviders>
-      <ShopDeeContent />
-    </AppProviders>
-  );
-}
-
-// Actual page content
-function ShopDeeContent() {
+// Standalone page component that doesn't rely on context
+export default function ShopDeePage() {
   const [animationsEnabled, setAnimationsEnabled] = useState(true);
   const [currentLang, setCurrentLang] = useState<'en' | 'th'>('en');
   
@@ -43,19 +33,26 @@ function ShopDeeContent() {
 
   // Check for language preference
   useEffect(() => {
-    // Try to get saved language preference
-    const savedLang = localStorage.getItem('preferredLanguage');
-    if (savedLang === 'th' || savedLang === 'en') {
-      setCurrentLang(savedLang);
-    } else {
-      // Check browser language
-      const browserLang = navigator.language.startsWith('th') ? 'th' : 'en';
-      setCurrentLang(browserLang as 'th' | 'en');
+    // Try to get saved language preference from localStorage
+    if (typeof window !== 'undefined') {
+      try {
+        const savedLang = localStorage.getItem('preferredLanguage');
+        if (savedLang === 'th' || savedLang === 'en') {
+          setCurrentLang(savedLang as 'en' | 'th');
+        } else {
+          // Check browser language
+          const browserLang = navigator.language.startsWith('th') ? 'th' : 'en';
+          setCurrentLang(browserLang as 'th' | 'en');
+        }
+      } catch (e) {
+        // Fallback to English if we can't access localStorage
+        console.error('Error accessing localStorage:', e);
+      }
     }
   }, []);
 
   // Translations
-  const t = {
+  const pageTranslations = {
     backButton: currentLang === 'en' ? 'Back to Projects' : 'กลับไปยังหน้าโปรเจค',
     githubButton: currentLang === 'en' ? 'View on GitHub' : 'ดูบน GitHub',
     title: currentLang === 'en' ? 'Shopdee - E-Commerce Marketplace' : 'Shopdee - แพลตฟอร์มอีคอมเมิร์ซแบบ Marketplace',
@@ -212,9 +209,9 @@ function ShopDeeContent() {
             asChild
             className="rounded-full bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
           >
-            <Link href="/">
+            <Link href="/#projects">
               <ChevronLeft size={16} className="mr-1" />
-              {t.backButton}
+              {pageTranslations.backButton}
             </Link>
           </Button>
         </div>
@@ -222,7 +219,8 @@ function ShopDeeContent() {
 
       {/* Project Title Section */}
       <section 
-        className="pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-32 md:pb-20 relative overflow-hidden bg-white dark:bg-black">
+        className="pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-32 md:pb-20 relative overflow-hidden bg-white dark:bg-black"
+      >
         {/* Background decoration */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-20 -right-20 w-60 sm:w-80 h-60 sm:h-80 rounded-full bg-gray-50 dark:bg-gray-900/20 blur-3xl opacity-70"></div>
@@ -246,10 +244,10 @@ function ShopDeeContent() {
             className="text-center"
           >
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white">
-              {t.title}
+              {pageTranslations.title}
             </h1>
             <p className="text-gray-600 dark:text-gray-300 text-lg sm:text-xl md:text-2xl max-w-3xl mx-auto">
-              {t.subtitle}
+              {pageTranslations.subtitle}
             </p>
             
             {/* Tech stack tags */}
@@ -280,7 +278,7 @@ function ShopDeeContent() {
               >
                 <Link href="https://github.com/Pisol00" target="_blank" rel="noopener noreferrer">
                   <Github size={18} className="mr-2" />
-                  {t.githubButton}
+                  {pageTranslations.githubButton}
                 </Link>
               </Button>
             </div>
@@ -290,7 +288,8 @@ function ShopDeeContent() {
 
       {/* Project Overview */}
       <section 
-        className="py-12 md:py-16 bg-gray-50 dark:bg-gray-900/20">
+        className="py-12 md:py-16 bg-gray-50 dark:bg-gray-900/20"
+      >
         <div className="container mx-auto max-w-5xl px-4 sm:px-6">
           <AnimatedSection
             animation="fade-in"
@@ -298,10 +297,10 @@ function ShopDeeContent() {
             className="mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
-              {t.overview.title}
+              {pageTranslations.overview.title}
             </h2>
             <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg leading-relaxed">
-              {t.overview.content}
+              {pageTranslations.overview.content}
             </p>
           </AnimatedSection>
         </div>
@@ -316,10 +315,10 @@ function ShopDeeContent() {
             className="mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
-              {t.projectStructure.title}
+              {pageTranslations.projectStructure.title}
             </h2>
             <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg mb-6">
-              {t.projectStructure.content}
+              {pageTranslations.projectStructure.content}
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -340,7 +339,8 @@ function ShopDeeContent() {
 
       {/* Key Features */}
       <section
-        className="py-12 md:py-16 bg-gray-50 dark:bg-gray-900/20">
+        className="py-12 md:py-16 bg-gray-50 dark:bg-gray-900/20"
+      >
         <div className="container mx-auto max-w-5xl px-4 sm:px-6">
           <AnimatedSection
             animation="fade-in"
@@ -348,7 +348,7 @@ function ShopDeeContent() {
             className="mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
-              {t.keyFeatures.title}
+              {pageTranslations.keyFeatures.title}
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -379,7 +379,8 @@ function ShopDeeContent() {
 
       {/* Technologies */}
       <section
-        className="py-12 md:py-16 bg-white dark:bg-black">
+        className="py-12 md:py-16 bg-white dark:bg-black"
+      >
         <div className="container mx-auto max-w-5xl px-4 sm:px-6">
           <AnimatedSection
             animation="fade-in"
@@ -387,7 +388,7 @@ function ShopDeeContent() {
             className="mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
-              {t.technologies.title}
+              {pageTranslations.technologies.title}
             </h2>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -413,7 +414,8 @@ function ShopDeeContent() {
 
       {/* Implementation Details */}
       <section
-        className="py-12 md:py-16 bg-gray-50 dark:bg-gray-900/20">
+        className="py-12 md:py-16 bg-gray-50 dark:bg-gray-900/20"
+      >
         <div className="container mx-auto max-w-5xl px-4 sm:px-6">
           <AnimatedSection
             animation="fade-in"
@@ -421,14 +423,14 @@ function ShopDeeContent() {
             className="mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
-              {t.implementation.title}
+              {pageTranslations.implementation.title}
             </h2>
             
             <div className="space-y-8">
               {/* Data Structure */}
               <div>
                 <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
-                  {t.implementation.dataStructure.title}
+                  {pageTranslations.implementation.dataStructure.title}
                 </h3>
                 <ul className="space-y-3 pl-5 list-disc">
                   {dataStructureItems.map((item, index) => (
@@ -442,7 +444,7 @@ function ShopDeeContent() {
               {/* Display System */}
               <div>
                 <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
-                  {t.implementation.displaySystem.title}
+                  {pageTranslations.implementation.displaySystem.title}
                 </h3>
                 <ul className="space-y-3 pl-5 list-disc">
                   {displaySystemItems.map((item, index) => (
@@ -459,7 +461,8 @@ function ShopDeeContent() {
 
       {/* Project Gallery */}
       <section
-        className="py-12 md:py-16 bg-white dark:bg-black">
+        className="py-12 md:py-16 bg-white dark:bg-black"
+      >
         <div className="container mx-auto max-w-5xl px-4 sm:px-6">
           <AnimatedSection
             animation="fade-in"
@@ -467,10 +470,10 @@ function ShopDeeContent() {
             className="mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
-              {t.gallery.title}
+              {pageTranslations.gallery.title}
             </h2>
             <p className="text-gray-600 dark:text-gray-300 text-base mb-6">
-              {t.gallery.description}
+              {pageTranslations.gallery.description}
             </p>
             
             {/* Image placeholders */}
@@ -501,10 +504,10 @@ function ShopDeeContent() {
             className="mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
-              {t.conclusion.title}
+              {pageTranslations.conclusion.title}
             </h2>
             <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg">
-              {t.conclusion.content}
+              {pageTranslations.conclusion.content}
             </p>
             
             <div className="mt-6 flex justify-center">
@@ -513,9 +516,9 @@ function ShopDeeContent() {
                 className="mt-8 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
                 asChild
               >
-                <Link href="/">
+                <Link href="/#projects">
                   <ChevronLeft size={18} className="mr-2" />
-                  {t.backButton}
+                  {pageTranslations.backButton}
                 </Link>
               </Button>
             </div>
