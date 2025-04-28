@@ -280,7 +280,7 @@ export const projectsData = [
       th: "โปรเจคเชิงวิชาการด้าน Server-Side Development สร้างแพลตฟอร์มตลาดสำหรับซื้อและขายเสื้อผ้าใหม่และมือสองโดยใช้ Django, HTML, CSS, Bootstrap 5 และ PostgreSQL"
     },
     technologies: ["Django", "HTML", "CSS", "Bootstrap 5", "PostgreSQL"],
-    link: "https://github.com/Pisol00"
+    link: "/project/shopdee"
   },
   {
     title: "Connextra",
