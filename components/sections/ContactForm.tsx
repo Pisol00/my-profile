@@ -24,7 +24,7 @@ interface ContactFormProps {
 }
 
 export default function ContactForm({ isMobile = false }: ContactFormProps) {
-  const { currentLang, t } = useLanguage();
+  const { t, currentLang } = useLanguage();
   
   // Form state
   const [formState, setFormState] = useState<FormState>({
@@ -145,6 +145,19 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
     }
   };
   
+  // Get translated error messages
+  const getErrorMessages = {
+    nameRequired: currentLang === 'en' ? 'Name is required' : 'กรุณากรอกชื่อ',
+    emailRequired: currentLang === 'en' ? 'Email is required' : 'กรุณากรอกอีเมล',
+    emailValid: currentLang === 'en' ? 'Please enter a valid email address' : 'กรุณากรอกที่อยู่อีเมลที่ถูกต้อง',
+    subjectRequired: currentLang === 'en' ? 'Subject is required' : 'กรุณากรอกหัวข้อ',
+    messageRequired: currentLang === 'en' ? 'Message is required' : 'กรุณากรอกข้อความ',
+    messageLength: currentLang === 'en' ? 'Message must be at least 10 characters' : 'ข้อความต้องมีความยาวอย่างน้อย 10 ตัวอักษร',
+    successMsg: currentLang === 'en' ? 'Your message has been sent successfully!' : 'ส่งข้อความของคุณเรียบร้อยแล้ว!',
+    errorMsg: currentLang === 'en' ? 'There was an error sending your message. Please try again.' : 'เกิดข้อผิดพลาดในการส่งข้อความของคุณ โปรดลองอีกครั้ง',
+    sending: currentLang === 'en' ? 'Sending...' : 'กำลังส่ง...'
+  };
+  
   // Mobile form layout
   if (isMobile) {
     return (
@@ -158,9 +171,7 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
               </svg>
             </div>
             <p className="text-xs">
-              {currentLang === 'en'
-                ? 'Your message has been sent successfully!'
-                : 'ส่งข้อความของคุณเรียบร้อยแล้ว!'}
+              {getErrorMessages.successMsg}
             </p>
           </div>
         )}
@@ -174,9 +185,7 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
               </svg>
             </div>
             <p className="text-xs">
-              {currentLang === 'en'
-                ? 'There was an error sending your message. Please try again.'
-                : 'เกิดข้อผิดพลาดในการส่งข้อความของคุณ โปรดลองอีกครั้ง'}
+              {getErrorMessages.errorMsg}
             </p>
           </div>
         )}
@@ -196,7 +205,7 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
                 ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
                 : 'border-gray-200 dark:border-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400'
             } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 text-sm`}
-            placeholder={currentLang === "en" ? "Enter your name" : "ใส่ชื่อของคุณ"}
+            placeholder={t.enterYourName || "Enter your name"}
             disabled={isSubmitting}
           />
           {errors.name && (
@@ -219,7 +228,7 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
                 ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
                 : 'border-gray-200 dark:border-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400'
             } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 text-sm`}
-            placeholder={currentLang === "en" ? "Enter your email" : "ใส่อีเมลของคุณ"}
+            placeholder={t.enterYourEmail || "Enter your email"}
             disabled={isSubmitting}
           />
           {errors.email && (
@@ -242,7 +251,7 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
                 ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
                 : 'border-gray-200 dark:border-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400'
             } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 text-sm`}
-            placeholder={currentLang === "en" ? "How can I help you?" : "ฉันช่วยคุณได้อย่างไร?"}
+            placeholder={t.subjectPlaceholder || "How can I help you?"}
             disabled={isSubmitting}
           />
           {errors.subject && (
@@ -265,7 +274,7 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
                 ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
                 : 'border-gray-200 dark:border-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400'
             } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 resize-none text-sm`}
-            placeholder={currentLang === "en" ? "Your message" : "ข้อความของคุณ"}
+            placeholder={t.messagePlaceholder || "Your message"}
             disabled={isSubmitting}
           ></textarea>
           {errors.message && (
@@ -286,7 +295,7 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                {currentLang === "en" ? "Sending..." : "กำลังส่ง..."}
+                {getErrorMessages.sending}
               </>
             ) : (
               <>
@@ -312,9 +321,7 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
             </svg>
           </div>
           <p className="text-sm">
-            {currentLang === 'en'
-              ? 'Your message has been sent successfully. I will get back to you soon!'
-              : 'ส่งข้อความของคุณเรียบร้อยแล้ว ฉันจะติดต่อกลับในเร็วๆ นี้!'}
+            {t.successMessage || "Your message has been sent successfully. I will get back to you soon!"}
           </p>
         </div>
       )}
@@ -328,9 +335,7 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
             </svg>
           </div>
           <p className="text-sm">
-            {currentLang === 'en'
-              ? 'There was an error sending your message. Please try again later.'
-              : 'เกิดข้อผิดพลาดในการส่งข้อความของคุณ โปรดลองอีกครั้งในภายหลัง'}
+            {t.errorMessage || "There was an error sending your message. Please try again later."}
           </p>
         </div>
       )}
@@ -350,7 +355,7 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
                 ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
                 : 'border-gray-200 dark:border-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400'
             } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 text-sm`}
-            placeholder={currentLang === "en" ? "Enter your name" : "ใส่ชื่อของคุณ"}
+            placeholder={t.enterYourName || "Enter your name"}
             disabled={isSubmitting}
           />
           {errors.name && (
@@ -371,7 +376,7 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
                 ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
                 : 'border-gray-200 dark:border-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400'
             } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 text-sm`}
-            placeholder={currentLang === "en" ? "Enter your email" : "ใส่อีเมลของคุณ"}
+            placeholder={t.enterYourEmail || "Enter your email"}
             disabled={isSubmitting}
           />
           {errors.email && (
@@ -394,7 +399,7 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
               ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
               : 'border-gray-200 dark:border-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400'
           } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 text-sm`}
-          placeholder={currentLang === "en" ? "How can I help you?" : "ฉันช่วยคุณได้อย่างไร?"}
+          placeholder={t.subjectPlaceholder || "How can I help you?"}
           disabled={isSubmitting}
         />
         {errors.subject && (
@@ -416,7 +421,7 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
               ? 'border-red-300 dark:border-red-700 focus:ring-red-500' 
               : 'border-gray-200 dark:border-gray-700 focus:ring-gray-500 dark:focus:ring-gray-400'
           } bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 resize-none text-sm`}
-          placeholder={currentLang === "en" ? "Your message" : "ข้อความของคุณ"}
+          placeholder={t.messagePlaceholder || "Your message"}
           disabled={isSubmitting}
         ></textarea>
         {errors.message && (
@@ -437,7 +442,7 @@ export default function ContactForm({ isMobile = false }: ContactFormProps) {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
-              {currentLang === "en" ? "Sending..." : "กำลังส่ง..."}
+              {getErrorMessages.sending}
             </>
           ) : (
             <>

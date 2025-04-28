@@ -1,17 +1,14 @@
 'use client';
 
 import { Badge } from '@/components/ui/badge';
-import {  ExternalLink, Code2, Folder} from 'lucide-react';
+import { ExternalLink, Code2, Folder } from 'lucide-react';
 import AnimatedSection from '@/components/common/animations/AnimatedSection';
 import Link from 'next/link';
+import { useLanguage } from '@/contexts';
+import { LocalizedProject } from '@/translations/types';
 
 interface ProjectCardProps {
-  title: string;
-  description: string;
-  technologies: string[];
-  link: string;
-  viewProjectText: string;
-  year?: string; // Added year as an optional prop
+  project: LocalizedProject;
   animationsEnabled?: boolean;
   delay?: number;
 }
@@ -20,18 +17,15 @@ interface ProjectCardProps {
  * ProjectCard Component
  * 
  * Displays a project with its description, technologies, and links
- * Updated with an elegant, luxury monochrome design
+ * Updated to use the new translation system
  */
 export function ProjectCard({ 
-  title, 
-  description, 
-  technologies, 
-  link, 
-  viewProjectText,
-  year,
+  project, 
   animationsEnabled = true, 
   delay = 0 
 }: ProjectCardProps) {
+  const { t } = useLanguage();
+  
   // Helper to handle external vs internal links
   const ExternalLinkWrapper = ({ 
     href, 
@@ -76,33 +70,30 @@ export function ProjectCard({
               <Folder size={20} />
             </div>
             <div>
-              <h3 className="font-bold text-xl">{title}</h3>
-              {year && (
+              <h3 className="font-bold text-xl">{project.title}</h3>
+              {project.year && (
                 <div className="flex items-center mt-1 text-sm text-gray-500 dark:text-gray-400">
-                  
-                  <span>{year}</span>
+                  <span>{project.year}</span>
                 </div>
               )}
             </div>
           </div>
-
         </div>
 
         {/* Content */}
         <div className="p-6 flex-1 flex flex-col">
           <p className="text-gray-600 dark:text-gray-300 text-sm mb-6 flex-1">
-            {description}
+            {project.description}
           </p>
 
           {/* Technologies */}
           <div className="flex flex-wrap gap-2 mb-6">
-            {technologies.map((tech, techIndex) => (
+            {project.technologies.map((tech, techIndex) => (
               <Badge 
                 key={techIndex} 
                 variant="outline" 
                 className="bg-gray-50/50 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 py-1"
               >
-                {/* <Code2 size={12} className="mr-1" /> */}
                 {tech}
               </Badge>
             ))}
@@ -110,10 +101,10 @@ export function ProjectCard({
 
           {/* Link */}
           <ExternalLinkWrapper
-            href={link}
+            href={project.link}
             className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-300 transition-colors font-medium"
           >
-            <span>{viewProjectText}</span>
+            <span>{t.viewProject}</span>
             <ExternalLink size={14} />
           </ExternalLinkWrapper>
         </div>

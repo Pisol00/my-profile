@@ -15,7 +15,7 @@ type ContactSectionProps = {
 
 const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
   ({ animationsEnabled }, ref) => {
-    const { currentLang, t } = useLanguage();
+    const { t } = useLanguage();
     
     return (
       <section ref={ref} className="py-16 sm:py-20 md:py-24 bg-white dark:bg-black relative overflow-hidden">
@@ -42,9 +42,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
               {t.contact}
             </h2>
             <p className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-base sm:text-lg">
-              {currentLang === "en"
-                ? "Feel free to reach out for collaborations, internship opportunities, or just to say hello"
-                : "อย่าลังเลที่จะติดต่อเพื่อความร่วมมือ โอกาสในการฝึกงาน หรือเพียงแค่ทักทาย"}
+              {t.contactIntro}
             </p>
           </AnimatedSection>
 
@@ -56,7 +54,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                 <div className="md:col-span-2 bg-gray-50 dark:bg-gray-800/50 p-5 sm:p-8 md:p-12">
                   <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2 text-gray-900 dark:text-white">
                     <MessageSquare size={20} className="sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400" />
-                    <span>{currentLang === "en" ? "Contact Info" : "ข้อมูลติดต่อ"}</span>
+                    <span>{t.contactInfo || "Contact Info"}</span>
                   </h3>
                   
                   <div className="space-y-6 sm:space-y-8">
@@ -67,7 +65,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       </div>
                       <div>
                         <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
-                          {currentLang === "en" ? "Email" : "อีเมล"}
+                          {t.email}
                         </h4>
                         <Link 
                           href={`mailto:${profileData.email}`} 
@@ -86,7 +84,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       </div>
                       <div>
                         <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
-                          {currentLang === "en" ? "Phone" : "โทรศัพท์"}
+                          {t.phone}
                         </h4>
                         <Link 
                           href={`tel:${profileData.phone}`} 
@@ -105,7 +103,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       </div>
                       <div>
                         <h4 className="font-medium text-base sm:text-lg mb-1 text-gray-900 dark:text-white">
-                          {currentLang === "en" ? "Location" : "ที่อยู่"}
+                          {t.location || "Location"}
                         </h4>
                         <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
                           {t.location}
@@ -140,14 +138,12 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                 <div className="md:col-span-3 p-5 sm:p-8 md:p-12">
                   <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2 text-gray-900 dark:text-white">
                     <MessageSquare size={20} className="sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400" />
-                    <span>{currentLang === "en" ? "Send a Message" : "ส่งข้อความ"}</span>
+                    <span>{t.sendMessage || "Send a Message"}</span>
                   </h3>
                   
                   <div className="mb-6 sm:mb-8">
                     <p className="text-gray-600 dark:text-gray-300 mb-5 sm:mb-6 text-sm sm:text-base">
-                      {currentLang === "en"
-                        ? "I'm currently available for internship opportunities, collaborations, or any questions you might have."
-                        : "ฉันพร้อมรับโอกาสฝึกงาน ความร่วมมือ หรือตอบคำถามที่คุณอาจมี"}
+                      {t.messageIntro || "I'm currently available for internship opportunities, collaborations, or any questions you might have."}
                     </p>
                     
                     {/* Use the ContactForm component */}
@@ -157,9 +153,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                   {/* Alternative contact methods */}
                   <div className="border-t border-gray-100 dark:border-gray-800 pt-4 sm:pt-6 mt-6 sm:mt-8">
                     <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-3 sm:mb-4">
-                      {currentLang === "en"
-                        ? "Prefer a direct approach? Contact me via:"
-                        : "ต้องการติดต่อโดยตรง? ติดต่อฉันผ่าน:"}
+                      {t.directApproach}
                     </p>
                     <div className="flex gap-2 sm:gap-3">
                       <Button 
@@ -170,7 +164,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       >
                         <Link href={`mailto:${profileData.email}`}>
                           <Mail size={14} className="sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
-                          Email
+                          {t.email}
                         </Link>
                       </Button>
                       <Button 
@@ -181,7 +175,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                       >
                         <Link href={`tel:${profileData.phone}`}>
                           <Phone size={14} className="sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
-                          {currentLang === "en" ? "Call" : "โทร"}
+                          {t.call}
                         </Link>
                       </Button>
                     </div>
@@ -198,7 +192,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
               <div className="p-5 border-b border-gray-100 dark:border-gray-800">
                 <h3 className="text-lg font-bold flex items-center gap-2 text-gray-900 dark:text-white">
                   <MessageSquare size={18} className="text-gray-600 dark:text-gray-400" />
-                  <span>{currentLang === "en" ? "Contact Info" : "ข้อมูลติดต่อ"}</span>
+                  <span>{t.contactInfo || "Contact Info"}</span>
                 </h3>
               </div>
 
@@ -212,7 +206,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium text-sm mb-0.5 text-gray-900 dark:text-white">
-                        {currentLang === "en" ? "Email" : "อีเมล"}
+                        {t.email}
                       </h4>
                       <Link 
                         href={`mailto:${profileData.email}`} 
@@ -236,7 +230,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                     </div>
                     <div className="flex-1">
                       <h4 className="font-medium text-sm mb-0.5 text-gray-900 dark:text-white">
-                        {currentLang === "en" ? "Phone" : "โทรศัพท์"}
+                        {t.phone}
                       </h4>
                       <span className="text-gray-600 dark:text-gray-300 text-xs">
                         {profileData.phone}
@@ -257,7 +251,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                     </div>
                     <div className="flex-1">
                       <h4 className="font-medium text-sm mb-0.5 text-gray-900 dark:text-white">
-                        {currentLang === "en" ? "Location" : "ที่อยู่"}
+                        {t.location || "Location"}
                       </h4>
                       <p className="text-gray-600 dark:text-gray-300 text-xs">
                         {t.location}
@@ -296,15 +290,13 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
               <div className="p-5 border-b border-gray-100 dark:border-gray-800">
                 <h3 className="text-lg font-bold flex items-center gap-2 text-gray-900 dark:text-white">
                   <MessageSquare size={18} className="text-gray-600 dark:text-gray-400" />
-                  <span>{currentLang === "en" ? "Send a Message" : "ส่งข้อความ"}</span>
+                  <span>{t.sendMessage || "Send a Message"}</span>
                 </h3>
               </div>
 
               <div className="p-5">
                 <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm">
-                  {currentLang === "en"
-                    ? "I'm currently available for internship opportunities, collaborations, or any questions you might have."
-                    : "ฉันพร้อมรับโอกาสฝึกงาน ความร่วมมือ หรือตอบคำถามที่คุณอาจมี"}
+                  {t.messageIntro || "I'm currently available for internship opportunities, collaborations, or any questions you might have."}
                 </p>
                 
                 {/* Mobile ContactForm */}
@@ -319,7 +311,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                   >
                     <Link href={`mailto:${profileData.email}`}>
                       <Mail size={14} className="mr-1.5" />
-                      Email
+                      {t.email}
                     </Link>
                   </Button>
                   <Button 
@@ -329,7 +321,7 @@ const ContactSection = forwardRef<HTMLElement, ContactSectionProps>(
                   >
                     <Link href={`tel:${profileData.phone}`}>
                       <Phone size={14} className="mr-1.5" />
-                      {currentLang === "en" ? "Call" : "โทร"}
+                      {t.call}
                     </Link>
                   </Button>
                 </div>

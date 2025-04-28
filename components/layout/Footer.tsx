@@ -50,7 +50,8 @@ type FooterProps = {
 };
 
 export default function Footer({ scrollToSection, sections }: FooterProps) {
-  const { currentLang, t } = useLanguage();
+  const { t } = useLanguage();
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-white dark:bg-black py-12 sm:py-16 border-t border-gray-100 dark:border-gray-800 relative overflow-hidden">
@@ -84,12 +85,12 @@ export default function Footer({ scrollToSection, sections }: FooterProps) {
             <SocialLink 
               href={`mailto:${profileData.email}`} 
               icon={<Mail size={18} className="sm:w-5 sm:h-5" />} 
-              label="Email" 
+              label={t.email || "Email"} 
             />
             <SocialLink 
               href={`tel:${profileData.phone}`} 
               icon={<Phone size={18} className="sm:w-5 sm:h-5" />} 
-              label="Phone" 
+              label={t.phone || "Phone"} 
             />
             <SocialLink 
               href={`https://github.com/${profileData.github}`} 
@@ -104,7 +105,7 @@ export default function Footer({ scrollToSection, sections }: FooterProps) {
           {/* Copyright */}
           <div className="text-center">
             <p className="text-gray-500 dark:text-gray-400 mb-2 text-sm sm:text-base">
-              © {new Date().getFullYear()} {t.name}. {t.allRightsReserved}
+              © {currentYear} {t.name}. {t.allRightsReserved}
             </p>
           </div>
         </div>

@@ -37,7 +37,7 @@ export default function Navbar({ scrollToSection, sections }: NavbarProps) {
             <div className="absolute inset-0 bg-gray-100/50 dark:bg-gray-800/50 rounded-md"></div>
           </div>
           <span className="font-bold text-base sm:text-lg bg-gradient-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
-            Pisol Uattankanjana
+            {t.name}
           </span>
         </div>
 
@@ -100,7 +100,7 @@ export default function Navbar({ scrollToSection, sections }: NavbarProps) {
             size="icon"
             className="md:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-full border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-label={mobileMenuOpen ? t.closeMenu || "Close menu" : t.openMenu || "Open menu"}
             aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? (

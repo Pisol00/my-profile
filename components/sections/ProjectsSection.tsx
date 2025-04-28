@@ -1,11 +1,10 @@
 'use client';
 
 import { forwardRef, useState, useMemo } from 'react';
-import { Github, ExternalLink, Calendar, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Github, ChevronRight, ChevronLeft, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import AnimatedSection from '@/components/common/animations/AnimatedSection';
 import { useLanguage } from '@/contexts';
-import { localizedData } from '@/translations';
 import { ProjectCard } from '@/components/common/cards';
 import { Button } from '@/components/ui/button';
 
@@ -15,12 +14,12 @@ type ProjectsSectionProps = {
 
 const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
   ({ animationsEnabled }, ref) => {
-    const { currentLang, t } = useLanguage();
+    const { t, getLocalizedProjects } = useLanguage();
     const [activeTab, setActiveTab] = useState("all"); // For projects filtering by year
     const [activeMobileIndex, setActiveMobileIndex] = useState(0); // For mobile carousel
 
-    // Get the projects data directly from localizedData
-    const projects = localizedData[currentLang].projects;
+    // Get the projects data from our localized projects function
+    const projects = getLocalizedProjects();
 
     // Get unique years from projects
     const projectYears = useMemo(() => {
@@ -92,9 +91,7 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
               {t.projectsHighlight}
             </h2>
             <p className="text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-base sm:text-lg">
-              {currentLang === "en"
-                ? "Featured projects showcasing my skills and experience"
-                : "โปรเจกต์เด่นที่แสดงให้เห็นถึงทักษะและประสบการณ์ของฉัน"}
+              {t.projectsIntro || "Featured projects showcasing my skills and experience"}
             </p>
           </AnimatedSection>
 
@@ -113,10 +110,10 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
                   }`}
                 >
                   {year === "all" ? (
-                    currentLang === "en" ? "All Projects" : "ทั้งหมด"
+                    t.allProjects || "All Projects"
                   ) : (
                     <div className="flex items-center gap-1.5">
-                      {/* <Calendar size={14} /> */}
+                      <Calendar size={14} />
                       <span>{year}</span>
                     </div>
                   )}
@@ -129,12 +126,7 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
               {filteredProjects.map((project, index) => (
                 <ProjectCard
                   key={index}
-                  title={project.title}
-                  description={project.description}
-                  technologies={project.technologies}
-                  link={project.link}
-                  viewProjectText={t.viewProject}
-                  year={project.year}
+                  project={project}
                   animationsEnabled={animationsEnabled}
                   delay={100 + index * 50}
                 />
@@ -161,7 +153,7 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
                     }`}
                   >
                     {year === "all" ? (
-                      currentLang === "en" ? "All" : "ทั้งหมด"
+                      t.allProjects || "All"
                     ) : (
                       <div className="flex items-center gap-1">
                         <Calendar size={12} />
@@ -180,12 +172,7 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
                   {/* Current Project Card */}
                   <div className="transition-all duration-500 ease-in-out px-1">
                     <ProjectCard
-                      title={filteredProjects[activeMobileIndex].title}
-                      description={filteredProjects[activeMobileIndex].description}
-                      technologies={filteredProjects[activeMobileIndex].technologies}
-                      link={filteredProjects[activeMobileIndex].link}
-                      viewProjectText={t.viewProject}
-                      year={filteredProjects[activeMobileIndex].year}
+                      project={filteredProjects[activeMobileIndex]}
                       animationsEnabled={animationsEnabled}
                     />
                   </div>
@@ -228,19 +215,6 @@ const ProjectsSection = forwardRef<HTMLElement, ProjectsSectionProps>(
               )}
             </div>
           </div>
-
-          {/* "View More Projects" button at the bottom - for both mobile and desktop */}
-          {/* <div className="flex justify-center mt-10 sm:mt-12">
-            <Link
-              href={`https://github.com/${localizedData[currentLang].github}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all shadow-md hover:shadow-lg font-medium text-sm sm:text-base"
-            >
-              <Github size={16} className="sm:w-[18px] sm:h-[18px]" />
-              {currentLang === "en" ? "View More Projects on GitHub" : "ดูโปรเจกต์เพิ่มเติมบน GitHub"}
-            </Link>
-          </div> */}
         </div>
       </section>
     );

@@ -20,7 +20,7 @@ type SkillsSectionProps = {
 
 const SkillsSection = forwardRef<HTMLElement, SkillsSectionProps>(
   ({ animationsEnabled }, ref) => {
-    const { currentLang, t } = useLanguage();
+    const { t } = useLanguage();
 
     // State for expandable mobile sections
     const [expandedCategory, setExpandedCategory] = useState<string | null>("development");
@@ -34,119 +34,47 @@ const SkillsSection = forwardRef<HTMLElement, SkillsSectionProps>(
       }
     };
 
-    // Front-end skills
-    const frontendSkills = [
-      { name: "HTML" },
-      { name: "CSS" },
-      { name: "JavaScript" },
-      { name: "Bootstrap" },
-      { name: "Tailwind CSS" },
-      { name: "React" },
-      { name: "React Native" },
-      { name: "NextJS" },
-    ];
+    // Front-end skills from profileData
+    const frontendSkills = profileData.skills.frontend;
 
-    // Back-end skills
-    const backendSkills = [
-      { name: "PostgreSQL" },
-      { name: "MongoDB" },
-      { name: "MySQL" },
-      { name: "Django" },
-      { name: "Flask" },
-      { name: "Node.js" },
-      { name: "Neo4J" },
-      { name: "REST APIs" },
-      { name: "PHP"}
-    ];
+    // Back-end skills from profileData
+    const backendSkills = profileData.skills.backend;
 
-    // Other programming languages
-    const otherLanguages = [
-      { name: "Java OOP" },
-      { name: "C" }
-    ];
+    // Other programming languages from profileData
+    const otherLanguages = profileData.skills.other;
 
-    // Tools and technologies - Separated by category
-    const versionControlTools = [
-      { name: "Git" },
-      { name: "GitHub" }
-    ];
-
-    const cloudDeploymentTools = [
-      { name: "AWS" },
-      { name: "Google Cloud" },
-      { name: "Docker" },
-      { name: "Nginx" }
-    ];
-
-    const cicdTools = [
-      { name: "Jenkins" }
-    ];
-
-    // Spoken languages and soft skills
-    const languages = [
-      { name: currentLang === "en" ? "Thai (Native)" : "ไทย (ภาษาแม่)" },
-      { name: currentLang === "en" ? "English (Intermediate)" : "อังกฤษ (ระดับกลาง)" },
-    ];
-
-    const SoftSkills = [
-      { name: currentLang === "en" ? "Problem-Solving & Critical Thinking" : "ทักษะการแก้ปัญหา" },
-      { name: currentLang === "en" ? "Communication Skills" : "ทักษะการสื่อสาร" },
-      { name: currentLang === "en" ? "Teamwork & Collaboration" : "การร่วมมือทำงานเป็นทีม" },
-      { name: currentLang === "en" ? "Adaptability & Learning Agility" : "การปรับตัวและการตื่นตัวในการเรียนรู้" },
-    ];
+    // Tools and technologies from profileData
+    const toolsAndTech = profileData.skills.tools;
 
     // Reorganized skill categories
     const skillCategories = [
       {
         id: "development",
-        name: currentLang === "en" ? "Development" : "การพัฒนา",
+        name: t.technicalSkills,
         icon: <Code size={22} className="sm:w-6 sm:h-6" />,
         skillGroups: [
           {
-            title: currentLang === "en" ? "Frontend" : "ฟร้อนท์เอนด์",
+            title: t.frontend,
             skills: frontendSkills
           },
           {
-            title: currentLang === "en" ? "Backend" : "แบ็คเอนด์",
+            title: t.backend,
             skills: backendSkills
           },
           {
-            title: currentLang === "en" ? "Other Languages" : "ภาษาอื่นๆ",
+            title: t.otherLang,
             skills: otherLanguages
           }
         ]
       },
       {
         id: "technologies",
-        name: currentLang === "en" ? "Technologies & Tools" : "เทคโนโลยีและเครื่องมือ",
+        name: t.toolsTech,
         icon: <Server size={22} className="sm:w-6 sm:h-6" />,
         skillGroups: [
           {
-            title: currentLang === "en" ? "Cloud & Deployment" : "คลาวด์และการเผยแพร่",
-            skills: cloudDeploymentTools
-          },
-          {
-            title: currentLang === "en" ? "Version Control" : "ระบบควบคุมเวอร์ชัน",
-            skills: versionControlTools
-          },
-          {
-            title: currentLang === "en" ? "CI/CD" : "CI/CD",
-            skills: cicdTools
-          }
-        ]
-      },
-      {
-        id: "abilities",
-        name: currentLang === "en" ? "Languages & Soft Skills" : "ความสามารถและภาษา",
-        icon: <Layers size={22} className="sm:w-6 sm:h-6" />,
-        skillGroups: [
-          {
-            title: currentLang === "en" ? "Languages" : "ภาษา",
-            skills: languages
-          },
-          {
-            title: currentLang === "en" ? "Soft Skills" : "ความสามารถ",
-            skills: SoftSkills
+            title: "",
+            skills: toolsAndTech
           }
         ]
       }
@@ -174,15 +102,13 @@ const SkillsSection = forwardRef<HTMLElement, SkillsSectionProps>(
               {t.skills}
             </h2>
             <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-base sm:text-lg">
-              {currentLang === "en"
-                ? "Technical skills, tools, and areas of expertise"
-                : "ทักษะทางเทคนิค เครื่องมือ และความเชี่ยวชาญ"}
+              {t.skillsSubtitle || "Technical skills, tools, and areas of expertise"}
             </p>
           </AnimatedSection>
 
           {/* Desktop View - Card Layout */}
           <div className="hidden md:block">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
               {skillCategories.map((category, categoryIndex) => (
                 <AnimatedSection
                   key={category.id}
@@ -214,7 +140,7 @@ const SkillsSection = forwardRef<HTMLElement, SkillsSectionProps>(
                                 key={idx}
                                 className="flex flex-col bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 py-2 px-3 rounded-lg border border-gray-100 dark:border-gray-700"
                               >
-                                <span className="text-sm font-medium">{skill.name}</span>
+                                <span className="text-sm font-medium">{skill}</span>
                               </div>
                             ))}
                           </div>
@@ -278,7 +204,7 @@ const SkillsSection = forwardRef<HTMLElement, SkillsSectionProps>(
                                   key={idx}
                                   className="flex flex-col bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 py-1.5 px-2.5 rounded-lg border border-gray-100 dark:border-gray-700"
                                 >
-                                  <span className="text-xs font-medium">{skill.name}</span>
+                                  <span className="text-xs font-medium">{skill}</span>
                                 </div>
                               ))}
                             </div>

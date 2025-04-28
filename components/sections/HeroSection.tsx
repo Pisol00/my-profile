@@ -8,7 +8,7 @@ import Link from 'next/link';
 import AnimatedSection from '@/components/common/animations/AnimatedSection';
 import InfoBadge from '@/components/common/ui/InfoBadge';
 import { useLanguage } from '@/contexts';
-import { profileData, localizedData } from '@/translations';
+import { profileData } from '@/translations';
 import TypedText from '@/components/common/animations/TypedText';
 
 type HeroSectionProps = {
@@ -18,22 +18,16 @@ type HeroSectionProps = {
 
 const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
   ({ animationsEnabled, onScrollToNext }, ref) => {
-    const { currentLang, t } = useLanguage();
-
-    // Simplify profile creation by combining profileData with localized data
-    const profile = {
-      ...profileData,
-      ...localizedData[currentLang]
-    };
+    const { t, currentLang } = useLanguage();
 
     // Split name into parts
-    const nameParts = profile.name.split(" ");
+    const nameParts = t.name.split(" ");
     const firstName = nameParts[0] || "";
     const lastName = nameParts.length > 1 ? nameParts[1] : "";
 
-    // Text options for typing animation
+    // Text options for typing animation - using the translation system
     const typingTexts = [
-      currentLang === "en" ? "SOFTWARE ENGINEERING" : "วิศวกรรมซอฟต์แวร์",
+      t.title,
       currentLang === "en" ? "FULL STACK DEVELOPER" : "นักพัฒนาซอฟต์แวร์แบบ Full Stack"
     ];
 
@@ -92,7 +86,7 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
                 <div className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 overflow-hidden rounded-full border-4 border-white dark:border-gray-800 shadow-xl">
                   <Image
                     src="/profile-image.jpg"
-                    alt={profile.name}
+                    alt={t.name}
                     fill
                     sizes="(max-width: 640px) 160px, (max-width: 768px) 192px, (max-width: 1024px) 224px, 256px"
                     priority
@@ -131,7 +125,7 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
 
                 {/* Bio */}
                 <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300 mb-4 sm:mb-5 max-w-2xl mx-auto md:mx-0 leading-relaxed">
-                  {profile.bio}
+                  {t.bio}
                 </p>
 
                 {/* CTA Buttons */}
@@ -141,7 +135,7 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
                     size="lg"
                     className="bg-gray-900 hover:bg-black text-white border-none gap-2 shadow-lg shadow-gray-200 dark:shadow-gray-900/20 w-full sm:w-auto dark:bg-white dark:text-black dark:hover:bg-gray-100"
                   >
-                    <Link href={`mailto:${profile.email}`}>
+                    <Link href={`mailto:${profileData.email}`}>
                       <Mail size={16} className="sm:w-[18px] sm:h-[18px]" />
                       {t.contactMe}
                     </Link>
@@ -154,7 +148,7 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
                     className="border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 gap-2 w-full sm:w-auto"
                   >
                     <Link
-                      href={`https://github.com/${profile.github}`}
+                      href={`https://github.com/${profileData.github}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -170,7 +164,7 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
                   <div className="sm:hidden grid grid-cols-1 gap-3 w-full">
                     <div className="flex items-center justify-center gap-2 p-3 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
                       <MapPin size={16} className="text-gray-500 flex-shrink-0" />
-                      <span className="text-sm">{profile.location}</span>
+                      <span className="text-sm">{t.location}</span>
                     </div>
 
                     <div className="flex items-center justify-center gap-2 p-3 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
@@ -188,7 +182,7 @@ const HeroSection = forwardRef<HTMLElement, HeroSectionProps>(
                   <div className="hidden sm:flex flex-wrap gap-3 justify-center md:justify-start">
                     <InfoBadge
                       icon={<MapPin size={14} className="text-gray-500" />}
-                      text={profile.location}
+                      text={t.location}
                     />
                     <InfoBadge
                       icon={<Phone size={14} className="text-gray-500" />}
