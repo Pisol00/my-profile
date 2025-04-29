@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronLeft, Server, Layout, Database, Users, ShoppingBag, Code2, Github, ExternalLink, Check, Star, ChevronRight, Eye, Calendar, Hash, Target, Images } from 'lucide-react';
+import { ChevronLeft, Server, Layout, Database, Users, ShoppingBag, Code2, Github, ExternalLink, Check, Star, ChevronRight, Eye, Calendar, Hash, Target, Images, Languages } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import AnimatedSection from '@/components/common/animations/AnimatedSection';
@@ -12,12 +12,20 @@ import { useLanguage } from '@/contexts';
 export default function ShopDeePage() {
   const [animationsEnabled, setAnimationsEnabled] = useState(true);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isClient, setIsClient] = useState(false);
   
   // Use the language context
-  const { currentLang, t } = useLanguage();
+  const { currentLang, t, toggleLanguage } = useLanguage();
+  
+  // Set client-side rendering flag
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   
   // Check if animations should be enabled
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setAnimationsEnabled(!mediaQuery.matches);
     
@@ -34,11 +42,15 @@ export default function ShopDeePage() {
 
   // Functions for image navigation
   const nextImage = () => {
-    setActiveImageIndex((prev) => (prev + 1) % screenshots.length);
+    if (screenshots.length > 0) {
+      setActiveImageIndex((prev) => (prev + 1) % screenshots.length);
+    }
   };
 
   const prevImage = () => {
-    setActiveImageIndex((prev) => (prev - 1 + screenshots.length) % screenshots.length);
+    if (screenshots.length > 0) {
+      setActiveImageIndex((prev) => (prev - 1 + screenshots.length) % screenshots.length);
+    }
   };
 
   // Project structure apps
@@ -198,6 +210,15 @@ export default function ShopDeePage() {
     },
   ];
 
+  // Show loading state during SSR or pre-hydration
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-black flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-gray-300 border-t-gray-800 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative min-h-screen bg-gray-50 dark:bg-black overflow-x-hidden">
       {/* Decorative Background Elements */}
@@ -206,8 +227,8 @@ export default function ShopDeePage() {
         <div className="absolute bottom-0 -left-20 w-80 h-80 rounded-full bg-gray-100 dark:bg-gray-800/20 blur-3xl opacity-40"></div>
       </div>
 
-      {/* Fixed Header */}
-      <header className="sticky top-0 z-40 backdrop-blur-md bg-white/90 dark:bg-black/90 border-b border-gray-200/30 dark:border-gray-800/30">
+      {/* Fixed Header - Using fixed positioning for reliable fixed behavior */}
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/95 dark:bg-black/95 border-b border-gray-200/30 dark:border-gray-800/30 shadow-md">
         <div className="container max-w-5xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between">
           <Button 
             variant="outline" 
@@ -222,6 +243,17 @@ export default function ShopDeePage() {
           </Button>
 
           <div className="flex gap-2">
+            {/* Language Toggle Button - Added */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={toggleLanguage}
+              className="rounded-full bg-white/80 dark:bg-gray-900/80 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-1.5"
+            >
+              <Languages size={16} className="text-gray-600 dark:text-gray-400" />
+              {currentLang === "en" ? "TH" : "EN"}
+            </Button>
+            
             <Button 
               variant="outline" 
               size="sm"
@@ -249,7 +281,8 @@ export default function ShopDeePage() {
         </div>
       </header>
 
-      <main className="container max-w-5xl mx-auto px-4 py-8 relative z-10">
+      {/* Add padding top to account for fixed header */}
+      <main className="container max-w-5xl mx-auto px-4 pt-24 pb-8 relative z-10">
         {/* Hero Section */}
         <AnimatedSection
           animation="fade-in"

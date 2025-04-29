@@ -36,34 +36,40 @@ function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setIsClient(true);
     
-    // Check system preference and localStorage
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const savedTheme = localStorage.getItem('darkMode');
-    const initialDarkMode = savedTheme !== null ? savedTheme === 'true' : systemPrefersDark;
-    
-    setIsDarkMode(initialDarkMode);
-    applyTheme(initialDarkMode);
-    
-    // Listen for system preference changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e: MediaQueryListEvent) => {
-      // Only change if user hasn't set a preference
-      if (localStorage.getItem('darkMode') === null) {
-        setIsDarkMode(e.matches);
-        applyTheme(e.matches);
-      }
-    };
-    
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    try {
+      // Check system preference and localStorage
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const savedTheme = localStorage.getItem('darkMode');
+      const initialDarkMode = savedTheme !== null ? savedTheme === 'true' : systemPrefersDark;
+      
+      setIsDarkMode(initialDarkMode);
+      applyTheme(initialDarkMode);
+      
+      // Listen for system preference changes
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const handleChange = (e: MediaQueryListEvent) => {
+        // Only change if user hasn't set a preference
+        if (localStorage.getItem('darkMode') === null) {
+          setIsDarkMode(e.matches);
+          applyTheme(e.matches);
+        }
+      };
+      
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
+    } catch (error) {
+      console.error('Error initializing theme:', error);
+    }
   }, []);
 
   // Apply theme to document
   const applyTheme = (dark: boolean) => {
-    if (dark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    if (typeof document !== 'undefined') {
+      if (dark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
     }
   };
 
@@ -71,7 +77,11 @@ function ThemeProvider({ children }: { children: ReactNode }) {
   const toggleDarkMode = () => {
     const newDarkMode = !isDarkMode;
     setIsDarkMode(newDarkMode);
-    localStorage.setItem('darkMode', String(newDarkMode));
+    try {
+      localStorage.setItem('darkMode', String(newDarkMode));
+    } catch (error) {
+      console.error('Error saving theme preference:', error);
+    }
     applyTheme(newDarkMode);
   };
 
@@ -106,13 +116,17 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
  */
 export function useLanguage() {
   const context = useContext(LanguageContext);
+  
+  // ตรวจสอบว่าเราอยู่ฝั่ง client และไม่มี context
   if (context === undefined && typeof window !== 'undefined') {
-    throw new Error('useLanguage must be used within a LanguageProvider');
+    console.warn('useLanguage was called outside of LanguageProvider. Using fallback values.');
   }
+  
+  // ส่งค่า fallback กลับไปเมื่ออยู่ใน SSR หรือเมื่อไม่มี context
   return context || { 
     currentLang: 'en', 
-    t: {}, 
-    tr: () => '', 
+    t: createTranslationObject('en'),
+    tr: (key: string) => key, 
     getLocalizedEducation: () => [],
     getLocalizedProjects: () => [],
     toggleLanguage: () => {} 
@@ -130,21 +144,35 @@ function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setIsClient(true);
     
-    // Use language from localStorage or browser preference
-    const browserLang = navigator.language.startsWith('th') ? 'th' : 'en';
-    const savedLang = (localStorage.getItem('preferredLanguage') as Language) || browserLang;
-    
-    setCurrentLang(savedLang as Language);
-    document.documentElement.lang = savedLang;
+    try {
+      // Use language from localStorage or browser preference
+      let savedLang = 'en' as Language;
+      let browserLang = 'en' as Language;
+      
+      // ตรวจสอบว่าเราอยู่ฝั่ง browser ก่อนเรียกใช้ APIs
+      if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
+        browserLang = navigator.language.startsWith('th') ? 'th' : 'en';
+        
+        try {
+          const storedLang = localStorage.getItem('preferredLanguage');
+          if (storedLang === 'en' || storedLang === 'th') {
+            savedLang = storedLang;
+          }
+        } catch (e) {
+          console.error('Error accessing localStorage:', e);
+        }
+      }
+      
+      const finalLang = savedLang || browserLang;
+      setCurrentLang(finalLang);
+      
+      if (typeof document !== 'undefined') {
+        document.documentElement.lang = finalLang;
+      }
+    } catch (error) {
+      console.error('Error initializing language:', error);
+    }
   }, []);
-
-  // Toggle language function
-  const toggleLanguage = () => {
-    const newLang = currentLang === 'en' ? 'th' : 'en';
-    setCurrentLang(newLang);
-    localStorage.setItem('preferredLanguage', newLang);
-    document.documentElement.lang = newLang;
-  };
 
   // Get current translations using memoization
   const t = useMemo(() => 
@@ -190,17 +218,33 @@ function LanguageProvider({ children }: { children: ReactNode }) {
     return getLocalizedProjects(currentLang);
   };
 
-  // Return undefined during SSR to avoid hydration issues
-  const value = useMemo(() => 
-    isClient ? { 
-      currentLang, 
-      t, 
-      tr, 
-      getLocalizedEducation: getLocalizedEdu,
-      getLocalizedProjects: getLocalizedProj,
-      toggleLanguage 
-    } : undefined
-  , [isClient, currentLang, t]);
+  // Toggle language function
+  const toggleLanguage = () => {
+    const newLang = currentLang === 'en' ? 'th' : 'en';
+    setCurrentLang(newLang);
+    
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('preferredLanguage', newLang);
+      }
+      
+      if (typeof document !== 'undefined') {
+        document.documentElement.lang = newLang;
+      }
+    } catch (error) {
+      console.error('Error saving language preference:', error);
+    }
+  };
+
+  // สร้าง context value ด้วย memoization 
+  const value = useMemo(() => ({ 
+    currentLang, 
+    t, 
+    tr, 
+    getLocalizedEducation: getLocalizedEdu,
+    getLocalizedProjects: getLocalizedProj,
+    toggleLanguage 
+  }), [currentLang, t]);
 
   return (
     <LanguageContext.Provider value={value}>
