@@ -1,26 +1,23 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { ChevronLeft, Server, Layout, Database, Users, ShoppingBag, Code2, Github, ExternalLink, Check, Star, ChevronRight, Eye, Calendar, Hash, Target, Images, Languages } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import AnimatedSection from '@/components/common/animations/AnimatedSection';
+import { kinAraiDeeProject } from '@/data/projects/kinAraiDee';
+import { ShoppingBag, Users, Server, Layout, Database } from 'lucide-react';
 import { useLanguage } from '@/contexts';
+
+// Project components
+import ProjectLayout from '@/components/project/ProjectLayout';
+import ProjectHero from '@/components/project/ProjectHero';
+import ProjectOverview from '@/components/project/ProjectOverview';
+import ProjectFeatures from '@/components/project/ProjectFeatures';
+import ProjectStructure from '@/components/project/ProjectStructure';
+import ProjectDataDisplay from '@/components/project/ProjectDataDisplay';
+import ProjectTechnologies from '@/components/project/ProjectTechnologies';
+import ProjectGallery from '@/components/project/ProjectGallery';
 
 export default function KinAraiDeePage() {
   const [animationsEnabled, setAnimationsEnabled] = useState(true);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [isClient, setIsClient] = useState(false);
-  
-  // Use the language context
-  const { currentLang, t, toggleLanguage } = useLanguage();
-  
-  // Set client-side rendering flag
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const { currentLang } = useLanguage();
   
   // Check if animations should be enabled
   useEffect(() => {
@@ -40,649 +37,133 @@ export default function KinAraiDeePage() {
     };
   }, []);
 
-  // Functions for image navigation
-  const nextImage = () => {
-    if (screenshots.length > 0) {
-      setActiveImageIndex((prev) => (prev + 1) % screenshots.length);
-    }
-  };
+  // Prepare data based on current language
+  const project = kinAraiDeeProject;
+  const lang = currentLang as keyof typeof project.subtitle;
 
-  const prevImage = () => {
-    if (screenshots.length > 0) {
-      setActiveImageIndex((prev) => (prev - 1 + screenshots.length) % screenshots.length);
-    }
-  };
+  // Map key facts with translations
+  const keyFacts = project.keyFacts.map(fact => ({
+    icon: fact.icon,
+    label: typeof fact.label === 'string' ? fact.label : fact.label[lang],
+    value: typeof fact.value === 'string' ? fact.value : fact.value[lang],
+  }));
 
-  // Project structure apps
-  const projectApps = [
-    {
-      name: 'frontend',
-      description: t?.kinaraidee_frontend_description || "React application with TailwindCSS for the user interface."
-    },
-    {
-      name: 'backend',
-      description: t?.kinaraidee_backend_description || "Python Flask API with SQLite database and ORM."
-    },
-    {
-      name: 'database',
-      description: t?.kinaraidee_database_description || "SQLite with SQLAlchemy ORM for data persistence."
-    }
-  ];
+  // Map features with translations
+  const features = project.features.items.map(feature => ({
+    icon: feature.icon,
+    title: typeof feature.title === 'string' ? feature.title : feature.title[lang],
+    description: typeof feature.description === 'string' ? feature.description : feature.description[lang],
+  }));
 
-  // Key features
-  const keyFeatures = [
-    {
-      icon: <Users size={20} />,
-      title: t?.kinaraidee_feature_user_title || "User System",
-      description: t?.kinaraidee_feature_user_description || "User authentication through LINE LIFF, account management, and personalized recommendations."
-    },
-    {
-      icon: <ShoppingBag size={20} />,
-      title: t?.kinaraidee_feature_restaurant_title || "Restaurant Management",
-      description: t?.kinaraidee_feature_restaurant_description || "Comprehensive restaurant information, menus, reviews, and ratings."
-    },
-    {
-      icon: <Layout size={20} />,
-      title: t?.kinaraidee_feature_menu_title || "Menu Catalog",
-      description: t?.kinaraidee_feature_menu_description || "Extensive catalog of menu items with detailed information, categorization, and filtering."
-    },
-    {
-      icon: <Server size={20} />,
-      title: t?.kinaraidee_feature_random_title || "Random Selection",
-      description: t?.kinaraidee_feature_random_description || "Intelligent random meal selector to help users make quick decisions on what to eat."
-    },
-    {
-      icon: <Database size={20} />,
-      title: t?.kinaraidee_feature_review_title || "Review System",
-      description: t?.kinaraidee_feature_review_description || "User-generated reviews and ratings for restaurants and menu items."
-    }
-  ];
+  // Map workflow steps with translations
+  const workflowSteps = project.features.workflow.steps.map(step => ({
+    ...step,
+    label: typeof step.label === 'string' ? step.label : step.label[lang],
+  }));
 
-  // Technology categories
-  const technologies = [
-    {
-      category: t?.kinaraidee_tech_front || "Frontend Technologies",
-      items: ['HTML/CSS', 'JavaScript', 'ReactJS', 'TailwindCSS', 'Mantine UI', 'Material UI']
-    },
-    {
-      category: t?.kinaraidee_tech_back || "Backend Technologies",
-      items: ['Python', 'Flask', 'Flask RESTful', 'SQLAlchemy ORM', 'JWT Authentication']
-    },
-    {
-      category: t?.kinaraidee_tech_storage || "Storage & Integration",
-      items: ['SQLite', 'Azure Blob Storage', 'LINE LIFF SDK']
-    },
-    {
-      category: t?.kinaraidee_tech_arch || "Architecture & Tools",
-      items: ['RESTful API', 'MVC Pattern', 'Responsive Design', 'ngrok']
-    }
-  ];
+  // Map structure apps with translations
+  const structureApps = project.structure.apps.map(app => ({
+    name: app.name,
+    description: typeof app.description === 'string' ? app.description : app.description[lang],
+  }));
 
-  // Data structure items
-  const dataStructureItems = [
-    t?.kinaraidee_data_user || "User model with LINE integration and user preferences",
-    t?.kinaraidee_data_restaurant || "Restaurant model with location, category, and contact information",
-    t?.kinaraidee_data_menu || "Menu items with pricing, categories, and restaurant relationships",
-    t?.kinaraidee_data_review || "Review system for both restaurants and menu items",
-    t?.kinaraidee_data_random || "Random selection history for user recommendations"
-  ];
+  // Map data structure items with translations
+  const dataStructureItems = project.dataSections.dataStructure.items.map(item => 
+    typeof item === 'string' ? item : item[lang]
+  );
 
-  // Display system items
-  const displaySystemItems = [
-    t?.kinaraidee_display_homepage || "Dynamic homepage with menu listing and category filtering",
-    t?.kinaraidee_display_restaurant || "Restaurant pages with detailed information and menu items",
-    t?.kinaraidee_display_menu || "Menu detail views with image, price, and reviews",
-    t?.kinaraidee_display_random || "Random menu selection with category filtering options",
-    t?.kinaraidee_display_user || "User profile and history of random selections"
-  ];
+  // Map display system items with translations
+  const displaySystemItems = project.dataSections.displaySystem.items.map(item => 
+    typeof item === 'string' ? item : item[lang]
+  );
 
-  // Screenshots placeholders
-  const screenshots = [
-    { 
-      label: t?.kinaraidee_screenshot_home || "Home Page",
-      desc: t?.kinaraidee_screenshot_home_desc || "Main landing page showing menu items from all restaurants with category filtering."
-    },
-    { 
-      label: t?.kinaraidee_screenshot_restaurant || "Restaurant Listing",
-      desc: t?.kinaraidee_screenshot_restaurant_desc || "Complete list of restaurants with search functionality."
-    },
-    { 
-      label: t?.kinaraidee_screenshot_menu || "Menu Details",
-      desc: t?.kinaraidee_screenshot_menu_desc || "Detailed view of menu items with pricing and restaurant information."
-    },
-    { 
-      label: t?.kinaraidee_screenshot_random || "Random Menu",
-      desc: t?.kinaraidee_screenshot_random_desc || "Random menu selection page with user history."
-    },
-  ];
+  // Map technology categories with translations
+  const technologies = project.technologies.categories.map(category => ({
+    category: typeof category.category === 'string' ? category.category : category.category[lang],
+    items: category.items,
+  }));
 
-  // Feature card component
-  type FeatureCardProps = {
-    icon: React.ReactNode;
-    title: string;
-    description: string;
-    index: number;
-  };
-
-  const FeatureCard = ({ icon, title, description, index }: FeatureCardProps) => {
-    const colorSchemes = [
-      { bg: "bg-blue-50 dark:bg-blue-900/10", icon: "bg-blue-100 dark:bg-blue-900/30", text: "text-blue-600 dark:text-blue-400", border: "border-blue-200 dark:border-blue-800/30" },
-      { bg: "bg-emerald-50 dark:bg-emerald-900/10", icon: "bg-emerald-100 dark:bg-emerald-900/30", text: "text-emerald-600 dark:text-emerald-400", border: "border-emerald-200 dark:border-emerald-800/30" },
-      { bg: "bg-purple-50 dark:bg-purple-900/10", icon: "bg-purple-100 dark:bg-purple-900/30", text: "text-purple-600 dark:text-purple-400", border: "border-purple-200 dark:border-purple-800/30" },
-      { bg: "bg-amber-50 dark:bg-amber-900/10", icon: "bg-amber-100 dark:bg-amber-900/30", text: "text-amber-600 dark:text-amber-400", border: "border-amber-200 dark:border-amber-800/30" },
-      { bg: "bg-pink-50 dark:bg-pink-900/10", icon: "bg-pink-100 dark:bg-pink-900/30", text: "text-pink-600 dark:text-pink-400", border: "border-pink-200 dark:border-pink-800/30" },
-    ];
-    
-    const colorScheme = colorSchemes[index % colorSchemes.length];
-    
-    return (
-      <div 
-        className={`${colorScheme.bg} rounded-xl border ${colorScheme.border} p-5 sm:p-6 shadow-md hover:shadow-xl transition-all group hover:-translate-y-1`}
-      >
-        <div className="flex gap-4 items-start">
-          <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl ${colorScheme.icon} flex items-center justify-center ${colorScheme.text} flex-shrink-0 transition-transform duration-300 group-hover:scale-110`}>
-            {icon}
-          </div>
-          <div>
-            <h3 className="font-bold text-gray-900 dark:text-white text-base sm:text-lg mb-2">{title}</h3>
-            <p className="text-gray-600 dark:text-gray-300 text-sm">{description}</p>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  // Key Facts for project
-  const keyFacts = [
-    { 
-      icon: <Calendar size={16} />, 
-      label: t?.kinaraidee_project_year || "Year", 
-      value: "2022" 
-    },
-    { 
-      icon: <Hash size={16} />, 
-      label: t?.kinaraidee_project_type || "Project Type", 
-      value: t?.kinaraidee_project_type_value || "Academic Project"
-    },
-    { 
-      icon: <Target size={16} />, 
-      label: t?.kinaraidee_project_course || "Course", 
-      value: t?.kinaraidee_project_course_value || "Problem Solving and Computer Programming"
-    },
-  ];
-
-  // Show loading state during SSR or pre-hydration
-  if (!isClient) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-black flex items-center justify-center">
-        <div className="w-10 h-10 border-4 border-gray-300 border-t-gray-800 rounded-full animate-spin"></div>
-      </div>
-    );
-  }
+  // Map screenshots with translations
+  const screenshots = project.gallery.screenshots.map(screenshot => ({
+    label: typeof screenshot.label === 'string' ? screenshot.label : screenshot.label[lang],
+    desc: typeof screenshot.desc === 'string' ? screenshot.desc : screenshot.desc[lang],
+    icon: screenshot.icon,
+  }));
 
   return (
-    <div className="relative min-h-screen bg-gray-50 dark:bg-black overflow-x-hidden">
-      {/* Decorative Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 -right-20 w-80 h-80 rounded-full bg-gray-100 dark:bg-gray-800/20 blur-3xl opacity-40"></div>
-        <div className="absolute bottom-0 -left-20 w-80 h-80 rounded-full bg-gray-100 dark:bg-gray-800/20 blur-3xl opacity-40"></div>
-      </div>
+    <ProjectLayout
+      githubUrl={project.githubUrl}
+      demoUrl={project.demoUrl}
+      animationsEnabled={animationsEnabled}
+    >
+      {/* Hero Section */}
+      <ProjectHero
+        title={project.title}
+        subtitle={project.subtitle[lang]}
+        platformDescription={project.platformDescription[lang]}
+        icon={project.icon}
+        badges={project.badges}
+        keyFacts={keyFacts}
+        animationsEnabled={animationsEnabled}
+        bgGradient={project.bgGradient}
+      />
 
-      {/* Fixed Header - Using fixed positioning for reliable fixed behavior */}
-      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/95 dark:bg-black/95 border-b border-gray-200/30 dark:border-gray-800/30 shadow-md">
-        <div className="container max-w-5xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            asChild
-            className="rounded-full bg-white/80 dark:bg-gray-900/80 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
-          >
-            <Link href="/#projects">
-              <ChevronLeft size={16} className="mr-1" />
-              {t?.kinaraidee_back_button || "Back to Projects"}
-            </Link>
-          </Button>
+      {/* Project Overview */}
+      <ProjectOverview
+        title={project.overview.title[lang]}
+        description={project.overview.description[lang]}
+        quickStats={project.overview.quickStats}
+        animationsEnabled={animationsEnabled}
+      />
 
-          <div className="flex gap-2">
-            {/* Language Toggle Button - Added */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={toggleLanguage}
-              className="rounded-full bg-white/80 dark:bg-gray-900/80 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-1.5"
-            >
-              <Languages size={16} className="text-gray-600 dark:text-gray-400" />
-              {currentLang === "en" ? "TH" : "EN"}
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              size="sm"
-              asChild
-              className="rounded-full bg-white/80 dark:bg-gray-900/80 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
-            >
-              <Link href="https://github.com/misterfocusth/Kin-Arai-Dee-KMITL" target="_blank" rel="noopener noreferrer">
-                <Github size={16} className="mr-1" />
-                {t?.kinaraidee_github_button || "View on GitHub"}
-              </Link>
-            </Button>
-            
-            <Button 
-              variant="default" 
-              size="sm"
-              asChild
-              className="rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-black dark:hover:bg-gray-100"
-            >
-              <Link href="#" target="_blank" rel="noopener noreferrer">
-                <Eye size={16} className="mr-1" />
-                {t?.kinaraidee_view_live_demo || "View Live Demo"}
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </header>
+      {/* Key Features Section */}
+      <ProjectFeatures
+        title={project.features.title[lang]}
+        features={features}
+        workflowTitle={project.features.workflow.title[lang]}
+        workflowSteps={workflowSteps}
+        workflowDescription={project.features.workflow.description[lang]}
+        animationsEnabled={animationsEnabled}
+      />
 
-      {/* Add padding top to account for fixed header */}
-      <main className="container max-w-5xl mx-auto px-4 pt-24 pb-8 relative z-10">
-        {/* Hero Section */}
-        <AnimatedSection
-          animation="fade-in"
-          disabled={!animationsEnabled}
-          className="mb-8 sm:mb-12"
-        >
-          <div className="text-center mb-6">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
-              {t?.kinaraidee_title || "Kin Arai Dee KMITL"}
-            </h1>
-            <p className="text-gray-600 dark:text-gray-300 text-lg sm:text-xl max-w-3xl mx-auto">
-              {t?.kinaraidee_subtitle || "A food recommendation platform for KMITL students to easily decide what to eat"}
-            </p>
-          </div>
+      {/* Project Structure Section */}
+      <ProjectStructure
+        title={project.structure.title[lang]}
+        apps={structureApps}
+        animationsEnabled={animationsEnabled}
+      />
 
-          {/* Featured Image */}
-          <div className="relative w-full h-72 sm:h-96 bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-800 dark:to-gray-900 rounded-xl overflow-hidden mb-6 sm:mb-8 shadow-xl border border-gray-300 dark:border-gray-700 group">
-            <div className="absolute inset-0 bg-gradient-to-br from-yellow-600/20 to-red-600/20 dark:from-yellow-500/10 dark:to-red-500/10 opacity-50"></div>
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-              <ShoppingBag size={40} className="mb-4 opacity-70 group-hover:scale-110 transition-transform duration-500" />
-              <span className="text-2xl font-medium bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 dark:from-white dark:to-gray-400">Kin Arai Dee Platform</span>
-              <span className="mt-2 text-sm text-gray-300 dark:text-gray-400 max-w-md text-center px-4">
-                {t?.kinaraidee_platform_description || "A decision-making tool for students to find and choose restaurants and menus around KMITL campus."}
-              </span>
-              <div className="flex gap-2 mt-6">
-                <Badge className="bg-black/30 hover:bg-black/40 text-white border-0">Food</Badge>
-                <Badge className="bg-black/30 hover:bg-black/40 text-white border-0">Restaurant</Badge>
-                <Badge className="bg-black/30 hover:bg-black/40 text-white border-0">Recommendation</Badge>
-              </div>
-            </div>
-          </div>
+      {/* Data Structure */}
+      <ProjectDataDisplay
+        title={project.dataSections.dataStructure.title[lang]}
+        icon={project.dataSections.dataStructure.icon}
+        items={dataStructureItems}
+        animationsEnabled={animationsEnabled}
+      />
 
-          {/* Key Facts Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-            {keyFacts.map((fact, index) => (
-              <div key={index} className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 p-4 shadow-sm">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400">
-                    {fact.icon}
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">{fact.label}</p>
-                    <p className="font-medium text-gray-900 dark:text-white">{fact.value}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </AnimatedSection>
+      {/* Display System */}
+      <ProjectDataDisplay
+        title={project.dataSections.displaySystem.title[lang]}
+        icon={project.dataSections.displaySystem.icon}
+        items={displaySystemItems}
+        animationsEnabled={animationsEnabled}
+      />
 
-        {/* Project Overview */}
-        <AnimatedSection
-          animation="fade-in"
-          disabled={!animationsEnabled}
-          className="mb-12"
-        >
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md border border-gray-100 dark:border-gray-800">
-            <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
-              <Eye size={20} className="text-gray-600 dark:text-gray-400" />
-              {t?.kinaraidee_project_overview || "Project Overview"}
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              {t?.kinaraidee_overview || "Kin Arai Dee KMITL ('What Should I Eat Today?') is a comprehensive food recommendation platform designed to help KMITL students make quick and informed decisions about their meals. The platform aggregates information about restaurants and menus from around the campus, allowing users to browse, search, and get random suggestions. It integrates with LINE for user authentication and features a robust review system to help users discover quality food options."}
-            </p>
-            
-            {/* Quick stats */}
-            <div className="grid grid-cols-3 gap-4 mt-6 sm:mt-8">
-              <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 mx-auto mb-2">
-                  <Users size={18} />
-                </div>
-                <p className="text-gray-700 dark:text-gray-300 text-sm font-medium">User-Centric</p>
-              </div>
-              <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 mx-auto mb-2">
-                  <ShoppingBag size={18} />
-                </div>
-                <p className="text-gray-700 dark:text-gray-300 text-sm font-medium">Food Catalog</p>
-              </div>
-              <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 mx-auto mb-2">
-                  <Database size={18} />
-                </div>
-                <p className="text-gray-700 dark:text-gray-300 text-sm font-medium">Data-Driven</p>
-              </div>
-            </div>
-          </div>
-        </AnimatedSection>
+      {/* Technologies Section */}
+      <ProjectTechnologies
+        title={project.technologies.title[lang]}
+        technologies={technologies}
+        animationsEnabled={animationsEnabled}
+      />
 
-        {/* Key Features Section */}
-        <AnimatedSection
-          animation="fade-in"
-          disabled={!animationsEnabled}
-          className="mb-12"
-        >
-          <div className="flex items-center mb-6">
-            <div className="h-10 w-1.5 bg-gradient-to-b from-yellow-500 to-red-500 rounded-full mr-4"></div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 text-transparent">
-              {t?.kinaraidee_key_features || "Key Features"}
-            </h2>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-            {keyFeatures.map((feature, index) => (
-              <FeatureCard
-                key={index}
-                icon={feature.icon}
-                title={feature.title}
-                description={feature.description}
-                index={index}
-              />
-            ))}
-          </div>
-
-          {/* Workflow Diagram */}
-          <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6 shadow-md mt-8">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
-              {t?.kinaraidee_user_workflow || "User Workflow"}
-            </h3>
-            
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-              <div className="flex-1 p-4 bg-blue-50 dark:bg-blue-900/10 rounded-lg border border-blue-100 dark:border-blue-900/20 text-center">
-                <div className="w-10 h-10 bg-blue-100 dark:bg-blue-800/30 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <Users size={18} className="text-blue-600 dark:text-blue-400" />
-                </div>
-                <p className="text-gray-900 dark:text-white font-medium text-sm">
-                  {t?.kinaraidee_user_login || "LINE Login"}
-                </p>
-              </div>
-              
-              <div className="hidden sm:block text-gray-400">
-                <ChevronRight size={20} />
-              </div>
-              <div className="block sm:hidden text-gray-400 self-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 5v14"></path>
-                  <path d="m19 12-7 7-7-7"></path>
-                </svg>
-              </div>
-              
-              <div className="flex-1 p-4 bg-emerald-50 dark:bg-emerald-900/10 rounded-lg border border-emerald-100 dark:border-emerald-900/20 text-center">
-                <div className="w-10 h-10 bg-emerald-100 dark:bg-emerald-800/30 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <ShoppingBag size={18} className="text-emerald-600 dark:text-emerald-400" />
-                </div>
-                <p className="text-gray-900 dark:text-white font-medium text-sm">
-                  {t?.kinaraidee_browse_restaurants || "Browse Restaurants"}
-                </p>
-              </div>
-              
-              <div className="hidden sm:block text-gray-400">
-                <ChevronRight size={20} />
-              </div>
-              <div className="block sm:hidden text-gray-400 self-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 5v14"></path>
-                  <path d="m19 12-7 7-7-7"></path>
-                </svg>
-              </div>
-              
-              <div className="flex-1 p-4 bg-purple-50 dark:bg-purple-900/10 rounded-lg border border-purple-100 dark:border-purple-900/20 text-center">
-                <div className="w-10 h-10 bg-purple-100 dark:bg-purple-800/30 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-600 dark:text-purple-400">
-                    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
-                    <path d="M7 2v20"></path>
-                    <path d="M21 15V2"></path>
-                    <path d="M18 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"></path>
-                  </svg>
-                </div>
-                <p className="text-gray-900 dark:text-white font-medium text-sm">
-                  {t?.kinaraidee_view_menus || "View Menus"}
-                </p>
-              </div>
-              
-              <div className="hidden sm:block text-gray-400">
-                <ChevronRight size={20} />
-              </div>
-              <div className="block sm:hidden text-gray-400 self-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 5v14"></path>
-                  <path d="m19 12-7 7-7-7"></path>
-                </svg>
-              </div>
-              
-              <div className="flex-1 p-4 bg-amber-50 dark:bg-amber-900/10 rounded-lg border border-amber-100 dark:border-amber-900/20 text-center">
-                <div className="w-10 h-10 bg-amber-100 dark:bg-amber-800/30 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-600 dark:text-amber-400">
-                    <path d="M4 20h16"></path>
-                    <path d="m6 9 6 6 6-6"></path>
-                    <path d="M12 3v12"></path>
-                  </svg>
-                </div>
-                <p className="text-gray-900 dark:text-white font-medium text-sm">
-                  {t?.kinaraidee_random_menu || "Get Random Menu"}
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-gray-600 dark:text-gray-300 mt-4 text-center">
-              {t?.kinaraidee_workflow_description || "A streamlined user experience from login to meal decision, helping students save time and discover new food options."}
-            </p>
-          </div>
-        </AnimatedSection>
-
-        {/* Project Structure Section */}
-        <AnimatedSection
-          animation="fade-in"
-          disabled={!animationsEnabled}
-          className="mb-12"
-        >
-          <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6 shadow-md">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-              <Code2 size={20} className="mr-3 text-gray-500 dark:text-gray-400" />
-              {t?.kinaraidee_project_structure || "Project Structure"}
-            </h3>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {projectApps.map((app, index) => (
-                <div 
-                  key={index} 
-                  className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 shadow-sm border-l-4 border-gray-300 dark:border-gray-600"
-                >
-                  <h4 className="font-bold text-gray-900 dark:text-white mb-2">
-                    {app.name}
-                  </h4>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">{app.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </AnimatedSection>
-
-        {/* Data Structure */}
-        <AnimatedSection
-          animation="fade-in"
-          disabled={!animationsEnabled}
-          className="mb-12"
-        >
-          <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6 shadow-md">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-              <Database size={20} className="mr-3 text-gray-500 dark:text-gray-400" />
-              {t?.kinaraidee_data_structure || "Data Structure"}
-            </h3>
-            
-            <div className="grid sm:grid-cols-2 gap-4">
-              {dataStructureItems.map((item, index) => (
-                <div 
-                  key={index} 
-                  className="flex items-start gap-3 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg"
-                >
-                  <Check size={18} className="text-gray-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-600 dark:text-gray-300 text-sm">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </AnimatedSection>
-
-        {/* Display System */}
-        <AnimatedSection
-          animation="fade-in"
-          disabled={!animationsEnabled}
-          className="mb-12"
-        >
-          <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6 shadow-md">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-              <Layout size={20} className="mr-3 text-gray-500 dark:text-gray-400" />
-              {t?.kinaraidee_display_system || "User Interface Pages"}
-            </h3>
-            
-            <div className="grid sm:grid-cols-2 gap-4">
-              {displaySystemItems.map((item, index) => (
-                <div 
-                  key={index} 
-                  className="flex items-start gap-3 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg"
-                >
-                  <Check size={18} className="text-gray-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-600 dark:text-gray-300 text-sm">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </AnimatedSection>
-
-        {/* Technologies Section */}
-        <AnimatedSection
-          animation="fade-in"
-          disabled={!animationsEnabled}
-          className="mb-12"
-        >
-          <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6 shadow-md">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
-              <Code2 size={20} className="mr-3 text-gray-500 dark:text-gray-400" />
-              {t?.kinaraidee_technologies || "Technologies Used"}
-            </h3>
-            
-            <div className="space-y-6">
-              {technologies.map((tech, index) => (
-                <div key={index} className="bg-gray-50 dark:bg-gray-800 p-5 rounded-lg border-l-2 border-gray-300 dark:border-gray-600">
-                  <h3 className="font-medium text-gray-900 dark:text-white text-base mb-4">{tech.category}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {tech.items.map((item, i) => (
-                      <Badge 
-                        key={i} 
-                        variant="outline" 
-                        className="bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 py-1"
-                      >
-                        {item}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </AnimatedSection>
-
-        {/* Gallery Section */}
-        <AnimatedSection
-          animation="fade-in"
-          disabled={!animationsEnabled}
-          className="mb-12"
-        >
-          <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6 shadow-md">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
-              <Images size={20} className="mr-3 text-gray-500 dark:text-gray-400" />
-              {t?.kinaraidee_gallery || "Screenshot Gallery"}
-            </h3>
-            
-            {/* Image Carousel */}
-            <div className="relative">
-              {/* Active Image */}
-              <div className="aspect-video bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-4 relative">
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-500 dark:text-gray-400 p-4">
-                  {/* Placeholder Icon */}
-                  {activeImageIndex === 0 && <ShoppingBag size={28} className="mb-3 opacity-50" />}
-                  {activeImageIndex === 1 && <Layout size={28} className="mb-3 opacity-50" />}
-                  {activeImageIndex === 2 && <ShoppingBag size={28} className="mb-3 opacity-50" />}
-                  {activeImageIndex === 3 && <Database size={28} className="mb-3 opacity-50" />}
-                  
-                  {/* Caption */}
-                  <span className="font-medium text-lg">{screenshots[activeImageIndex].label}</span>
-                  <p className="text-sm text-gray-400 dark:text-gray-500 text-center mt-2">
-                    {screenshots[activeImageIndex].desc}
-                  </p>
-                  
-                  {/* Placeholder image dimensions */}
-                  <div className="absolute bottom-3 right-3 bg-gray-200 dark:bg-gray-700 rounded-full px-2 py-0.5 text-xs">
-                    1920 × 1080
-                  </div>
-                </div>
-              </div>
-              
-              {/* Navigation Buttons */}
-              <div className="absolute top-1/2 left-2 -translate-y-1/2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={prevImage}
-                  className="rounded-full w-8 h-8 bg-white/80 dark:bg-gray-900/80 border-gray-200 dark:border-gray-700 cursor-pointer"
-                  aria-label={t?.kinaraidee_prev_image || "Previous Image"}
-                >
-                  <ChevronLeft size={16} className="text-gray-600 dark:text-gray-300" />
-                </Button>
-              </div>
-              
-              <div className="absolute top-1/2 right-2 -translate-y-1/2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={nextImage}
-                  className="rounded-full w-8 h-8 bg-white/80 dark:bg-gray-900/80 border-gray-200 dark:border-gray-700 cursor-pointer"
-                  aria-label={t?.kinaraidee_next_image || "Next Image"}
-                >
-                  <ChevronRight size={16} className="text-gray-600 dark:text-gray-300" />
-                </Button>
-              </div>
-            </div>
-            
-            {/* Thumbnails */}
-            <div className="grid grid-cols-4 gap-2 mt-4">
-              {screenshots.map((screenshot, index) => (
-                <div 
-                  key={index} 
-                  className={`aspect-video bg-gray-100 dark:bg-gray-800 rounded-md cursor-pointer flex items-center justify-center p-2 transition-all ${
-                    activeImageIndex === index 
-                      ? 'ring-2 ring-gray-900 dark:ring-white' 
-                      : 'opacity-70 hover:opacity-100'
-                  }`}
-                  onClick={() => setActiveImageIndex(index)}
-                >
-                  <span className="text-xs text-center text-gray-600 dark:text-gray-300 font-medium">
-                    {screenshot.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </AnimatedSection>
-      </main>
-    </div>
+      {/* Gallery Section */}
+      <ProjectGallery
+        title={project.gallery.title[lang]}
+        screenshots={screenshots}
+        nextImageLabel={project.gallery.nextImageLabel[lang]}
+        prevImageLabel={project.gallery.prevImageLabel[lang]}
+        animationsEnabled={animationsEnabled}
+      />
+    </ProjectLayout>
   );
 }
