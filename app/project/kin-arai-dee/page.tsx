@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import AnimatedSection from '@/components/common/animations/AnimatedSection';
 import { useLanguage } from '@/contexts';
 
-export default function ShopDeePage() {
+export default function KinAraiDeePage() {
   const [animationsEnabled, setAnimationsEnabled] = useState(true);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isClient, setIsClient] = useState(false);
@@ -56,16 +56,16 @@ export default function ShopDeePage() {
   // Project structure apps
   const projectApps = [
     {
-      name: 'authen',
-      description: t.shopdee_authen_description
+      name: 'frontend',
+      description: t?.kinaraidee_frontend_description || "React application with TailwindCSS for the user interface."
     },
     {
-      name: 'shop',
-      description: t.shopdee_shop_description
+      name: 'backend',
+      description: t?.kinaraidee_backend_description || "Python Flask API with SQLite database and ORM."
     },
     {
-      name: 'employee',
-      description: t.shopdee_employee_description
+      name: 'database',
+      description: t?.kinaraidee_database_description || "SQLite with SQLAlchemy ORM for data persistence."
     }
   ];
 
@@ -73,85 +73,86 @@ export default function ShopDeePage() {
   const keyFeatures = [
     {
       icon: <Users size={20} />,
-      title: t.shopdee_feature_user_title,
-      description: t.shopdee_feature_user_description
+      title: t?.kinaraidee_feature_user_title || "User System",
+      description: t?.kinaraidee_feature_user_description || "User authentication through LINE LIFF, account management, and personalized recommendations."
     },
     {
       icon: <ShoppingBag size={20} />,
-      title: t.shopdee_feature_product_title,
-      description: t.shopdee_feature_product_description
+      title: t?.kinaraidee_feature_restaurant_title || "Restaurant Management",
+      description: t?.kinaraidee_feature_restaurant_description || "Comprehensive restaurant information, menus, reviews, and ratings."
     },
     {
       icon: <Layout size={20} />,
-      title: t.shopdee_feature_marketplace_title,
-      description: t.shopdee_feature_marketplace_description
+      title: t?.kinaraidee_feature_menu_title || "Menu Catalog",
+      description: t?.kinaraidee_feature_menu_description || "Extensive catalog of menu items with detailed information, categorization, and filtering."
     },
     {
       icon: <Server size={20} />,
-      title: t.shopdee_feature_order_title,
-      description: t.shopdee_feature_order_description
+      title: t?.kinaraidee_feature_random_title || "Random Selection",
+      description: t?.kinaraidee_feature_random_description || "Intelligent random meal selector to help users make quick decisions on what to eat."
     },
     {
       icon: <Database size={20} />,
-      title: t.shopdee_feature_admin_title,
-      description: t.shopdee_feature_admin_description
+      title: t?.kinaraidee_feature_review_title || "Review System",
+      description: t?.kinaraidee_feature_review_description || "User-generated reviews and ratings for restaurants and menu items."
     }
   ];
 
   // Technology categories
   const technologies = [
     {
-      category: t.shopdee_tech_front,
-      items: ['HTML/CSS/JavaScript', 'Bootstrap', 'jQuery', 'Font Awesome', 'SweetAlert']
+      category: t?.kinaraidee_tech_front || "Frontend Technologies",
+      items: ['HTML/CSS', 'JavaScript', 'ReactJS', 'TailwindCSS', 'Mantine UI', 'Material UI']
     },
     {
-      category: t.shopdee_tech_back,
-      items: ['Django Framework', 'PostgreSQL', 'Django Authentication', 'Django ORM', 'Django Migrations']
+      category: t?.kinaraidee_tech_back || "Backend Technologies",
+      items: ['Python', 'Flask', 'Flask RESTful', 'SQLAlchemy ORM', 'JWT Authentication']
     },
     {
-      category: t.shopdee_tech_storage,
-      items: ['AWS S3', 'boto3']
+      category: t?.kinaraidee_tech_storage || "Storage & Integration",
+      items: ['SQLite', 'Azure Blob Storage', 'LINE LIFF SDK']
     },
     {
-      category: t.shopdee_tech_arch,
-      items: ['MVC Pattern', 'Class-Based Views', 'Mixins', 'Transactions']
+      category: t?.kinaraidee_tech_arch || "Architecture & Tools",
+      items: ['RESTful API', 'MVC Pattern', 'Responsive Design', 'ngrok']
     }
   ];
 
   // Data structure items
   const dataStructureItems = [
-    t.shopdee_data_brand,
-    t.shopdee_data_category,
-    t.shopdee_data_collection,
-    t.shopdee_data_product
+    t?.kinaraidee_data_user || "User model with LINE integration and user preferences",
+    t?.kinaraidee_data_restaurant || "Restaurant model with location, category, and contact information",
+    t?.kinaraidee_data_menu || "Menu items with pricing, categories, and restaurant relationships",
+    t?.kinaraidee_data_review || "Review system for both restaurants and menu items",
+    t?.kinaraidee_data_random || "Random selection history for user recommendations"
   ];
 
   // Display system items
   const displaySystemItems = [
-    t.shopdee_display_homepage,
-    t.shopdee_display_explore,
-    t.shopdee_display_collection,
-    t.shopdee_display_size,
-    t.shopdee_display_conditional
+    t?.kinaraidee_display_homepage || "Dynamic homepage with menu listing and category filtering",
+    t?.kinaraidee_display_restaurant || "Restaurant pages with detailed information and menu items",
+    t?.kinaraidee_display_menu || "Menu detail views with image, price, and reviews",
+    t?.kinaraidee_display_random || "Random menu selection with category filtering options",
+    t?.kinaraidee_display_user || "User profile and history of random selections"
   ];
 
   // Screenshots placeholders
   const screenshots = [
     { 
-      label: t.shopdee_screenshot_home,
-      desc: t.shopdee_screenshot_home_desc
+      label: t?.kinaraidee_screenshot_home || "Home Page",
+      desc: t?.kinaraidee_screenshot_home_desc || "Main landing page showing menu items from all restaurants with category filtering."
     },
     { 
-      label: t.shopdee_screenshot_listing,
-      desc: t.shopdee_screenshot_listing_desc
+      label: t?.kinaraidee_screenshot_restaurant || "Restaurant Listing",
+      desc: t?.kinaraidee_screenshot_restaurant_desc || "Complete list of restaurants with search functionality."
     },
     { 
-      label: t.shopdee_screenshot_detail,
-      desc: t.shopdee_screenshot_detail_desc
+      label: t?.kinaraidee_screenshot_menu || "Menu Details",
+      desc: t?.kinaraidee_screenshot_menu_desc || "Detailed view of menu items with pricing and restaurant information."
     },
     { 
-      label: t.shopdee_screenshot_admin,
-      desc: t.shopdee_screenshot_admin_desc
+      label: t?.kinaraidee_screenshot_random || "Random Menu",
+      desc: t?.kinaraidee_screenshot_random_desc || "Random menu selection page with user history."
     },
   ];
 
@@ -195,18 +196,18 @@ export default function ShopDeePage() {
   const keyFacts = [
     { 
       icon: <Calendar size={16} />, 
-      label: t.shopdee_project_year, 
-      value: "2024" 
+      label: t?.kinaraidee_project_year || "Year", 
+      value: "2022" 
     },
     { 
       icon: <Hash size={16} />, 
-      label: t.shopdee_project_type, 
-      value: t.shopdee_project_type_value
+      label: t?.kinaraidee_project_type || "Project Type", 
+      value: t?.kinaraidee_project_type_value || "Academic Project"
     },
     { 
       icon: <Target size={16} />, 
-      label: t.shopdee_project_role, 
-      value: t.shopdee_project_role_value
+      label: t?.kinaraidee_project_course || "Course", 
+      value: t?.kinaraidee_project_course_value || "Problem Solving and Computer Programming"
     },
   ];
 
@@ -238,7 +239,7 @@ export default function ShopDeePage() {
           >
             <Link href="/#projects">
               <ChevronLeft size={16} className="mr-1" />
-              {t.shopdee_back_button}
+              {t?.kinaraidee_back_button || "Back to Projects"}
             </Link>
           </Button>
 
@@ -260,9 +261,9 @@ export default function ShopDeePage() {
               asChild
               className="rounded-full bg-white/80 dark:bg-gray-900/80 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
             >
-              <Link href="https://github.com/Pisol00" target="_blank" rel="noopener noreferrer">
+              <Link href="https://github.com/misterfocusth/Kin-Arai-Dee-KMITL" target="_blank" rel="noopener noreferrer">
                 <Github size={16} className="mr-1" />
-                {t.shopdee_github_button}
+                {t?.kinaraidee_github_button || "View on GitHub"}
               </Link>
             </Button>
             
@@ -274,7 +275,7 @@ export default function ShopDeePage() {
             >
               <Link href="#" target="_blank" rel="noopener noreferrer">
                 <Eye size={16} className="mr-1" />
-                {t.shopdee_view_live_demo}
+                {t?.kinaraidee_view_live_demo || "View Live Demo"}
               </Link>
             </Button>
           </div>
@@ -291,26 +292,26 @@ export default function ShopDeePage() {
         >
           <div className="text-center mb-6">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
-              {t.shopdee_title}
+              {t?.kinaraidee_title || "Kin Arai Dee KMITL"}
             </h1>
             <p className="text-gray-600 dark:text-gray-300 text-lg sm:text-xl max-w-3xl mx-auto">
-              {t.shopdee_subtitle}
+              {t?.kinaraidee_subtitle || "A food recommendation platform for KMITL students to easily decide what to eat"}
             </p>
           </div>
 
           {/* Featured Image */}
           <div className="relative w-full h-72 sm:h-96 bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-800 dark:to-gray-900 rounded-xl overflow-hidden mb-6 sm:mb-8 shadow-xl border border-gray-300 dark:border-gray-700 group">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 dark:from-blue-500/10 dark:to-purple-500/10 opacity-50"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-600/20 to-red-600/20 dark:from-yellow-500/10 dark:to-red-500/10 opacity-50"></div>
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
               <ShoppingBag size={40} className="mb-4 opacity-70 group-hover:scale-110 transition-transform duration-500" />
-              <span className="text-2xl font-medium bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 dark:from-white dark:to-gray-400">Shopdee Platform</span>
+              <span className="text-2xl font-medium bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 dark:from-white dark:to-gray-400">Kin Arai Dee Platform</span>
               <span className="mt-2 text-sm text-gray-300 dark:text-gray-400 max-w-md text-center px-4">
-                {t.shopdee_platform_description}
+                {t?.kinaraidee_platform_description || "A decision-making tool for students to find and choose restaurants and menus around KMITL campus."}
               </span>
               <div className="flex gap-2 mt-6">
-                <Badge className="bg-black/30 hover:bg-black/40 text-white border-0">E-Commerce</Badge>
-                <Badge className="bg-black/30 hover:bg-black/40 text-white border-0">Marketplace</Badge>
-                <Badge className="bg-black/30 hover:bg-black/40 text-white border-0">Fashion</Badge>
+                <Badge className="bg-black/30 hover:bg-black/40 text-white border-0">Food</Badge>
+                <Badge className="bg-black/30 hover:bg-black/40 text-white border-0">Restaurant</Badge>
+                <Badge className="bg-black/30 hover:bg-black/40 text-white border-0">Recommendation</Badge>
               </div>
             </div>
           </div>
@@ -342,10 +343,10 @@ export default function ShopDeePage() {
           <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md border border-gray-100 dark:border-gray-800">
             <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
               <Eye size={20} className="text-gray-600 dark:text-gray-400" />
-              {t.shopdee_project_overview}
+              {t?.kinaraidee_project_overview || "Project Overview"}
             </h2>
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              {t.shopdee_overview}
+              {t?.kinaraidee_overview || "Kin Arai Dee KMITL ('What Should I Eat Today?') is a comprehensive food recommendation platform designed to help KMITL students make quick and informed decisions about their meals. The platform aggregates information about restaurants and menus from around the campus, allowing users to browse, search, and get random suggestions. It integrates with LINE for user authentication and features a robust review system to help users discover quality food options."}
             </p>
             
             {/* Quick stats */}
@@ -360,7 +361,7 @@ export default function ShopDeePage() {
                 <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 mx-auto mb-2">
                   <ShoppingBag size={18} />
                 </div>
-                <p className="text-gray-700 dark:text-gray-300 text-sm font-medium">Marketplace</p>
+                <p className="text-gray-700 dark:text-gray-300 text-sm font-medium">Food Catalog</p>
               </div>
               <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                 <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 mx-auto mb-2">
@@ -379,9 +380,9 @@ export default function ShopDeePage() {
           className="mb-12"
         >
           <div className="flex items-center mb-6">
-            <div className="h-10 w-1.5 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full mr-4"></div>
+            <div className="h-10 w-1.5 bg-gradient-to-b from-yellow-500 to-red-500 rounded-full mr-4"></div>
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 text-transparent">
-              {t.shopdee_key_features}
+              {t?.kinaraidee_key_features || "Key Features"}
             </h2>
           </div>
           
@@ -400,7 +401,7 @@ export default function ShopDeePage() {
           {/* Workflow Diagram */}
           <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6 shadow-md mt-8">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
-              {t.shopdee_user_workflow}
+              {t?.kinaraidee_user_workflow || "User Workflow"}
             </h3>
             
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
@@ -409,7 +410,7 @@ export default function ShopDeePage() {
                   <Users size={18} className="text-blue-600 dark:text-blue-400" />
                 </div>
                 <p className="text-gray-900 dark:text-white font-medium text-sm">
-                  {t.shopdee_user_registration}
+                  {t?.kinaraidee_user_login || "LINE Login"}
                 </p>
               </div>
               
@@ -428,7 +429,7 @@ export default function ShopDeePage() {
                   <ShoppingBag size={18} className="text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <p className="text-gray-900 dark:text-white font-medium text-sm">
-                  {t.shopdee_browse_products}
+                  {t?.kinaraidee_browse_restaurants || "Browse Restaurants"}
                 </p>
               </div>
               
@@ -445,13 +446,14 @@ export default function ShopDeePage() {
               <div className="flex-1 p-4 bg-purple-50 dark:bg-purple-900/10 rounded-lg border border-purple-100 dark:border-purple-900/20 text-center">
                 <div className="w-10 h-10 bg-purple-100 dark:bg-purple-800/30 rounded-full flex items-center justify-center mx-auto mb-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-600 dark:text-purple-400">
-                    <circle cx="8" cy="21" r="1"></circle>
-                    <circle cx="19" cy="21" r="1"></circle>
-                    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+                    <path d="M7 2v20"></path>
+                    <path d="M21 15V2"></path>
+                    <path d="M18 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"></path>
                   </svg>
                 </div>
                 <p className="text-gray-900 dark:text-white font-medium text-sm">
-                  {t.shopdee_add_to_cart}
+                  {t?.kinaraidee_view_menus || "View Menus"}
                 </p>
               </div>
               
@@ -468,18 +470,19 @@ export default function ShopDeePage() {
               <div className="flex-1 p-4 bg-amber-50 dark:bg-amber-900/10 rounded-lg border border-amber-100 dark:border-amber-900/20 text-center">
                 <div className="w-10 h-10 bg-amber-100 dark:bg-amber-800/30 rounded-full flex items-center justify-center mx-auto mb-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-600 dark:text-amber-400">
-                    <rect width="20" height="14" x="2" y="5" rx="2"></rect>
-                    <line x1="2" x2="22" y1="10" y2="10"></line>
+                    <path d="M4 20h16"></path>
+                    <path d="m6 9 6 6 6-6"></path>
+                    <path d="M12 3v12"></path>
                   </svg>
                 </div>
                 <p className="text-gray-900 dark:text-white font-medium text-sm">
-                  {t.shopdee_checkout}
+                  {t?.kinaraidee_random_menu || "Get Random Menu"}
                 </p>
               </div>
             </div>
 
             <p className="text-sm text-gray-600 dark:text-gray-300 mt-4 text-center">
-              {t.shopdee_workflow_description}
+              {t?.kinaraidee_workflow_description || "A streamlined user experience from login to meal decision, helping students save time and discover new food options."}
             </p>
           </div>
         </AnimatedSection>
@@ -493,7 +496,7 @@ export default function ShopDeePage() {
           <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6 shadow-md">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
               <Code2 size={20} className="mr-3 text-gray-500 dark:text-gray-400" />
-              {t.shopdee_project_structure}
+              {t?.kinaraidee_project_structure || "Project Structure"}
             </h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -521,7 +524,7 @@ export default function ShopDeePage() {
           <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6 shadow-md">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
               <Database size={20} className="mr-3 text-gray-500 dark:text-gray-400" />
-              {t.shopdee_data_structure}
+              {t?.kinaraidee_data_structure || "Data Structure"}
             </h3>
             
             <div className="grid sm:grid-cols-2 gap-4">
@@ -547,7 +550,7 @@ export default function ShopDeePage() {
           <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6 shadow-md">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
               <Layout size={20} className="mr-3 text-gray-500 dark:text-gray-400" />
-              {t.shopdee_display_system}
+              {t?.kinaraidee_display_system || "User Interface Pages"}
             </h3>
             
             <div className="grid sm:grid-cols-2 gap-4">
@@ -573,7 +576,7 @@ export default function ShopDeePage() {
           <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6 shadow-md">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
               <Code2 size={20} className="mr-3 text-gray-500 dark:text-gray-400" />
-              {t.shopdee_technologies}
+              {t?.kinaraidee_technologies || "Technologies Used"}
             </h3>
             
             <div className="space-y-6">
@@ -606,7 +609,7 @@ export default function ShopDeePage() {
           <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6 shadow-md">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
               <Images size={20} className="mr-3 text-gray-500 dark:text-gray-400" />
-              {t.shopdee_gallery}
+              {t?.kinaraidee_gallery || "Screenshot Gallery"}
             </h3>
             
             {/* Image Carousel */}
@@ -640,7 +643,7 @@ export default function ShopDeePage() {
                   size="icon"
                   onClick={prevImage}
                   className="rounded-full w-8 h-8 bg-white/80 dark:bg-gray-900/80 border-gray-200 dark:border-gray-700 cursor-pointer"
-                  aria-label={t.shopdee_prev_image}
+                  aria-label={t?.kinaraidee_prev_image || "Previous Image"}
                 >
                   <ChevronLeft size={16} className="text-gray-600 dark:text-gray-300" />
                 </Button>
@@ -652,7 +655,7 @@ export default function ShopDeePage() {
                   size="icon"
                   onClick={nextImage}
                   className="rounded-full w-8 h-8 bg-white/80 dark:bg-gray-900/80 border-gray-200 dark:border-gray-700 cursor-pointer"
-                  aria-label={t.shopdee_next_image}
+                  aria-label={t?.kinaraidee_next_image || "Next Image"}
                 >
                   <ChevronRight size={16} className="text-gray-600 dark:text-gray-300" />
                 </Button>
