@@ -210,6 +210,266 @@ export const translationData = {
   prevImage: {
     en: "Previous Image",
     th: "ภาพก่อนหน้า"
+  },
+  
+  // ShopDee Project Page translations
+  shopdee_back_button: {
+    en: "Back to Projects",
+    th: "กลับไปยังหน้าโปรเจค"
+  },
+  shopdee_title: {
+    en: "Shopdee - E-Commerce Marketplace",
+    th: "Shopdee - แพลตฟอร์มอีคอมเมิร์ซแบบ Marketplace"
+  },
+  shopdee_subtitle: {
+    en: "A StockX and GOAT-inspired marketplace platform for fashion items",
+    th: "แพลตฟอร์มตลาดสำหรับสินค้าแฟชั่น ได้แรงบันดาลใจจาก StockX และ GOAT"
+  },
+  shopdee_platform_description: {
+    en: "An e-commerce marketplace built with Django, featuring user authentication, product management, and secure payment processing",
+    th: "แพลตฟอร์มอีคอมเมิร์ซแบบตลาดที่สร้างด้วย Django มีระบบยืนยันตัวตนผู้ใช้ การจัดการสินค้า และการประมวลผลการชำระเงินที่ปลอดภัย"
+  },
+  shopdee_overview: {
+    en: "Shopdee is an e-commerce marketplace platform developed with Django Framework, inspired by websites like StockX and GOAT. The platform facilitates buying and selling of fashion items, particularly sneakers, clothing, bags, and accessories.",
+    th: "Shopdee เป็นแพลตฟอร์มอีคอมเมิร์ซแบบ marketplace ที่พัฒนาด้วย Django Framework โดยมีแนวคิดคล้ายกับเว็บไซต์ StockX และ GOAT ที่ให้บริการซื้อขายสินค้าแฟชั่น โดยเฉพาะรองเท้าสนีกเกอร์ เสื้อผ้า กระเป๋า และอุปกรณ์เสริมต่างๆ"
+  },
+  shopdee_project_structure: {
+    en: "Project Structure",
+    th: "โครงสร้างโปรเจค"
+  },
+  shopdee_key_features: {
+    en: "Key Features",
+    th: "คุณสมบัติหลัก"
+  },
+  shopdee_technologies: {
+    en: "Technologies Used",
+    th: "เทคโนโลยีที่ใช้ในการพัฒนา"
+  },
+  shopdee_project_overview: {
+    en: "Project Overview",
+    th: "ภาพรวมโปรเจค"
+  },
+  shopdee_gallery: {
+    en: "Project Gallery",
+    th: "แกลเลอรีโปรเจค"
+  },
+  shopdee_conclusion: {
+    en: "The Shopdee project demonstrates the ability to develop a comprehensive e-commerce system from user management to product management, buying/selling processes, and data analytics.",
+    th: "โปรเจค Shopdee แสดงให้เห็นถึงความสามารถในการพัฒนาระบบอีคอมเมิร์ซแบบครบวงจร ตั้งแต่การจัดการผู้ใช้ การจัดการสินค้า กระบวนการซื้อขาย และระบบการวิเคราะห์ข้อมูล"
+  },
+  shopdee_github_button: {
+    en: "View on GitHub",
+    th: "ดูบน GitHub"
+  },
+  shopdee_tech_front: {
+    en: "Frontend",
+    th: "ฟร้อนท์เอนด์"
+  },
+  shopdee_tech_back: {
+    en: "Backend",
+    th: "แบ็คเอนด์"
+  },
+  shopdee_tech_storage: {
+    en: "Storage",
+    th: "พื้นที่จัดเก็บข้อมูล"
+  },
+  shopdee_tech_arch: {
+    en: "Architecture",
+    th: "สถาปัตยกรรม"
+  },
+  shopdee_data_structure: {
+    en: "Data Structure",
+    th: "โครงสร้างข้อมูล"
+  },
+  shopdee_display_system: {
+    en: "Display System",
+    th: "ระบบการแสดงผล"
+  },
+  shopdee_project_year: {
+    en: "Year",
+    th: "ปีที่พัฒนา"
+  },
+  shopdee_project_type: {
+    en: "Project Type",
+    th: "ประเภทโปรเจค"
+  },
+  shopdee_project_type_value: {
+    en: "Academic Project",
+    th: "โปรเจครายวิชาเป็นคู่"
+  },
+  shopdee_project_role: {
+    en: "Role",
+    th: "บทบาท"
+  },
+  shopdee_project_role_value: {
+    en: "Full Stack Developer",
+    th: "นักพัฒนา Full Stack"
+  },
+  shopdee_next_image: {
+    en: "Next Image",
+    th: "ภาพถัดไป"
+  },
+  shopdee_prev_image: {
+    en: "Previous Image",
+    th: "ภาพก่อนหน้า"
+  },
+  shopdee_view_live_demo: {
+    en: "View Live Demo",
+    th: "ดูตัวอย่างเว็บไซต์"
+  },
+  shopdee_user_workflow: {
+    en: "User Workflow",
+    th: "ขั้นตอนการใช้งาน"
+  },
+  shopdee_workflow_description: {
+    en: "The platform streamlines the shopping experience from user registration to checkout, with a focus on ease of use and security.",
+    th: "แพลตฟอร์มนี้ช่วยให้ประสบการณ์การช้อปปิ้งเป็นไปอย่างราบรื่นตั้งแต่การลงทะเบียนผู้ใช้จนถึงการชำระเงิน โดยเน้นที่ความง่ายในการใช้งานและความปลอดภัย"
+  },
+  shopdee_user_registration: {
+    en: "User Registration",
+    th: "ลงทะเบียนผู้ใช้"
+  },
+  shopdee_browse_products: {
+    en: "Browse Products",
+    th: "เรียกดูสินค้า"
+  },
+  shopdee_add_to_cart: {
+    en: "Add to Cart",
+    th: "เพิ่มลงตะกร้า"
+  },
+  shopdee_checkout: {
+    en: "Checkout",
+    th: "ชำระเงิน"
+  },
+  
+  // ShopDee app descriptions
+  shopdee_authen_description: {
+    en: "Manages user authentication systems (registration, login, logout)",
+    th: "จัดการระบบการยืนยันตัวตนของผู้ใช้ (สมัครสมาชิก, เข้าสู่ระบบ, ออกจากระบบ)"
+  },
+  shopdee_shop_description: {
+    en: "Handles the core shop system, including products, orders, and payment processing",
+    th: "จัดการระบบหลักของร้านค้า รวมถึงสินค้า, คำสั่งซื้อ, และกระบวนการชำระเงิน"
+  },
+  shopdee_employee_description: {
+    en: "Manages the system for employees and administrators",
+    th: "จัดการระบบสำหรับพนักงานและผู้ดูแลระบบ"
+  },
+  
+  // ShopDee key features
+  shopdee_feature_user_title: {
+    en: "User Management",
+    th: "ระบบผู้ใช้งาน"
+  },
+  shopdee_feature_user_description: {
+    en: "User registration, login, profile management, and shipping address management.",
+    th: "การลงทะเบียนผู้ใช้, เข้าสู่ระบบ, จัดการโปรไฟล์, จัดการที่อยู่จัดส่ง"
+  },
+  shopdee_feature_product_title: {
+    en: "Product System",
+    th: "ระบบสินค้า"
+  },
+  shopdee_feature_product_description: {
+    en: "Product listings, collections, brands, categories, filtering, and search functionality.",
+    th: "การแสดงรายการสินค้า, คอลเลกชัน, แบรนด์, หมวดหมู่, การกรอง และฟังก์ชันการค้นหา"
+  },
+  shopdee_feature_marketplace_title: {
+    en: "Marketplace Trading",
+    th: "การซื้อขายสินค้า"
+  },
+  shopdee_feature_marketplace_description: {
+    en: "Buying products, selling products, shopping cart system, payment processing.",
+    th: "การซื้อสินค้า, การขายสินค้า, ระบบตะกร้าสินค้า, การชำระเงิน"
+  },
+  shopdee_feature_order_title: {
+    en: "Order Management",
+    th: "การจัดการคำสั่งซื้อ"
+  },
+  shopdee_feature_order_description: {
+    en: "Order tracking, sales tracking, filtering by status, order details.",
+    th: "การติดตามคำสั่งซื้อ, การติดตามการขาย, การกรองตามสถานะ, รายละเอียดคำสั่งซื้อ"
+  },
+  shopdee_feature_admin_title: {
+    en: "Admin Dashboard",
+    th: "แดชบอร์ดสำหรับผู้ดูแลระบบ"
+  },
+  shopdee_feature_admin_description: {
+    en: "Collection overview, sales analytics, managing brands, collections, and sellers.",
+    th: "ภาพรวมคอลเลกชัน, การวิเคราะห์ยอดขาย, การจัดการแบรนด์, คอลเลกชัน และผู้ขาย"
+  },
+  
+  // ShopDee data structure
+  shopdee_data_brand: {
+    en: "Brand - Stores brand information with details and image links",
+    th: "แบรนด์ (Brand) - เก็บข้อมูลแบรนด์พร้อมรายละเอียดและลิงก์รูปภาพ"
+  },
+  shopdee_data_category: {
+    en: "Category - Divides products into main categories like shoes, clothing, bags, and accessories",
+    th: "หมวดหมู่ (Category) - แบ่งสินค้าเป็นหมวดหมู่หลักต่างๆ เช่น รองเท้า, เสื้อผ้า, กระเป๋า และอุปกรณ์เสริม"
+  },
+  shopdee_data_collection: {
+    en: "Collection - Groups products of the same series or collection",
+    th: "คอลเลกชัน (Collection) - รวมกลุ่มสินค้าที่เป็นซีรีส์หรือคอลเลกชันเดียวกัน"
+  },
+  shopdee_data_product: {
+    en: "Product - Information about specific items with size, condition, and price",
+    th: "สินค้า (Product) - ข้อมูลสินค้าเฉพาะชิ้นที่มีขนาด สภาพ และราคาเฉพาะ"
+  },
+  
+  // ShopDee display system
+  shopdee_display_homepage: {
+    en: "Homepage - Displays latest and popular products",
+    th: "หน้าแรก (Homepage) - แสดงสินค้าล่าสุดและยอดนิยม"
+  },
+  shopdee_display_explore: {
+    en: "Explore - Shows all products with filters and search",
+    th: "หน้าสำรวจ (Explore) - แสดงสินค้าทั้งหมดพร้อมตัวกรองและการค้นหา"
+  },
+  shopdee_display_collection: {
+    en: "Collection Details - Shows collection information with images, starting price, and latest selling price",
+    th: "หน้ารายละเอียดคอลเลกชัน - แสดงข้อมูลเกี่ยวกับคอลเลกชันพร้อมรูปภาพ, ราคาเริ่มต้น, และราคาขายล่าสุด"
+  },
+  shopdee_display_size: {
+    en: "Size Selection - Allows users to select the size they want to buy or sell",
+    th: "หน้าเลือกขนาด - ให้ผู้ใช้เลือกขนาดสินค้าที่ต้องการซื้อหรือขาย"
+  },
+  shopdee_display_conditional: {
+    en: "Conditional Display - Shows products based on selected size and condition (new/used)",
+    th: "หน้าแสดงสินค้าตามเงื่อนไข - แสดงสินค้าตามขนาดและสภาพที่เลือก (ใหม่/มือสอง)"
+  },
+  
+  // ShopDee screenshots
+  shopdee_screenshot_home: {
+    en: "Home Page",
+    th: "หน้าแรก"
+  },
+  shopdee_screenshot_home_desc: {
+    en: "Landing page showing featured products and collections",
+    th: "หน้าแรกแสดงสินค้าแนะนำและคอลเลคชั่นต่างๆ"
+  },
+  shopdee_screenshot_listing: {
+    en: "Product Listing",
+    th: "รายการสินค้า"
+  },
+  shopdee_screenshot_listing_desc: {
+    en: "Browse all products with category filters and search",
+    th: "ดูสินค้าทั้งหมดพร้อมตัวกรองหมวดหมู่และการค้นหา"
+  },
+  shopdee_screenshot_detail: {
+    en: "Product Detail",
+    th: "รายละเอียดสินค้า"
+  },
+  shopdee_screenshot_detail_desc: {
+    en: "Detailed view of a product with size selection and pricing",
+    th: "มุมมองรายละเอียดของสินค้าพร้อมการเลือกขนาดและราคา"
+  },
+  shopdee_screenshot_admin: {
+    en: "Admin Dashboard",
+    th: "แดชบอร์ดผู้ดูแล"
+  },
+  shopdee_screenshot_admin_desc: {
+    en: "Administrative interface for managing products and users",
+    th: "อินเตอร์เฟซสำหรับผู้ดูแลระบบในการจัดการสินค้าและผู้ใช้"
   }
 };
 
@@ -544,7 +804,7 @@ export const projectsData = [
 ];
 
 // Function to create a flattened translation object for a specific language
-export function createTranslationObject(language: Language) {
+export function createTranslationObject(language: Language = 'en') {
   const translationObj: Record<string, string> = {};
   
   // Add all translations from translationData
@@ -561,7 +821,7 @@ export function createTranslationObject(language: Language) {
 // Helper function to get a translated value for a dataset entry
 export function getTranslation(
   data: any, 
-  language: Language, 
+  language: Language = 'en', 
   path: string = ''
 ) {
   // Handle direct translation objects like { en: "text", th: "ข้อความ" }
@@ -593,7 +853,7 @@ export function getTranslation(
 }
 
 // Helper function to get localized project data
-export function getLocalizedProjects(language: Language): LocalizedProject[] {
+export function getLocalizedProjects(language: Language = 'en'): LocalizedProject[] {
   return projectsData.map(project => ({
     title: project.title,
     year: project.year,
@@ -604,7 +864,7 @@ export function getLocalizedProjects(language: Language): LocalizedProject[] {
 }
 
 // Helper function to get localized education data
-export function getLocalizedEducation(language: Language): LocalizedEducation[] {
+export function getLocalizedEducation(language: Language = 'en'): LocalizedEducation[] {
   return educationData.map(edu => ({
     institution: getTranslation(edu.translations, language, 'institution'),
     degree: getTranslation(edu.translations, language, 'degree'),
